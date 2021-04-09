@@ -11,6 +11,7 @@ class ApiController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+<<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
 /**
     * @OA\Get(
     *   path="/api/llibres",
@@ -122,17 +123,32 @@ class ApiController extends BaseController
     *   )
     * )
     */
+=======
+function getLlibres () {
+        return Llibre::all();
+     }
+
+     function getLlibre (Request $request, $id) {
+        return Llibre::find($id);
+     }
+
+
+>>>>>>> rutas y api controller
  function updateLlibre (Request $request, $id) {
     //cal posar en la peticio PUT el Header field:
     //Content-Type = application/x-www-form-urlencoded
     $llibre = Llibre::find($id);
+<<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
     //print_r($llibre);
     //print_r($request);exit;
+=======
+>>>>>>> rutas y api controller
     $llibre->update($request->all());
 
     return $llibre;
   }
 
+<<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
   /**
     * @OA\Post(
     *   path="/api/llibre",
@@ -184,6 +200,8 @@ class ApiController extends BaseController
     *   )
     * )
     */
+=======
+>>>>>>> rutas y api controller
   function insertLlibres(Request $request)
     {
         // Validate the request...
@@ -191,6 +209,7 @@ class ApiController extends BaseController
         $llibre = new Llibre;
 
         $llibre->titol = $request->titol;
+<<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
         $llibre->data_publi = $request->data_publi;
         $llibre->autor_id = $request->autor_id;
 
@@ -224,11 +243,20 @@ class ApiController extends BaseController
       * )
       *
       */
+=======
+        $llibre->paginas = $request->paginas;
+        $llibre->autor_id = $request->autor_id;
+
+        $llibre->save();
+    }
+
+>>>>>>> rutas y api controller
     function deleteLlibres (Request $request, $id) {
         $llibre = Llibre::find($id);
 
         $llibre->delete();
     
+<<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
         return $llibre;
       }
 
@@ -261,10 +289,18 @@ class ApiController extends BaseController
     *   )
     * )
     */
+=======
+        //return $llibre;
+      }
+
+      //=======================================
+
+>>>>>>> rutas y api controller
       function getAutors () {
         return Autor::all();
      }
 
+<<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
     /**
       * @OA\Get(
       *   path="/api/autor/{id}",
@@ -302,10 +338,13 @@ class ApiController extends BaseController
       *   )
       * )
       */
+=======
+>>>>>>> rutas y api controller
      function getAutor (Request $request, $id) {
         return Autor::find($id);
      }
 
+<<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
      function getUltimAutor () {
 
       $autores=Autor::all();
@@ -387,6 +426,9 @@ class ApiController extends BaseController
     *   )
     * )
     */
+=======
+
+>>>>>>> rutas y api controller
  function updAteautor (Request $request, $id) {
     //cal posar en la peticio PUT el Header field:
     //Content-Type = application/x-www-form-urlencoded
@@ -395,6 +437,7 @@ class ApiController extends BaseController
 
     return $autor;
   }
+<<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
 /**
     * @OA\Post(
     *   path="/api/autor",
@@ -440,6 +483,9 @@ class ApiController extends BaseController
     *   )
     * )
     */
+=======
+
+>>>>>>> rutas y api controller
   function insertAutor(Request $request)
     {
         // Validate the request...
@@ -450,6 +496,7 @@ class ApiController extends BaseController
         $autor->cognoms = $request->cognoms;
 
         $autor->save();
+<<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
         
         return $autor;
     }
@@ -495,11 +542,16 @@ class ApiController extends BaseController
       *   )
       * )
       */
+=======
+    }
+
+>>>>>>> rutas y api controller
     function deleteAutor (Request $request, $id) {
         $autor = Autor::find($id);
 
         $autor->delete();
     
+<<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
         return $autor;
       }
 
@@ -555,4 +607,10 @@ class ApiController extends BaseController
 
 
     
+=======
+        //return $llibre;
+      }
+
+
+>>>>>>> rutas y api controller
 }
