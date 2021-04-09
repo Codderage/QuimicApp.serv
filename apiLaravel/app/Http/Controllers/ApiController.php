@@ -11,7 +11,10 @@ class ApiController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+<<<<<<< HEAD
 <<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
 /**
     * @OA\Get(
     *   path="/api/llibres",
@@ -123,6 +126,7 @@ class ApiController extends BaseController
     *   )
     * )
     */
+<<<<<<< HEAD
 =======
 function getLlibres () {
         return Llibre::all();
@@ -134,21 +138,31 @@ function getLlibres () {
 
 
 >>>>>>> rutas y api controller
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
  function updateLlibre (Request $request, $id) {
     //cal posar en la peticio PUT el Header field:
     //Content-Type = application/x-www-form-urlencoded
     $llibre = Llibre::find($id);
+<<<<<<< HEAD
 <<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
     //print_r($llibre);
     //print_r($request);exit;
 =======
 >>>>>>> rutas y api controller
+=======
+    //print_r($llibre);
+    //print_r($request);exit;
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
     $llibre->update($request->all());
 
     return $llibre;
   }
 
+<<<<<<< HEAD
 <<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
   /**
     * @OA\Post(
     *   path="/api/llibre",
@@ -200,8 +214,11 @@ function getLlibres () {
     *   )
     * )
     */
+<<<<<<< HEAD
 =======
 >>>>>>> rutas y api controller
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
   function insertLlibres(Request $request)
     {
         // Validate the request...
@@ -209,7 +226,10 @@ function getLlibres () {
         $llibre = new Llibre;
 
         $llibre->titol = $request->titol;
+<<<<<<< HEAD
 <<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
         $llibre->data_publi = $request->data_publi;
         $llibre->autor_id = $request->autor_id;
 
@@ -243,6 +263,7 @@ function getLlibres () {
       * )
       *
       */
+<<<<<<< HEAD
 =======
         $llibre->paginas = $request->paginas;
         $llibre->autor_id = $request->autor_id;
@@ -251,12 +272,17 @@ function getLlibres () {
     }
 
 >>>>>>> rutas y api controller
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
     function deleteLlibres (Request $request, $id) {
         $llibre = Llibre::find($id);
 
         $llibre->delete();
     
+<<<<<<< HEAD
 <<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
         return $llibre;
       }
 
@@ -289,6 +315,7 @@ function getLlibres () {
     *   )
     * )
     */
+<<<<<<< HEAD
 =======
         //return $llibre;
       }
@@ -296,11 +323,16 @@ function getLlibres () {
       //=======================================
 
 >>>>>>> rutas y api controller
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
       function getAutors () {
         return Autor::all();
      }
 
+<<<<<<< HEAD
 <<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
     /**
       * @OA\Get(
       *   path="/api/autor/{id}",
@@ -338,13 +370,19 @@ function getLlibres () {
       *   )
       * )
       */
+<<<<<<< HEAD
 =======
 >>>>>>> rutas y api controller
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
      function getAutor (Request $request, $id) {
         return Autor::find($id);
      }
 
+<<<<<<< HEAD
 <<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
      function getUltimAutor () {
 
       $autores=Autor::all();
@@ -426,9 +464,12 @@ function getLlibres () {
     *   )
     * )
     */
+<<<<<<< HEAD
 =======
 
 >>>>>>> rutas y api controller
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
  function updAteautor (Request $request, $id) {
     //cal posar en la peticio PUT el Header field:
     //Content-Type = application/x-www-form-urlencoded
@@ -437,7 +478,10 @@ function getLlibres () {
 
     return $autor;
   }
+<<<<<<< HEAD
 <<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
 /**
     * @OA\Post(
     *   path="/api/autor",
@@ -483,9 +527,12 @@ function getLlibres () {
     *   )
     * )
     */
+<<<<<<< HEAD
 =======
 
 >>>>>>> rutas y api controller
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
   function insertAutor(Request $request)
     {
         // Validate the request...
@@ -496,7 +543,10 @@ function getLlibres () {
         $autor->cognoms = $request->cognoms;
 
         $autor->save();
+<<<<<<< HEAD
 <<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
         
         return $autor;
     }
@@ -542,16 +592,22 @@ function getLlibres () {
       *   )
       * )
       */
+<<<<<<< HEAD
 =======
     }
 
 >>>>>>> rutas y api controller
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
     function deleteAutor (Request $request, $id) {
         $autor = Autor::find($id);
 
         $autor->delete();
     
+<<<<<<< HEAD
 <<<<<<< 0548cca8d40fa8fb7e02c0825ceae6a937b099fd
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
         return $autor;
       }
 
@@ -607,10 +663,13 @@ function getLlibres () {
 
 
     
+<<<<<<< HEAD
 =======
         //return $llibre;
       }
 
 
 >>>>>>> rutas y api controller
+=======
+>>>>>>> cdb7e7170f7e3c4e761d2a30f3fa5218a263d53f
 }
