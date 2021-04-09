@@ -17,3 +17,19 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Autor
+
+Route::get('/api/Autors', [ApiController::class, 'getAutors']);
+Route::get('/api/autor/{id}', [ApiController::class, 'getAutor']);
+Route::put('/api/autor/{id}', [ApiController::class, 'updAteautor']);
+Route::post('/api/autor', [ApiController::class, 'insertAutor']);
+Route::delete('/api/autor/{id}', [ApiController::class, 'deleteAutor']);
+
+//Llibre
+
+Route::get('/api/llibres', [ApiController::class, 'getLlibres']);
+Route::get('/api/llibre/{id}', [ApiController::class, 'getLlibre']);
+Route::put('/api/llibre/{id}', [ApiController::class, 'updateLlibre']);
+Route::post('/api/llibre', [ApiController::class, 'insertLlibres']);
+Route::delete('/api/llibre/{id}', [ApiController::class, 'deleteLlibres']);
