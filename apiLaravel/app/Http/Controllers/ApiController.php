@@ -17,6 +17,7 @@ class ApiController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+
     function getUsuarios () {
       return Usuario::all();
    }
@@ -25,6 +26,4 @@ class ApiController extends BaseController
       return Usuario::find($id);
    }
 
-
-    
 }
