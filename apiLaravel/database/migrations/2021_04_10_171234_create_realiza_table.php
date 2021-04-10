@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRealizasTable extends Migration
+class CreateRealizaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateRealizasTable extends Migration
      */
     public function up()
     {
-        Schema::create('realizas', function (Blueprint $table) {
+        Schema::create('realiza', function (Blueprint $table) {
             $table->id();
-
-            //$table->unsignedBigInteger('grupo_id');
-            //$table->foreign('grupo_id')->references('id')->on('grupos');
 
             $table->unsignedBigInteger('practica_id')->nullable();
             $table->foreign('practica_id')->references('id')->on('practicas');
@@ -26,7 +23,7 @@ class CreateRealizasTable extends Migration
             $table->foreign('alumno_id')->references('id')->on('alumnos');
 
             $table->unsignedBigInteger('profesor_id')->nullable();
-            $table->foreign('profesor_id')->references('id')->on('profesors');
+            $table->foreign('profesor_id')->references('id')->on('profesores');
 
             $table->integer('nota')->nullable();
             $table->string('comentario_alumno')->nullable();
@@ -45,6 +42,6 @@ class CreateRealizasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('realizas');
+        Schema::dropIfExists('realiza');
     }
 }

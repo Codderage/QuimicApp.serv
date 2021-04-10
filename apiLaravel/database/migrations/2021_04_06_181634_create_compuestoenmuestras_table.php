@@ -13,11 +13,11 @@ class CreateCompuestoenmuestrasTable extends Migration
      */
     public function up()
     {
-        Schema::create('compuestoenmuestras', function (Blueprint $table) {
+        Schema::create('compuesto_en_muestras', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('compuesto_id');
-            $table->foreign('compuesto_id')->references('id')->on('compuestoquimicos');
+            $table->foreign('compuesto_id')->references('id')->on('compuestos_quimicos');
 
             $table->unsignedBigInteger('muestra_id');
             $table->foreign('muestra_id')->references('id')->on('muestras');
@@ -40,6 +40,6 @@ class CreateCompuestoenmuestrasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('compuestoenmuestras');
+        Schema::dropIfExists('compuesto_en_muestras');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMuestrasTable extends Migration
+class CreateProfesoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateMuestrasTable extends Migration
      */
     public function up()
     {
-        Schema::create('muestras', function (Blueprint $table) {
+        Schema::create('profesores', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->nullable();
-            $table->string('comentario')->nullable();
-
-            $table->timestamps();
+                //$table->rememberToken();
+    
+                $table->unsignedBigInteger('usuario_id');
+                $table->foreign('usuario_id')->references('id')->on('usuarios');
+    
+                $table->string('roles');
         });
     }
 
@@ -29,6 +31,6 @@ class CreateMuestrasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('muestras');
+        Schema::dropIfExists('profesores');
     }
 }

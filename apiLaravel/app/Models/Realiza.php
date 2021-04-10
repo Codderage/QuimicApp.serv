@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Realiza extends Model
 {
+    /**
+    * The table associated with the model.
+    *
+    * @var string
+    */
+    protected $table = 'realiza';
     use HasFactory;
 }
