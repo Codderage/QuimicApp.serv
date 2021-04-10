@@ -19,16 +19,6 @@ class CreateAlumnosTable extends Migration
             $table->unsignedBigInteger('usuario_id');
             $table->foreign('usuario_id')->references('id')->on('usuarios');
 
-            //$table->string('nombre');
-            //$table->string('apellidos');
-            //$table->string('email')->nullable();
-
-            //$table->string('usuario');
-            //$table->string('password');
-            //$table->string('token');
-            //$table->string('roles');
-            //$table->rememberToken();
-            //$table->timestamps();
         });
     }
 
