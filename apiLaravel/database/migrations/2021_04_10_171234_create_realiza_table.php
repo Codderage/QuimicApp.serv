@@ -16,9 +16,6 @@ class CreateRealizaTable extends Migration
         Schema::create('realiza', function (Blueprint $table) {
             $table->id();
 
-            //$table->unsignedBigInteger('grupo_id');
-            //$table->foreign('grupo_id')->references('id')->on('grupos');
-
             $table->unsignedBigInteger('practica_id')->nullable();
             $table->foreign('practica_id')->references('id')->on('practicas');
 
