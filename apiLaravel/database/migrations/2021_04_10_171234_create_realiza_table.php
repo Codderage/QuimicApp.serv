@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRealizasTable extends Migration
+class CreateRealizaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -26,7 +26,7 @@ class CreateRealizasTable extends Migration
             $table->foreign('alumno_id')->references('id')->on('alumnos');
 
             $table->unsignedBigInteger('profesor_id')->nullable();
-            $table->foreign('profesor_id')->references('id')->on('profesors');
+            $table->foreign('profesor_id')->references('id')->on('profesores');
 
             $table->integer('nota')->nullable();
             $table->string('comentario_alumno')->nullable();

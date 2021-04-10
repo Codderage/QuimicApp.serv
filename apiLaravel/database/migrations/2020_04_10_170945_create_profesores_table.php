@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProfesorTable extends Migration
+class CreateProfesoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,12 +15,12 @@ class CreateProfesorTable extends Migration
     {
         Schema::create('profesores', function (Blueprint $table) {
             $table->id();
-            //$table->rememberToken();
-
-            $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
-
-            $table->string('roles');
+                //$table->rememberToken();
+    
+                $table->unsignedBigInteger('usuario_id');
+                $table->foreign('usuario_id')->references('id')->on('usuarios');
+    
+                $table->string('roles');
         });
     }
 

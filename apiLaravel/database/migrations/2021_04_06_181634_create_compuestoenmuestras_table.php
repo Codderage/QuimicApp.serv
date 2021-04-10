@@ -17,7 +17,7 @@ class CreateCompuestoenmuestrasTable extends Migration
             $table->id();
 
             $table->unsignedBigInteger('compuesto_id');
-            $table->foreign('compuesto_id')->references('id')->on('compuestoquimicos');
+            $table->foreign('compuesto_id')->references('id')->on('compuestos_quimicos');
 
             $table->unsignedBigInteger('muestra_id');
             $table->foreign('muestra_id')->references('id')->on('muestras');
