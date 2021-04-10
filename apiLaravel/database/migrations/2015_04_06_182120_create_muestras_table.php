@@ -15,6 +15,9 @@ class CreateMuestrasTable extends Migration
     {
         Schema::create('muestras', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre')->nullable();
+            $table->string('comentario')->nullable();
+
             $table->timestamps();
         });
     }

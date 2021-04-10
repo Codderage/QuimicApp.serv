@@ -13,7 +13,7 @@ class CreateRealizasTable extends Migration
      */
     public function up()
     {
-        Schema::create('realizas', function (Blueprint $table) {
+        Schema::create('realiza', function (Blueprint $table) {
             $table->id();
 
             //$table->unsignedBigInteger('grupo_id');
@@ -45,6 +45,6 @@ class CreateRealizasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('realizas');
+        Schema::dropIfExists('realiza');
     }
 }

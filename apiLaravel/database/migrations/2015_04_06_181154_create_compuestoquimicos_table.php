@@ -13,7 +13,7 @@ class CreateCompuestoquimicosTable extends Migration
      */
     public function up()
     {
-        Schema::create('compuestoquimicos', function (Blueprint $table) {
+        Schema::create('compuestos_quimicos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->string('formula')->nullable();
@@ -31,6 +31,6 @@ class CreateCompuestoquimicosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('compuestoquimicos');
+        Schema::dropIfExists('compuestos_quimicos');
     }
 }
