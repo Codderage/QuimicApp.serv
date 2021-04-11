@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Usuario extends Model
 {
     use HasFactory;
+
+
+    public function alumnos()
+    {
+        return $this->hasMany('alumnos');
+    }
+
+    public function profesores()
+    {
+        return $this->hasMany('profesores');
+    }
 }
