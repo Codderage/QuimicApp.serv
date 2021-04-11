@@ -15,9 +15,17 @@ class CreateMuestrasTable extends Migration
     {
         Schema::create('muestras', function (Blueprint $table) {
             $table->id();
+            
+            $table->unsignedBigInteger('id_compuesto_muestra');
+            $table->foreign('id_compuesto_muestra')
+                ->references('id')->on('compuestos_en_muestras');
+
+            $table->unsignedBigInteger('id_condiciones');
+            $table->foreign('id_condiciones')
+                ->references('id')->on('condiciones');
+
             $table->string('nombre')->nullable();
             $table->string('comentario')->nullable();
-
             $table->timestamps();
         });
     }

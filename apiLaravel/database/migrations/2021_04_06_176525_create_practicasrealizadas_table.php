@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRealizaTable extends Migration
+class CreatePracticasrealizadasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,22 @@ class CreateRealizaTable extends Migration
      */
     public function up()
     {
-        Schema::create('realiza', function (Blueprint $table) {
+        Schema::create('practicas_realizadas', function (Blueprint $table) {
             $table->id();
+            
+            $table->unsignedBigInteger('id_practica')->nullable();
+            $table->foreign('id_practica')
+                ->references('id')->on('practicas');
 
-            $table->unsignedBigInteger('practica_id')->nullable();
-            $table->foreign('practica_id')->references('id')->on('practicas');
+            $table->unsignedBigInteger('id_alumno')->nullable();
+            $table->foreign('id_alumno')
+                ->references('id')->on('alumnos');
 
-            $table->unsignedBigInteger('alumno_id')->nullable();
-            $table->foreign('alumno_id')->references('id')->on('alumnos');
-
-            $table->unsignedBigInteger('profesor_id')->nullable();
-            $table->foreign('profesor_id')->references('id')->on('profesores');
-
+            $table->string('respuesta_alumno')->nullable();
             $table->integer('nota')->nullable();
             $table->string('comentario_alumno')->nullable();
             $table->string('comentario_profesor')->nullable();
             $table->string('fichero')->nullable();
-            $table->string('respuesta_alumno')->nullable();
-
             $table->timestamps();
         });
     }
@@ -42,6 +40,6 @@ class CreateRealizaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('realiza');
+        Schema::dropIfExists('practicas_realizadas');
     }
 }

@@ -14,13 +14,13 @@ class CreateProfesoresTable extends Migration
     public function up()
     {
         Schema::create('profesores', function (Blueprint $table) {
-            
             $table->id();
-            $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
-            //$table->rememberToken();
-
-            $table->string('roles');
+            $table->string('nombre');
+            $table->string('apellidos');
+            $table->string('email');
+            $table->unsignedBigInteger('id_usuario');
+            $table->foreign('id_usuario')
+                ->references('id')->on('usuarios');
         });
     }
 
