@@ -20,8 +20,8 @@ class CreateCondicionesTable extends Migration
             $table->integer('tamano_particula');
             $table->integer('temperatura');
             $table->integer('velocidad_flujo');
-            $table->string('Eluyente');
-            $table->integer('DetectorUV');
+            $table->string('eluyente');
+            $table->integer('detector_uv');
 
             $table->timestamps();
         });

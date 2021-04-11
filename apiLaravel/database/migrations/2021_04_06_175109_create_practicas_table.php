@@ -15,15 +15,14 @@ class CreatePracticasTable extends Migration
     {
         Schema::create('practicas', function (Blueprint $table) {
             $table->id();
-            #$table->timestamps();
+
+            $table->unsignedBigInteger('id_muestra');
+            $table->foreign('id_muestra')
+                ->references('id')->on('muestras');
+
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
-            $table->string('respuesta');
             $table->string('enunciado')->nullable();
-            
-            $table->unsignedBigInteger('muestra_id');
-            $table->foreign('muestra_id')->references('id')->on('muestras');
-            
         });
     }
 

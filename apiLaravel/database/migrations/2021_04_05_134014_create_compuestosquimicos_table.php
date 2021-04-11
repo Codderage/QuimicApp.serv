@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateCompuestosQuimicosTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('compuestos_quimicos', function (Blueprint $table) {
+            $table->id();
+            
+            $table->unsignedBigInteger('id_componente');
+            $table->foreign('id_componente')
+                ->references('id')->on('componentes_quimicos');
+
+            $table->string('cantidad');
+            $table->string('nombre_compuesto');
+            $table->timestamps();
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('compuestos_quimicos');
+    }
+}
