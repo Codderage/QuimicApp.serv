@@ -18,9 +18,7 @@ class CreateProfesoresTable extends Migration
             $table->string('nombre');
             $table->string('apellidos');
             $table->string('email');
-            $table->unsignedBigInteger('id_usuario');
-            $table->foreign('id_usuario')
-                ->references('id')->on('usuarios');
+            $table->boolean('es_admin');
         });
     }
 

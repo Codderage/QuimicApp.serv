@@ -20,15 +20,17 @@ class CreatePracticasrealizadasTable extends Migration
             $table->foreign('id_practica')
                 ->references('id')->on('practicas');
 
-            $table->unsignedBigInteger('id_alumno')->nullable();
-            $table->foreign('id_alumno')
-                ->references('id')->on('alumnos');
+            $table->unsignedBigInteger('id_grupo')->nullable();
+            $table->foreign('id_grupo')
+                ->references('id')->on('grupos');
 
             $table->string('respuesta_alumno')->nullable();
             $table->integer('nota')->nullable();
             $table->string('comentario_alumno')->nullable();
             $table->string('comentario_profesor')->nullable();
             $table->string('fichero')->nullable();
+            $table->boolean('puede_proceder')->nullable();
+
             $table->timestamps();
         });
     }
