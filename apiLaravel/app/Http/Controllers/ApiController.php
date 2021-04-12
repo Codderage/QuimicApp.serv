@@ -22,6 +22,7 @@ class ApiController extends BaseController
       return Usuario::all();
    }
 
+   //eeeeee
    function getUsuario (Request $request, $id) {
       return Usuario::find($id);
    }
