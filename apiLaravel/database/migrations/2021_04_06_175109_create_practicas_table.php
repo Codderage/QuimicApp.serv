@@ -16,6 +16,10 @@ class CreatePracticasTable extends Migration
         Schema::create('practicas', function (Blueprint $table) {
             $table->id();
 
+            $table->unsignedBigInteger('id_profesor');
+            $table->foreign('id_profesor')
+                ->references('id')->on('profesores');
+
             $table->unsignedBigInteger('id_muestra');
             $table->foreign('id_muestra')
                 ->references('id')->on('muestras');

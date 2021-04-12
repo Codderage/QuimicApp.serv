@@ -15,13 +15,11 @@ class CreateCompuestosQuimicosTable extends Migration
     {
         Schema::create('compuestos_quimicos', function (Blueprint $table) {
             $table->id();
-            
-            $table->unsignedBigInteger('id_componente');
-            $table->foreign('id_componente')
-                ->references('id')->on('componentes_quimicos');
-
-            $table->string('cantidad');
-            $table->string('nombre_compuesto');
+            $table->string('nombre');
+            $table->string('formula')->nullable();
+            $table->string('descripcion')->nullable();
+            $table->string('tipo')->nullable();
+            $table->string('estructura')->nullable();
             $table->timestamps();
         });
     }

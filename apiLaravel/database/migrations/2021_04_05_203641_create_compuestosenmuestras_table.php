@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class CreateCompuestosEnmuestrasTable extends Migration
 {
@@ -15,12 +16,20 @@ class CreateCompuestosEnmuestrasTable extends Migration
     {
         Schema::create('compuestos_en_muestras', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
+            $table->string('nombre')->nullable();
 
             $table->unsignedBigInteger('id_compuesto');
             $table->foreign('id_compuesto')
                 ->references('id')->on('compuestos_quimicos');
-                
+
+            $table->unsignedBigInteger('id_condiciones');
+            $table->foreign('id_condiciones')
+                ->references('id')->on('condiciones');
+
+            $table->unsignedBigInteger('id_muestra')->nullable();
+            $table->foreign('id_muestra')
+                ->references('id')->on('muestras');
+
             $table->string('cantidad');
             $table->integer('minutos');
             $table->integer('altura');

@@ -13,5 +13,6 @@ class Profesor extends Model
     * @var string
     */
     protected $table = 'profesores';
+    
     use HasFactory;
 }
