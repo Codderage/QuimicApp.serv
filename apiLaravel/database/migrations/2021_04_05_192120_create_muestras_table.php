@@ -19,6 +19,7 @@ class CreateMuestrasTable extends Migration
             $table->string('nombre')->nullable();
             $table->string('codigo')->nullable();
             $table->string('comentario')->nullable();
+            
             $table->timestamps();
         });
     }
