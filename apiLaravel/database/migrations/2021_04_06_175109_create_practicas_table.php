@@ -20,13 +20,16 @@ class CreatePracticasTable extends Migration
             $table->foreign('id_profesor')
                 ->references('id')->on('profesores');
 
-            $table->unsignedBigInteger('id_muestra');
-            $table->foreign('id_muestra')
-                ->references('id')->on('muestras');
+            $table->unsignedBigInteger('id_compuesto_en_muestra');
+            $table->foreign('id_compuesto_en_muestra')
+                ->references('id')->on('compuestos_en_muestras');
 
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
+            
             $table->string('enunciado')->nullable();
+
+            $table->timestamps();
         });
     }
 

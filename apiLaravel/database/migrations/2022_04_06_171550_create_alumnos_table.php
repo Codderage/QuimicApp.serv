@@ -22,6 +22,8 @@ class CreateAlumnosTable extends Migration
             $table->string('nombre');
             $table->string('apellidos');
             $table->string('email')->nullable();
+            
+            $table->timestamps();
         });
     }
 

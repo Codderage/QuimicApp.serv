@@ -10,16 +10,16 @@ class Usuario extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id_profesor','id_alumno','username','password','token'
-        ];
+        'id_profesor', 'id_alumno', 'username', 'password', 'token'
+    ];
 
-    public function alumnos()
-    {
-        return $this->hasMany('alumnos');
-    }
+    // public function alumnos()
+    // {
+    //     return $this->hasMany('alumnos');
+    // }
 
-    public function profesores()
-    {
-        return $this->hasMany('profesores');
-    }
+    // public function profesores()
+    // {
+    //     return $this->hasMany('profesores');
+    // }
 }

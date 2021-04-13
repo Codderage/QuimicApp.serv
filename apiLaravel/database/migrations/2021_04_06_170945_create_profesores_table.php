@@ -17,8 +17,10 @@ class CreateProfesoresTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('apellidos');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->boolean('es_admin');
+
+            $table->timestamps();
         });
     }
 

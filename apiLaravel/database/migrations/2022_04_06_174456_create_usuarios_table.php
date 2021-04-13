@@ -23,12 +23,13 @@ class CreateUsuariosTable extends Migration
 
             $table->unsignedBigInteger('id_alumno')->nullable();
             $table->foreign('id_alumno')
-                ->references('id')->on('profesores')
+                ->references('id')->on('alumnos')
                 ->onDelete('cascade');
 
             $table->string('username');
             $table->string('password');
             $table->string('token')->nullable();
+
             $table->timestamps();
         });
     }

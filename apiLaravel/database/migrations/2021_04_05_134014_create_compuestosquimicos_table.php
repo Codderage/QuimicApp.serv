@@ -20,6 +20,7 @@ class CreateCompuestosQuimicosTable extends Migration
             $table->string('descripcion')->nullable();
             $table->string('tipo')->nullable();
             $table->string('estructura')->nullable();
+            
             $table->timestamps();
         });
     }

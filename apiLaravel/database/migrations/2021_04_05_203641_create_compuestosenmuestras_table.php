@@ -33,6 +33,7 @@ class CreateCompuestosEnmuestrasTable extends Migration
             $table->string('cantidad');
             $table->integer('minutos');
             $table->integer('altura');
+            
             $table->timestamps();
         });
     }
