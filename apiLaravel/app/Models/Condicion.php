@@ -15,4 +15,9 @@ class Condicion extends Model
     protected $table = 'condiciones';
     
     use HasFactory;
+
+    protected $fillable = [
+        'longitud_columna','diametro_interior_columna','tamano_particula','temperatura','velocidad_flujo',
+        'eluyente','detector_uv'
+        ];
 }

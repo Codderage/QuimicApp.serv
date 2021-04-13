@@ -15,4 +15,8 @@ class CompuestoQuimico extends Model
     protected $table = 'compuestos_quimicos';
 
     use HasFactory;
+
+    protected $fillable = [
+        'nombre','formula','descripcion','tipo','estructura'
+        ];
 }

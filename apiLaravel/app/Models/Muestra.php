@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Muestra extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'nombre','codigo','comentario'
+        ];
 }
