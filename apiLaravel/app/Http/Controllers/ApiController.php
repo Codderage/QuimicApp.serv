@@ -212,7 +212,7 @@ class ApiController extends BaseController
    {
       $practica = new Practica;
       $practica->id_profesor = $request->id_profesor;
-      $practica->id_muestra = $request->id_muestra;
+      $practica->id_compuesto_en_muestra = $request->id_compuesto_en_muestra;
       $practica->fecha_inicio = $request->fecha_inicio;
       $practica->fecha_fin = $request->fecha_fin;
       $practica->enunciado = $request->enunciado;
@@ -252,11 +252,14 @@ class ApiController extends BaseController
    function insertPracticaRealizada(Request $request)
    {
       $practicaRealizada = new PracticaRealizada;
-      $practicaRealizada->id_profesor = $request->id_profesor;
-      $practicaRealizada->id_muestra = $request->id_muestra;
-      $practicaRealizada->fecha_inicio = $request->fecha_inicio;
-      $practicaRealizada->fecha_fin = $request->fecha_fin;
-      $practicaRealizada->enunciado = $request->enunciado;
+      $practicaRealizada->id_practica = $request->id_practica;
+      $practicaRealizada->id_grupo = $request->id_grupo;
+      $practicaRealizada->respuesta_alumno = $request->respuesta_alumno;
+      $practicaRealizada->nota = $request->nota;
+      $practicaRealizada->comentario_alumno = $request->comentario_alumno;
+      $practicaRealizada->comentario_profesor = $request->comentario_profesor;
+      $practicaRealizada->fichero = $request->fichero;
+      $practicaRealizada->puede_proceder = $request->puede_proceder;
 
       $practicaRealizada->save();
       return $practicaRealizada;
@@ -379,7 +382,7 @@ class ApiController extends BaseController
    {
       $compuestoQuimico = new CompuestoQuimico;
       $compuestoQuimico->nombre = $request->nombre;
-      $compuestoQuimico->formula = $request->dormula;
+      $compuestoQuimico->formula = $request->formula;
       $compuestoQuimico->descripcion = $request->descripcion;
       $compuestoQuimico->tipo = $request->tipo;
       $compuestoQuimico->estructura = $request->estructura;
@@ -400,7 +403,7 @@ class ApiController extends BaseController
 
 
 
-   // COMPUESTO EN QUíMICO
+   // COMPUESTO EN MUESTRA
    function getCompuestosMuestras()
    {
       return CompuestoEnMuestra::all();
@@ -423,9 +426,9 @@ class ApiController extends BaseController
    {
       $compuestoMuestra = new CompuestoEnMuestra;
       $compuestoMuestra->nombre = $request->nombre;
-      $compuestoMuestra->compuesto_id = $request->compuesto_id;
-      $compuestoMuestra->condiciones_id = $request->condiciones_id;
-      $compuestoMuestra->muestra_id = $request->muestra_id;
+      $compuestoMuestra->id_compuesto = $request->id_compuesto;
+      $compuestoMuestra->id_condiciones = $request->id_condiciones;
+      $compuestoMuestra->id_muestra = $request->id_muestra;
       $compuestoMuestra->cantidad = $request->cantidad;
       $compuestoMuestra->minutos = $request->minutos;
       $compuestoMuestra->altura = $request->altura;
