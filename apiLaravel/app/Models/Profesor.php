@@ -8,15 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Profesor extends Model
 {
     /**
-    * The table associated with the model.
-    *
-    * @var string
-    */
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'profesores';
-    
+
     use HasFactory;
 
     protected $fillable = [
-        'nombre','apellidos','email','es_admin'
-        ];
+        'nombre', 'apellidos', 'email', 'es_admin'
+    ];
 }

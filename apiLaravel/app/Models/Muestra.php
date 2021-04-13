@@ -10,6 +10,6 @@ class Muestra extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nombre','codigo','comentario'
-        ];
+        'nombre', 'codigo', 'comentario'
+    ];
 }

@@ -13,11 +13,10 @@ class PracticaRealizada extends Model
      * @var string
      */
     protected $table = 'practicas_realizadas';
-    
+
     use HasFactory;
     protected $fillable = [
-        'id_practica','id_grupo','respuesta_alumno','nota','comentario_alumno',
-        'comentario_profesor','fichero','puede_proceder'
-        ];
-    
+        'id_practica', 'id_grupo', 'respuesta_alumno', 'nota', 'comentario_alumno',
+        'comentario_profesor', 'fichero', 'puede_proceder'
+    ];
 }
