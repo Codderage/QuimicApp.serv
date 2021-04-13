@@ -15,4 +15,9 @@ class CompuestoEnMuestra extends Model
     protected $table = 'compuestos_en_muestras';
     
     use HasFactory;
+    protected $fillable = [
+        'nombre','id_compuesto','id_condiciones','id_muestra','cantidad',
+        'minutos','altura'
+        ];
+    
 }
