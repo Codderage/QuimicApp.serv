@@ -33,8 +33,6 @@ columnas.forEach(function (columna) {
 
 class ScatterChart extends Component {
 
-    state = {
-    }
     render() {
         return (
             <div>
@@ -130,15 +128,6 @@ class ScatterChart extends Component {
     };
 
 }
-
-
-
-
-
-
-
-
-
 
 export default ScatterChart
 
