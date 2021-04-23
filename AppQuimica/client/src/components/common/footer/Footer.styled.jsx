@@ -9,6 +9,8 @@ export const SFooter = styled.footer`
         transition: 0.15s ease-in-out;
         color: #fefcfb;
         font-size: 28px;
+        transform: scale3d(1, 1, 1);
+
         :hover {
             transform: scale3d(1.2, 1.2, 1.2);
         }

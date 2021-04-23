@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\AuthController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +17,20 @@ use App\Http\Controllers\ApiController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/registro', [AuthController::class, 'registro']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/perfil-usuario', [AuthController::class, 'perfilUsuario']);
 });
 
 //USUARIO
@@ -102,7 +116,3 @@ Route::get('/compuesto_muestra/{id}', [ApiController::class, 'getCompuestoMuestr
 Route::put('/compuesto_muestra/{id}', [ApiController::class, 'updateCompuestoMuestra']);
 Route::post('/compuesto_muestra', [ApiController::class, 'insertCompuestoMuestra']);
 Route::delete('/compuesto_muestra/{id}', [ApiController::class, 'deleteCompuestoMuestra']);
-
-
-
-

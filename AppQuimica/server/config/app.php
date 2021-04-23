@@ -80,7 +80,15 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
+    //'locale' => 'ca',
+
+    /*
+    También se puede cambiar el idioma en tiempo de ejecución utilizando el método setLocale de App.
+    Este cambio no es permanente, en la siguiente ejecución se utilizará el valor de configuración por defecto: 
+
+    App::setLocale('es');
+    */
 
     /*
     |--------------------------------------------------------------------------
@@ -162,9 +170,12 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Laraveles\Spanish\SpanishServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -227,6 +238,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
 
     ],
 

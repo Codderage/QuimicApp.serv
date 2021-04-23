@@ -2,24 +2,47 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Usuario extends Model
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
+class Usuario extends Authenticatable implements JWTSubject
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'id_profesor', 'id_alumno', 'username', 'password', 'token'
+        'id_profesor',
+        'id_alumno',
+        'username',
+        'password',
+        'token',
     ];
 
-    // public function alumnos()
-    // {
-    //     return $this->hasMany('alumnos');
-    // }
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
 
-    // public function profesores()
-    // {
-    //     return $this->hasMany('profesores');
-    // }
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }

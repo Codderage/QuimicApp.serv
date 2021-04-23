@@ -8,9 +8,9 @@ const App = () => {
 
   return (
     <>
-      <GlobalFonts />
-      <Landing />
-      {/* <ScatterChart></ScatterChart> */}
+      {/* <GlobalFonts />
+      <Landing /> */}
+      <ScatterChart></ScatterChart>
     </>
   )
 }
