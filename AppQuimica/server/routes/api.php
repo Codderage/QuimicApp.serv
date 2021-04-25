@@ -24,14 +24,20 @@ use App\Http\Controllers\AuthController;
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
-
+    //api/auth/registro....
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/registro', [AuthController::class, 'registro']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/perfil-usuario', [AuthController::class, 'perfilUsuario']);
+    Route::post('/registroAlumno', [AuthController::class, 'registroAlumno']);
+    Route::post('/registroProfesor', [AuthController::class, 'registroProfesor']);
+    Route::delete('/eliminarUsuario/{id}', [AuthController::class, 'eliminarUsuario']);
+    Route::get('/usuario/{id}', [AuthController::class, 'leerUsuario']);
+    Route::put('/updateUsuario/{id}', [AuthController::class, 'updateUsuario']);
 });
+//Route::post('auth/registroAlumno', [AuthController::class, 'registroAlumno']);
 
 //USUARIO
 
