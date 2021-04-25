@@ -1,42 +1,142 @@
 import React, { useState } from "react";
 import {
-    LoginLogo,
-    EmailInput,
-    PasswordInput,
-    RememberInput,
-    SendButton,
-    Link,
-    Seccion,
+  LoginLogo,
+  EmailInput,
+  PasswordInput,
+  RememberInput,
+  SendButton,
+  Link,
+  Seccion,
+  Button,
 } from "./login.styled";
+import swal from "sweetalert";
+import axios from "axios";
+
+import carga from "../../../assets/img/load/ajax-loader.gif";
+
+import Cookies from "universal-cookie";
+
+import peticionGet from "../../servicios/peticiones";
 
 const Login = () => {
-    const [getState, setState] = useState();
+  const [getState, setState] = useState();
+  const [username, setUserName] = useState(0);
+  const [password, setPassword] = useState(0);
+  const cookies = new Cookies();
 
-    return (
-        <Seccion className="container d-flex flex-column justify-content-centre align-items-center">
-            <div>
-                <LoginLogo />
-            </div>
-            <form action="cms/logged.html">
-                <div className="form-group">
-                    <EmailInput className="form-control mb-3" />
-                </div>
-                <div className="form-group">
-                    <PasswordInput className="form-control mb-3" />
-                </div>
-                <div className="form-check mb-0">
-                    <RememberInput />
-                    <label className="form-check-label" htmlFor="loginRemember">
-                        Recuerdame
-                    </label>
-                </div>
-                <SendButton className="btn btn-lg my-4">Entrar</SendButton>
-                <div>
-                    <Link>He olvidado la contraseña</Link>
-                </div>
-            </form>
-        </Seccion>
-    );
+  const handleSubmit = async (e) => {
+    if (username.length <= 5 || password.length <= 5) {
+      swal({
+        title: "Error",
+        text: "El usuario o contraseña deben de ser mínimo 6 carácteres.",
+        icon: "error",
+        button: "Aceptar",
+        timer: "3000",
+      });
+    } else {
+      swal({
+        //title: "Comprobando ...",
+        icon: carga,
+        button: false,
+        showConfirmButton: false,
+        allowOutsideClick: false,
+      });
+      axios
+        //.get(
+        .post(
+          "http://localhost/Clase/ProyectoFinal/Quimica/quimica/AppQuimica/server/public/api/auth/login",
+          {
+            username: username,
+            password: password,
+          }
+        )
+        .then((response) => {
+          //console.log(response.data);
+          if (response.status >= 200 && response.status <= 205) {
+            swal({
+              title: "Logueado con exito",
+              text: "Bienvenido " + response.data.user.username,
+              icon: "success",
+              button: "Aceptar",
+              timer: "3000",
+            });
+            cookies.set("token", response.data.access_token, { path: "/" });
+            //console.log(cookies.get('token'));
+          }
+        })
+        .catch(function (error) {
+          if (error.response.status >= 400 && error.response.status <= 403) {
+            swal({
+              title: "Usuario no encontrado",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
+          } else if (error.response.status == 422) {
+            console.log(error.response.data);
+            swal({
+              title: "Error, algun campo vacío",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
+          } else {
+            swal({
+              title: "Error interno " + error.response.status,
+              text: "Error interno, vuelve a intentarlo en unos momentos.",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
+          }
+        });
+    }
+
+    // setAa((a) => {
+    //   peticionGet("usuarios");
+    // });
+    // console.log(aa, "aaaa");
+    //console.log(peticionGet("usuarios"));
+    //<peticionGet ruta="usuarios" />;
+  };
+  return (
+    <Seccion className="container d-flex flex-column justify-content-centre align-items-center">
+      <div>
+        <LoginLogo />
+      </div>
+      <Button className="btn btn-lg my-4" type="button" onClick={handleSubmit}>
+        Submit
+      </Button>
+      <form onSubmit={handleSubmit}>
+        {/*action="cms/logged.html"*/}
+        <div className="form-group">
+          <EmailInput
+            className="form-control mb-3"
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <PasswordInput
+            className="form-control mb-3"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div className="form-check mb-0">
+          <RememberInput />
+          <label className="form-check-label" htmlFor="loginRemember">
+            Recuerdame
+          </label>
+        </div>
+        <SendButton className="btn btn-lg my-4">Entrar</SendButton>
+        {/* <button className="btn btn-lg my-4" type="submit">
+          Submit
+        </button> */}
+        <div>
+          <Link>He olvidado la contraseña</Link>
+        </div>
+      </form>
+    </Seccion>
+  );
 };
 
 export default Login;
