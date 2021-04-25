@@ -104,9 +104,7 @@ const Login = () => {
       <div>
         <LoginLogo />
       </div>
-      <Button className="btn btn-lg my-4" type="button" onClick={handleSubmit}>
-        Submit
-      </Button>
+
       <form onSubmit={handleSubmit}>
         {/*action="cms/logged.html"*/}
         <div className="form-group">
@@ -127,12 +125,26 @@ const Login = () => {
             Recuerdame
           </label>
         </div>
-        <SendButton className="btn btn-lg my-4">Entrar</SendButton>
-        {/* <button className="btn btn-lg my-4" type="submit">
-          Submit
-        </button> */}
+        {/*<SendButton className="btn btn-lg my-4">Entrar</SendButton>*/}
+        <Button
+          className="btn btn-lg my-4"
+          type="button"
+          onClick={handleSubmit}
+        >
+          Entrar
+        </Button>
         <div>
-          <Link>He olvidado la contraseña</Link>
+          <Link
+            onClick={() => {
+              swal("Escribe tu correo electronico:", {
+                content: "input",
+              }).then((value) => {
+                swal(`Te hemos enviado un enlace a: ${value}`);
+              });
+            }}
+          >
+            He olvidado la contraseña
+          </Link>
         </div>
       </form>
     </Seccion>
