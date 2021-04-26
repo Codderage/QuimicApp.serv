@@ -11,7 +11,11 @@ import {
 } from "./login.styled";
 import swal from "sweetalert";
 import axios from "axios";
-import { BrowserRouter as Router, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  useHistory,
+} from "react-router-dom";
 
 import carga from "../../../assets/img/load/ajax-loader.gif";
 
@@ -24,6 +28,7 @@ const Login = () => {
   const [username, setUserName] = useState(0);
   const [password, setPassword] = useState(0);
   const cookies = new Cookies();
+  let history = useHistory();
 
   const handleSubmit = async (e) => {
     if (username.length <= 5 || password.length <= 5) {
@@ -45,7 +50,7 @@ const Login = () => {
       axios
         //.get(
         .post(
-          "http://localhost/Clase/ProyectoFinal/Quimica/quimica/AppQuimica/server/public/api/auth/login",
+          "http://localhost/M7_M14/projecte_M14/quimica/AppQuimica/server/public/api/auth/login",
           {
             username: username,
             password: password,
@@ -62,7 +67,8 @@ const Login = () => {
               timer: "3000",
             });
             cookies.set("token", response.data.access_token, { path: "/" });
-            <Redirect to="/" />;
+
+            history.push("/");
 
             //console.log(cookies.get('token'));
           }

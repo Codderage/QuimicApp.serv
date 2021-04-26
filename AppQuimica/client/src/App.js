@@ -24,7 +24,6 @@ const App = () => {
           <Route path="/" exact>
             <Home />
           </Route>
-          {/*<ScatterChart></ScatterChart> */}
         </Switch>
       </Router>
     </>
