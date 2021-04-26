@@ -11,6 +11,7 @@ import {
 } from "./login.styled";
 import swal from "sweetalert";
 import axios from "axios";
+import { BrowserRouter as Router, Redirect } from "react-router-dom";
 
 import carga from "../../../assets/img/load/ajax-loader.gif";
 
@@ -61,6 +62,8 @@ const Login = () => {
               timer: "3000",
             });
             cookies.set("token", response.data.access_token, { path: "/" });
+            <Redirect to="/" />;
+
             //console.log(cookies.get('token'));
           }
         })
