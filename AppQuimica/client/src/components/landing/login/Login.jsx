@@ -4,24 +4,17 @@ import {
   EmailInput,
   PasswordInput,
   RememberInput,
-  SendButton,
   Link,
   Seccion,
   Button,
 } from "./login.styled";
 import swal from "sweetalert";
 import axios from "axios";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  useHistory,
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import carga from "../../../assets/img/load/ajax-loader.gif";
 
 import Cookies from "universal-cookie";
-
-import peticionGet from "../../servicios/peticiones";
 
 const Login = () => {
   const [getState, setState] = useState();
