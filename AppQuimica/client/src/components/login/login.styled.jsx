@@ -26,9 +26,9 @@ export const EmailInput = styled.input`
   ${baseInputStyles}
 `;
 EmailInput.defaultProps = {
-  type: "email",
+  type: "text",
   id: "loginEmail",
-  placeholder: "Introduce tu email",
+  placeholder: "Introduce tu usuario",
 };
 
 export const PasswordInput = styled.input`

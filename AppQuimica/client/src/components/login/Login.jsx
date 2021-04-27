@@ -17,13 +17,16 @@ import carga from "../../assets/img/load/ajax-loader.gif";
 import Cookies from "universal-cookie";
 
 const Login = () => {
-  const [getState, setState] = useState();
+  // const [getState, setState] = useState();
   const [username, setUserName] = useState(0);
   const [password, setPassword] = useState(0);
   const cookies = new Cookies();
-  let history = useHistory();
+  const history = useHistory();
 
   const handleSubmit = async (e) => {
+
+    e.preventDefault();
+
     if (username.length <= 5 || password.length <= 5) {
       swal({
         title: "Error",
@@ -43,7 +46,7 @@ const Login = () => {
       axios
         //.get(
         .post(
-          "http://localhost/M7_M14/projecte_M14/quimica/AppQuimica/server/public/api/auth/login",
+          "login",
           {
             username: username,
             password: password,
@@ -59,9 +62,17 @@ const Login = () => {
               button: "Aceptar",
               timer: "3000",
             });
-            cookies.set("token", response.data.access_token, { path: "/" });
+            cookies.set("token", response.data.access_token, {
+              path: "/",
+              // httpOnly: true,
+            });
 
-            history.push("/");
+            if (cookies.get('token')) {
+              history.push("/");
+            }
+
+
+            // <Link to="/" />
 
             //console.log(cookies.get('token'));
           }
