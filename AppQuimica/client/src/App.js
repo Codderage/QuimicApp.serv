@@ -1,14 +1,11 @@
 import React from "react";
-import Landing from "./containers/landing/Landing";
+import Login from "./containers/login/Login";
 import GlobalFonts from "./assets/fonts/fonts";
-import ScatterChart from "./components/ScatterChart";
 import "./App.css";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  NavLink,
 } from "react-router-dom";
 import Home from "./containers/home/home";
 
@@ -19,7 +16,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route path="/login">
-            <Landing />
+            <Login />
           </Route>
           <Route path="/" exact>
             <Home />

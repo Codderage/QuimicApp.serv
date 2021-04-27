@@ -3,7 +3,7 @@ import Footer from "../../components/common/footer/Footer";
 import NavBar from "../../components/common/navBar/NavBar";
 import RegisterAlumno from "../../components/register/alumno/RegisterAlumno";
 
-const Landing = () => {
+const RegisterAlumnoPage = () => {
   const [getState, setState] = useState();
 
   return (
@@ -15,4 +15,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default RegisterAlumnoPage;

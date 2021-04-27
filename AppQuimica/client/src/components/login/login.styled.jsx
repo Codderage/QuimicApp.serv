@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import logo from "../../../assets/img/logo/logo.svg";
+import logo from "../../assets/img/logo/logo.svg";
 
 export const LoginLogo = styled.img`
   width: 380px;

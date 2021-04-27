@@ -12,7 +12,7 @@ import swal from "sweetalert";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
-import carga from "../../../assets/img/load/ajax-loader.gif";
+import carga from "../../assets/img/load/ajax-loader.gif";
 
 import Cookies from "universal-cookie";
 
@@ -124,12 +124,6 @@ const Login = () => {
           <RememberInput />
           <label className="form-check-label" htmlFor="loginRemember">
             Recuerdame
-          </label>
-        </div>
-        <div className="form-check mb-0">
-          <RememberInput />
-          <label className="form-check-label" htmlFor="esAdmin">
-            Permiso de administrador
           </label>
         </div>
         <SendButton className="btn btn-lg my-4" onClick={handleSubmit}>

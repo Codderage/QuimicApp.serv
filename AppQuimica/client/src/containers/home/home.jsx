@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Footer from "../../components/common/footer/Footer";
 import NavBar from "../../components/common/navBar/NavBar";
 
-const Landing = () => {
+const HomePage = () => {
   const [getState, setState] = useState();
 
   return (
@@ -13,4 +13,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default HomePage;
