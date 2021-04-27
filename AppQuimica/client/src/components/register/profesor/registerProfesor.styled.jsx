@@ -1,15 +1,4 @@
 import styled, { css } from "styled-components";
-import logo from "../../../assets/img/logo/logo.svg";
-
-export const LoginLogo = styled.img`
-  width: 380px;
-  height: auto;
-  margin: 0px auto 0px auto;
-`;
-LoginLogo.defaultProps = {
-  src: logo,
-  alt: "logo QuimicApp",
-};
 
 const baseInputStyles = css`
   border: 2px solid #1282a2 !important;
@@ -22,13 +11,28 @@ const baseInputStyles = css`
   }
 `;
 
+export const Title = styled.h1`
+  color: #034078;
+  font-family: "DM Serif Text";
+  font-weight: bold;
+  padding: 4rem 0 3rem 0;
+`;
+
+export const TextInput = styled.input`
+  ${baseInputStyles}
+`;
+TextInput.defaultProps = {
+  type: "text",
+  className: "textInput",
+};
+
 export const EmailInput = styled.input`
   ${baseInputStyles}
 `;
 EmailInput.defaultProps = {
   type: "email",
-  id: "loginEmail",
-  placeholder: "Introduce tu email",
+  id: "registerEmail",
+  placeholder: "Introduce el email",
 };
 
 export const PasswordInput = styled.input`
@@ -36,11 +40,28 @@ export const PasswordInput = styled.input`
 `;
 PasswordInput.defaultProps = {
   type: "password",
-  id: "loginPassword",
-  placeholder: "Contraseña",
 };
 
-export const RememberInput = styled.input`
+export const SendButton = styled.button`
+  background-color: #034078;
+  color: #fefcfb;
+  padding: 0.3rem 4rem;
+  border-radius: 0.15rem;
+  width: 100%;
+  font-size: 16px;
+  font-family: "Lexend", "Arial";
+  &:hover {
+    background-color: #1282a2;
+    color: #fefcfb;
+  }
+`;
+
+SendButton.defaultProps = {
+  type: "submit",
+  name: "submit",
+};
+
+export const AdminCheckbox = styled.input`
   ${baseInputStyles};
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -66,42 +87,10 @@ export const RememberInput = styled.input`
     background-color: #034078;
   }
 `;
-RememberInput.defaultProps = {
+AdminCheckbox.defaultProps = {
   type: "checkbox",
-  id: "loginRemember",
+  id: "esAdmin",
   className: "form-check-input",
-};
-
-export const SendButton = styled.button`
-  background-color: #034078;
-  color: #fefcfb;
-  padding: 0.3rem 4rem;
-  border-radius: 0.15rem;
-  width: 100%;
-  font-size: 16px;
-  font-family: "Lexend", "Arial";
-  &:hover {
-    background-color: #1282a2;
-    color: #fefcfb;
-  }
-`;
-
-SendButton.defaultProps = {
-  type: "submit",
-  name: "submit",
-};
-
-export const Link = styled.a`
-  color: #034078;
-  text-decoration: underline;
-  font-family: "Lexend";
-  font-size: 14px;
-  &:hover {
-    color: #1282a2;
-  }
-`;
-Link.defaultProps = {
-  href: "#",
 };
 
 export const Seccion = styled.section`

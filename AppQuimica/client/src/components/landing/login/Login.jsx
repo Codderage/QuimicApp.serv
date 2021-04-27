@@ -4,9 +4,9 @@ import {
   EmailInput,
   PasswordInput,
   RememberInput,
+  SendButton,
   Link,
   Seccion,
-  Button,
 } from "./login.styled";
 import swal from "sweetalert";
 import axios from "axios";
@@ -108,7 +108,6 @@ const Login = () => {
       </div>
 
       <form onSubmit={handleSubmit}>
-        {/*action="cms/logged.html"*/}
         <div className="form-group">
           <EmailInput
             className="form-control mb-3"
@@ -127,21 +126,22 @@ const Login = () => {
             Recuerdame
           </label>
         </div>
-        {/*<SendButton className="btn btn-lg my-4">Entrar</SendButton>*/}
-        <Button
-          className="btn btn-lg my-4"
-          type="button"
-          onClick={handleSubmit}
-        >
+        <div className="form-check mb-0">
+          <RememberInput />
+          <label className="form-check-label" htmlFor="esAdmin">
+            Permiso de administrador
+          </label>
+        </div>
+        <SendButton className="btn btn-lg my-4" onClick={handleSubmit}>
           Entrar
-        </Button>
+        </SendButton>
         <div>
           <Link
             onClick={() => {
               swal("Escribe tu correo electronico:", {
                 content: "input",
               }).then((value) => {
-                swal(`Te hemos enviado un enlace a: ${value}`);
+                swal(`Te hemos enviado un coreo a '${value}'`);
               });
             }}
           >

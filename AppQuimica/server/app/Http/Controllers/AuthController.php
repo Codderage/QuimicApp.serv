@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Usuario;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
-
 use App\Models\Alumno;
 use App\Models\Profesor;
+use App\Models\Usuario;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -19,8 +18,8 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'registro', 'registroAlumno', 'registroProfesor', 
-        'eliminarUsuario', 'leerUsuario', 'updateUsuario']]);
+        $this->middleware('auth:api', ['except' => ['login', 'registro', 'registroAlumno', 'registroProfesor',
+            'eliminarUsuario', 'leerUsuario', 'updateUsuario']]);
     }
 
     /**
@@ -72,10 +71,9 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Registrado con éxito',
-            'user' => $user
+            'user' => $user,
         ], 201);
     }
-
 
     /**
      * Log the user out (Invalidate the token).
@@ -122,7 +120,7 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()
+            'user' => auth()->user(),
         ]);
     }
 
@@ -161,7 +159,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Registrado con éxito',
-            'user' => $user
+            'user' => $user,
         ], 201);
     }
 
@@ -172,7 +170,7 @@ class AuthController extends Controller
      */
     public function registroProfesor(Request $request)
     {
-        
+
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|between:2,100',
             'password' => 'required|string|confirmed|min:6',
@@ -201,7 +199,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Registrado con éxito',
-            'user' => $user
+            'user' => $user,
         ], 201);
     }
 
@@ -209,10 +207,10 @@ class AuthController extends Controller
     {
         $usuario = Usuario::find($id);
 
-        if($usuario->id_profesor){
+        if ($usuario->id_profesor) {
             $profesor = Profesor::find($usuario->id_profesor);
             $profesor->delete();
-        }else{
+        } else {
             $alumno = Alumno::find($usuario->id_alumno);
             $alumno->delete();
         }
@@ -227,11 +225,11 @@ class AuthController extends Controller
         unset($usuario['password']);
         unset($usuario['token']);
 
-        if($usuario->id_profesor){
+        if ($usuario->id_profesor) {
             $profesor = Profesor::find($usuario->id_profesor);
             unset($profesor['es_admin']);
             return [$usuario, $profesor];
-        }else{
+        } else {
             $alumno = Alumno::find($usuario->id_alumno);
             return [$usuario, $alumno];
         }
@@ -245,35 +243,34 @@ class AuthController extends Controller
     public function updateUsuario(Request $request, $id)
     {
         $usuario = Usuario::find($request->id);
-        
 
-        if($request->password){
+        if ($request->password) {
             //$password = bcrypt($request->password);
             //$usuario->update("password"->$password);
             $request->password = bcrypt($request->password);
             $usuario->update(array_merge($request->all(),
-            ['password' => bcrypt($request->password)]));
-        }else{
+                ['password' => bcrypt($request->password)]));
+        } else {
             $usuario->update($request->all());
         }
 
         unset($usuario['password']);
         unset($usuario['token']);
 
-        if($usuario->id_alumno){
+        if ($usuario->id_alumno) {
             $alumno = Alumno::find($usuario->id_alumno);
             $alumno->update($request->all());
             $respuesta = response()->json([
                 'message' => 'Actualizado con éxito',
-                'user' => [$usuario, $alumno]
+                'user' => [$usuario, $alumno],
             ], 200);
-        }else{
+        } else {
             $profesor = Profesor::find($usuario->id_profesor);
             $profesor->update($request->all());
             unset($profesor['es_admin']);
             $respuesta = response()->json([
                 'message' => 'Actualizado con éxito',
-                'user' => [$usuario, $profesor]
+                'user' => [$usuario, $profesor],
             ], 200);
         }
 
