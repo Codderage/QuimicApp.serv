@@ -64,23 +64,13 @@ const Login = (props) => {
               timer: "3000",
             });
 
-            // console.log(response.data);
-
             localStorage.setItem('token', response.data.access_token);
 
             localStorage.setItem('user', JSON.stringify(response.data.user));
 
             props.set(response.data.user);
 
-            // console.log(cookies.get('token'));
-
-            // axios.defaults.headers.common['Authorization'] = 'Bearer ' + cookies.get('token');
-
             history.push("/");
-
-            // <Link to="/" />
-
-            //console.log(cookies.get('token'));
           }
         })
         .catch(function (error) {
@@ -91,7 +81,7 @@ const Login = (props) => {
               button: "Aceptar",
               timer: "3000",
             });
-          } else if (error.response.status == 422) {
+          } else if (error.response.status === 422) {
             console.log(error.response.data);
             swal({
               title: "Error, algun campo vacío",

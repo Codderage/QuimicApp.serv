@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "../../components/common/footer/Footer";
 import NavBar from "../../components/common/navBar/NavBar";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const Heading = styled.h1`
     text-align: center;
@@ -9,8 +9,6 @@ const Heading = styled.h1`
   `;
 
 const HomePage = (props) => {
-
-  // console.log(props);
 
   const msg = props.user ? <Heading>Hello {props.user.username}</Heading> : <Heading>You're not logged in</Heading>;
 
