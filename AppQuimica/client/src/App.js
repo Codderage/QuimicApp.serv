@@ -9,19 +9,20 @@ import {
 } from "react-router-dom";
 import Home from "./containers/home/home";
 import axios from "axios";
+import Cookie from 'universal-cookie';
 
 const App = () => {
 
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const consulta = async () => {
-      const res = await axios.get('perfil-usuario');
+  // useEffect(() => {
+  //   const consulta = async () => {
+  //     const res = await axios.get('perfil-usuario');
 
-      setUser(res.data);
-    }
-    consulta();
-  }, []);
+  //     setUser(res.data);
+  //   }
+  //   consulta();
+  // }, []);
 
   return (
     <>
@@ -29,7 +30,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route path="/login">
-            <Login />
+            <Login setUser={user => setUser(user)} />
           </Route>
           <Route path="/" exact>
             <Home user={user} />

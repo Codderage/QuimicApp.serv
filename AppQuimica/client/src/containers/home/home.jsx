@@ -10,6 +10,8 @@ const Heading = styled.h1`
 
 const HomePage = (props) => {
 
+  console.log(props);
+
   const msg = props.user ? <Heading>Hello {props.user.username}</Heading> : <Heading>You're not logged in</Heading>;
 
   return (

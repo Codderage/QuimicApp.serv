@@ -16,12 +16,14 @@ import carga from "../../assets/img/load/ajax-loader.gif";
 
 import Cookies from "universal-cookie";
 
-const Login = () => {
+const Login = (props) => {
   // const [getState, setState] = useState();
   const [username, setUserName] = useState(0);
   const [password, setPassword] = useState(0);
   const cookies = new Cookies();
   const history = useHistory();
+
+  // console.log(props);
 
   const handleSubmit = async (e) => {
 
@@ -40,7 +42,6 @@ const Login = () => {
         //title: "Comprobando ...",
         icon: carga,
         button: false,
-        showConfirmButton: false,
         allowOutsideClick: false,
       });
       axios
@@ -62,15 +63,19 @@ const Login = () => {
               button: "Aceptar",
               timer: "3000",
             });
+
             cookies.set("token", response.data.access_token, {
               path: "/",
               // httpOnly: true,
             });
 
-            if (cookies.get('token')) {
-              history.push("/");
-            }
+            props.setUser(response.data.user);
 
+            // console.log(cookies.get('token'));
+
+            // axios.defaults.headers.common['Authorization'] = 'Bearer ' + cookies.get('token');
+
+            history.push("/");
 
             // <Link to="/" />
 
