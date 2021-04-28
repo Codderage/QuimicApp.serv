@@ -1,15 +1,42 @@
-import React from "react";
-import Landing from "./containers/landing/Landing";
+import React, { useEffect, useState } from "react";
+import Login from "./containers/login/Login";
 import GlobalFonts from "./assets/fonts/fonts";
-import ScatterChart from "./components/ScatterChart";
 import "./App.css";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import Home from "./containers/home/home";
+import axios from "axios";
+import Cookie from 'universal-cookie';
 
 const App = () => {
+
+  const [user, setUser] = useState(null);
+
+  // useEffect(() => {
+  //   const consulta = async () => {
+  //     const res = await axios.get('perfil-usuario');
+
+  //     setUser(res.data);
+  //   }
+  //   consulta();
+  // }, []);
+
   return (
     <>
       <GlobalFonts />
-      <Landing />
-      {/*<ScatterChart></ScatterChart> */}
+      <Router>
+        <Switch>
+          <Route path="/login">
+            <Login setUser={user => setUser(user)} />
+          </Route>
+          <Route path="/" exact>
+            <Home user={user} />
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 };

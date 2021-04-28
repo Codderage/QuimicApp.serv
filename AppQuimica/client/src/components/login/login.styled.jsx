@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import logo from "../../../assets/img/logo/logo.svg";
+import logo from "../../assets/img/logo/logo.svg";
 
 export const LoginLogo = styled.img`
   width: 380px;
@@ -14,7 +14,8 @@ LoginLogo.defaultProps = {
 const baseInputStyles = css`
   border: 2px solid #1282a2 !important;
   height: auto;
-  font-family: "Cutive Mono", monospace;
+  font-family: "Lexend", monospace;
+  font-size: 15px;
   &:focus {
     outline: none;
     box-shadow: inset 0 1px 1px #0340789a, 0 0 8px #1283a29f;
@@ -25,9 +26,9 @@ export const EmailInput = styled.input`
   ${baseInputStyles}
 `;
 EmailInput.defaultProps = {
-  type: "email",
+  type: "text",
   id: "loginEmail",
-  placeholder: "Introduce tu email",
+  placeholder: "Introduce tu usuario",
 };
 
 export const PasswordInput = styled.input`
@@ -35,7 +36,7 @@ export const PasswordInput = styled.input`
 `;
 PasswordInput.defaultProps = {
   type: "password",
-  id: "loginEmail",
+  id: "loginPassword",
   placeholder: "Contraseña",
 };
 
@@ -55,8 +56,10 @@ export const RememberInput = styled.input`
   border-radius: 0.25em;
   border-color: 2px solid #1282a2 !important;
   + label {
-    font-family: "Cutive Mono", monospace;
-    margin-left: 0.25rem;
+    font-size: 14px;
+    font-family: "Lexend";
+    vertical-align: top;
+    margin-top: 0.09rem;
   }
   &:checked {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
@@ -83,19 +86,6 @@ export const SendButton = styled.button`
   }
 `;
 
-export const Button = styled.button`
-  background-color: #034078;
-  color: #fefcfb;
-  padding: 0.3rem 4rem;
-  border-radius: 0.15rem;
-  width: 100%;
-  font-size: 16px;
-  font-family: "Lexend", "Arial";
-  &:hover {
-    background-color: #1282a2;
-    color: #fefcfb;
-  }
-`;
 SendButton.defaultProps = {
   type: "submit",
   name: "submit",
@@ -104,7 +94,8 @@ SendButton.defaultProps = {
 export const Link = styled.a`
   color: #034078;
   text-decoration: underline;
-  font-family: "Cutive Mono", monospace;
+  font-family: "Lexend";
+  font-size: 14px;
   &:hover {
     color: #1282a2;
   }

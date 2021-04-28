@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Footer from "../../components/common/footer/Footer";
 import NavBar from "../../components/common/navBar/NavBar";
-import Login from "../../components/landing/login/Login";
+import Login from "../../components/login/Login";
 
-const Landing = () => {
+const LoginPage = () => {
   const [getState, setState] = useState();
 
   return (
@@ -15,4 +15,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default LoginPage;

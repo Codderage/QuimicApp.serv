@@ -4,6 +4,13 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle.js';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+
+axios.defaults.baseURL = 'http://localhost/M7_M14/projecte_M14/quimica/AppQuimica/server/public/api/auth/';
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + cookies.get('token');
 
 ReactDOM.render(
   <React.StrictMode>

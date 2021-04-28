@@ -7,24 +7,28 @@ import {
   SendButton,
   Link,
   Seccion,
-  Button,
 } from "./login.styled";
 import swal from "sweetalert";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-import carga from "../../../assets/img/load/ajax-loader.gif";
+import carga from "../../assets/img/load/ajax-loader.gif";
 
 import Cookies from "universal-cookie";
 
-import peticionGet from "../../servicios/peticiones";
-
-const Login = () => {
-  const [getState, setState] = useState();
+const Login = (props) => {
+  // const [getState, setState] = useState();
   const [username, setUserName] = useState(0);
   const [password, setPassword] = useState(0);
   const cookies = new Cookies();
+  const history = useHistory();
+
+  // console.log(props);
 
   const handleSubmit = async (e) => {
+
+    e.preventDefault();
+
     if (username.length <= 5 || password.length <= 5) {
       swal({
         title: "Error",
@@ -38,13 +42,12 @@ const Login = () => {
         //title: "Comprobando ...",
         icon: carga,
         button: false,
-        showConfirmButton: false,
         allowOutsideClick: false,
       });
       axios
         //.get(
         .post(
-          "http://localhost/Clase/ProyectoFinal/Quimica/quimica/AppQuimica/server/public/api/auth/login",
+          "login",
           {
             username: username,
             password: password,
@@ -60,7 +63,22 @@ const Login = () => {
               button: "Aceptar",
               timer: "3000",
             });
-            cookies.set("token", response.data.access_token, { path: "/" });
+
+            cookies.set("token", response.data.access_token, {
+              path: "/",
+              // httpOnly: true,
+            });
+
+            props.setUser(response.data.user);
+
+            // console.log(cookies.get('token'));
+
+            // axios.defaults.headers.common['Authorization'] = 'Bearer ' + cookies.get('token');
+
+            history.push("/");
+
+            // <Link to="/" />
+
             //console.log(cookies.get('token'));
           }
         })
@@ -106,7 +124,6 @@ const Login = () => {
       </div>
 
       <form onSubmit={handleSubmit}>
-        {/*action="cms/logged.html"*/}
         <div className="form-group">
           <EmailInput
             className="form-control mb-3"
@@ -125,21 +142,16 @@ const Login = () => {
             Recuerdame
           </label>
         </div>
-        {/*<SendButton className="btn btn-lg my-4">Entrar</SendButton>*/}
-        <Button
-          className="btn btn-lg my-4"
-          type="button"
-          onClick={handleSubmit}
-        >
+        <SendButton className="btn btn-lg my-4" onClick={handleSubmit}>
           Entrar
-        </Button>
+        </SendButton>
         <div>
           <Link
             onClick={() => {
               swal("Escribe tu correo electronico:", {
                 content: "input",
               }).then((value) => {
-                swal(`Te hemos enviado un enlace a: ${value}`);
+                swal(`Te hemos enviado un coreo a '${value}'`);
               });
             }}
           >
