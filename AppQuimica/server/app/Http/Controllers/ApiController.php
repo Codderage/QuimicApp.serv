@@ -27,6 +27,16 @@ class ApiController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /**
+    * Create a new AuthController instance.
+    *
+    * @return void
+    */
+   public function __construct()
+   {
+       $this->middleware('auth:api', ['except' => ['']]);
+   }
+
     // USUARIO
 
     /**
