@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AlumnoController;
+use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProfesorController;
 use App\Http\Controllers\PracticaController;
 use App\Http\Controllers\PracticasRealizadasController;
