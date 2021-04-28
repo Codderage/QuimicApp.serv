@@ -116,11 +116,16 @@ class AuthController extends Controller
      */
     protected function createNewToken($token)
     {
+
+        $usuario = auth()->user();
+        unset($usuario['password']);
+        unset($usuario['token']);
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user(),
+            'user' => $usuario,
         ]);
     }
 
@@ -219,7 +224,7 @@ class AuthController extends Controller
         return $usuario;
     }
 
-    public function leerUsuario($id)
+    public static function leerUsuario($id)
     {
         $usuario = Usuario::find($id);
         unset($usuario['password']);

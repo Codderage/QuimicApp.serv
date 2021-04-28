@@ -14,13 +14,13 @@ import { useHistory } from "react-router-dom";
 
 import carga from "../../assets/img/load/ajax-loader.gif";
 
-import Cookies from "universal-cookie";
+// import Cookies from "universal-cookie";
 
 const Login = (props) => {
   // const [getState, setState] = useState();
   const [username, setUserName] = useState(0);
   const [password, setPassword] = useState(0);
-  const cookies = new Cookies();
+  // const cookies = new Cookies();
   const history = useHistory();
 
   // console.log(props);
@@ -64,12 +64,13 @@ const Login = (props) => {
               timer: "3000",
             });
 
-            cookies.set("token", response.data.access_token, {
-              path: "/",
-              // httpOnly: true,
-            });
+            // console.log(response.data);
 
-            props.setUser(response.data.user);
+            localStorage.setItem('token', response.data.access_token);
+
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+
+            props.set(response.data.user);
 
             // console.log(cookies.get('token'));
 

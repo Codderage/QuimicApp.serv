@@ -3,13 +3,15 @@ import Footer from "../../components/common/footer/Footer";
 import NavBar from "../../components/common/navBar/NavBar";
 import Login from "../../components/login/Login";
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   const [getState, setState] = useState();
+
+  // console.log(props);
 
   return (
     <div>
       <NavBar />
-      <Login />
+      <Login set={props.setUser} />
       <Footer />
     </div>
   );
