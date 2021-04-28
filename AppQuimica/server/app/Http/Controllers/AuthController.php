@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Usuario;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-
-use App\Models\Alumno;
-use App\Models\Profesor;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -75,7 +71,6 @@ class AuthController extends Controller
     //     ], 201);
     // }
 
-
     /**
      * Log the user out (Invalidate the token).
      *
@@ -117,11 +112,16 @@ class AuthController extends Controller
      */
     protected function createNewToken($token)
     {
+
+        $usuario = auth()->user();
+        unset($usuario['password']);
+        unset($usuario['token']);
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()
+            'user' => $usuario,
         ]);
     }
 
@@ -171,7 +171,7 @@ class AuthController extends Controller
     //  */
     // public function registroProfesor(Request $request)
     // {
-        
+
     //     $validator = Validator::make($request->all(), [
     //         'username' => 'required|string|between:2,100',
     //         'password' => 'required|string|confirmed|min:6',
@@ -244,7 +244,6 @@ class AuthController extends Controller
     // public function updateUsuario(Request $request, $id)
     // {
     //     $usuario = Usuario::find($request->id);
-        
 
     //     if($request->password){
     //         //$password = bcrypt($request->password);
