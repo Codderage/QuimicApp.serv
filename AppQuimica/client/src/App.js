@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext, createContext } from "react";
 import Login from "./containers/login/Login";
 import GlobalFonts from "./assets/fonts/fonts";
 import "./App.css";
@@ -8,35 +8,36 @@ import {
   Route,
 } from "react-router-dom";
 import Home from "./containers/home/home";
-import axios from "axios";
-import Cookie from 'universal-cookie';
+
+export const User = createContext();
 
 const App = () => {
 
   const [user, setUser] = useState(null);
 
-  // useEffect(() => {
-  //   const consulta = async () => {
-  //     const res = await axios.get('perfil-usuario');
-
-  //     setUser(res.data);
-  //   }
-  //   consulta();
-  // }, []);
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser);
+    }
+  }, []);
 
   return (
     <>
       <GlobalFonts />
-      <Router>
-        <Switch>
-          <Route path="/login">
-            <Login setUser={user => setUser(user)} />
-          </Route>
-          <Route path="/" exact>
-            <Home user={user} />
-          </Route>
-        </Switch>
-      </Router>
+      <User.Provider value={{ user, setUser }}>
+        <Router>
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/" exact>
+              <Home />
+            </Route>
+          </Switch>
+        </Router>
+      </User.Provider>
     </>
   );
 };
