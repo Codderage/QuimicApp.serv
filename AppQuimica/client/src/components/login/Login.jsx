@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   LoginLogo,
   EmailInput,
@@ -11,19 +11,16 @@ import {
 import swal from "sweetalert";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { User } from '../../App';
 
 import carga from "../../assets/img/load/ajax-loader.gif";
 
-// import Cookies from "universal-cookie";
-
-const Login = (props) => {
-  // const [getState, setState] = useState();
+const Login = () => {
   const [username, setUserName] = useState(0);
   const [password, setPassword] = useState(0);
-  // const cookies = new Cookies();
   const history = useHistory();
 
-  // console.log(props);
+  const { setUser } = useContext(User);
 
   const handleSubmit = async (e) => {
 
@@ -68,7 +65,7 @@ const Login = (props) => {
 
             localStorage.setItem('user', JSON.stringify(response.data.user));
 
-            props.set(response.data.user);
+            setUser(response.data.user);
 
             history.push("/");
           }
