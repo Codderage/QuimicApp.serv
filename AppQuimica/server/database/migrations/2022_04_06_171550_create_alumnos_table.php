@@ -21,7 +21,7 @@ class CreateAlumnosTable extends Migration
                 ->onDelete('cascade');
             $table->string('nombre');
             $table->string('apellidos');
-            $table->string('email')->nullable();
+            $table->string('email')->nullable()->unique();;
             
             $table->timestamps();
         });
