@@ -28,7 +28,7 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function registro(Request $request)
+    public function register(Request $request)
     {
 
         $validator = Validator::make($request->all(), [
@@ -58,7 +58,7 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function registroAlumno(Request $request)
+    public function registerAlumno(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|between:2,100',
@@ -106,7 +106,7 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function registroProfesor(Request $request)
+    public function registerProfesor(Request $request)
     {
         
         $validator = Validator::make($request->all(), [
@@ -150,7 +150,7 @@ class UsuarioController extends Controller
         ], 201);
     }
 
-    public function eliminarUsuario($id)
+    public function deleteUsuario($id)
     {
         $usuario = Usuario::find($id);
 
@@ -166,7 +166,7 @@ class UsuarioController extends Controller
         return $usuario;
     }
 
-    public function leerUsuario($id)
+    public function getUsuario($id)
     {
         $usuario = Usuario::find($id);
         unset($usuario['password']);

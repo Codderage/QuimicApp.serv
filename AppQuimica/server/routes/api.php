@@ -49,10 +49,10 @@ Route::get('auth/perfil-usuario', [AuthController::class, 'perfilUsuario']);
 
 //USUARIO
 
-Route::post('/registro-alumno', [UsuarioController::class, 'registroAlumno']);
-Route::post('/registro-profesor', [UsuarioController::class, 'registroProfesor']);
-Route::delete('/eliminar-usuario/{id}', [UsuarioController::class, 'eliminarUsuario']);
-Route::get('/usuario/{id}', [UsuarioController::class, 'leerUsuario']);
+Route::post('/register-alumno', [UsuarioController::class, 'registerAlumno']);
+Route::post('/register-profesor', [UsuarioController::class, 'registerProfesor']);
+Route::delete('/delete-usuario/{id}', [UsuarioController::class, 'deleteUsuario']);
+Route::get('/usuario/{id}', [UsuarioController::class, 'getUsuario']);
 Route::put('/update-usuario/{id}', [UsuarioController::class, 'updateUsuario']);
 
 //ALUMNO

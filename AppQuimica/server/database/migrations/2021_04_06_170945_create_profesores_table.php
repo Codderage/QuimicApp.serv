@@ -17,7 +17,7 @@ class CreateProfesoresTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('apellidos');
-            $table->string('email')->nullable();
+            $table->string('email')->nullable()->unique();;
             $table->boolean('es_admin');
 
             $table->timestamps();
