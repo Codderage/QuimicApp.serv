@@ -6,6 +6,7 @@ export const LoginLogo = styled.img`
   height: auto;
   margin: 0px auto 0px auto;
 `;
+
 LoginLogo.defaultProps = {
   src: logo,
   alt: "logo QuimicApp",

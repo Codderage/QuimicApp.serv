@@ -57,8 +57,8 @@ const Login = () => {
               title: "Logueado con exito",
               text: "Bienvenido " + response.data.user.username,
               icon: "success",
-              button: "Aceptar",
-              timer: "3000",
+              button: false,
+              timer: "1800",
             });
 
             localStorage.setItem('token', response.data.access_token);
