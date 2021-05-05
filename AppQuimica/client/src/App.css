@@ -1,5 +1,23 @@
+* {
+  box-sizing: border-box;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 body {
   background-color: #fefcfb;
+}
+
+.landing,
+.usuarios,
+.grupos .practicas,
+.compuestos,
+.componentes {
+  display: flex;
+  height: 90vh;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
 }
 
 .swal-title {
