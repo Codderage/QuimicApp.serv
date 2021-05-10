@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Mail\CorreosMailable;
+use Illuminate\Support\Facades\Mail;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,4 +18,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('contactanos', function (){
+    $correo = new CorreosMailable;
+
+    Mail::to('jordimartinezz13@gmail.com')->send($correo);
+
+
+    return "mensaje enviado";
 });
