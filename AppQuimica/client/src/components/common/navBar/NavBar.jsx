@@ -13,18 +13,9 @@ const NavBar = () => {
 
   return (
     <SNav className="navbar navbar-expand-md">
-      <Link to="/">
-        <Logo />
-      </Link>
       {logged}
     </SNav>
   );
 };
 
 export default NavBar;
-
-/*
-Logo
-width: 48px;
-height: auto;
-*/
