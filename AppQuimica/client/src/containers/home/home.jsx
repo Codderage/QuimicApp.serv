@@ -22,6 +22,7 @@ const HomePage = () => {
   return (
     <div>
       <SideNavBar />
+      {msg}
     </div>
   );
 };

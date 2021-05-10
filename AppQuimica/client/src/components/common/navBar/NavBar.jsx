@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { SNav, Logo } from "./NavBar.styled";
+import { SNav } from "./NavBar.styled";
 import { Link } from 'react-router-dom';
 import { User } from '../../../App';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
