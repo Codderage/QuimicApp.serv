@@ -8,4 +8,6 @@ export const SNav = styled.nav`
   font-size: 24px;
   font-weight: 900;
   letter-spacing: 1px;
+  display: flex;
+  justify-content: flex-end;
 `;
