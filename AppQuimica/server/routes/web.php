@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('contactanos', function (){
-    $correo = new CorreosMailable;
+    $correo = new CorreosMailable("USUARIO123123123123", true);
 
     Mail::to('jordimartinezz13@gmail.com')->send($correo);
 

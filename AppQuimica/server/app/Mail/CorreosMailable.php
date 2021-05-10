@@ -18,9 +18,14 @@ class CorreosMailable extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $usuario, $recuperarCONT;
+
+    public function __construct($usuario, $recuperarCONT)
     {
-        //
+        $this->usuario = $usuario;
+        $this->recuperarCONT = $recuperarCONT;
+        //echo $usuario;
+        //exit;
     }
 
     /**
@@ -30,6 +35,15 @@ class CorreosMailable extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.correos');
+        if($this->recuperarCONT){
+            $data = array('usuario' => $this->usuario);
+            return $this->view('emails.correos')->with($data);
+        }
+        else{
+            $data = array('usuario' => $this->usuario);
+            return $this->view('emails.correos')->with($data);
+        }
+        
+        //echo $this->hola;exit;
     }
 }

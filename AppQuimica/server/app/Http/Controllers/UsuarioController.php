@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Alumno;
 use App\Models\Profesor;
 
+use App\Mail\CorreosMailable;
+use Illuminate\Support\Facades\Mail;
+
 class UsuarioController extends Controller
 {
     /**
@@ -19,9 +22,8 @@ class UsuarioController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['']]);
+        $this->middleware('auth:api', ['except' => ['register']]);
     }
-
 
     /**
      * Register a User.
@@ -92,8 +94,19 @@ class UsuarioController extends Controller
         $user = Usuario::create(array_merge(
             $validator->validated(),
             ['password' => bcrypt($request->password)],
-            ['id_alumno' => $alumno->id]
+            ['id_alumno' => $alumno->id],
+            ['codigo_verificacion' => bin2hex(random_bytes(64))]
         ));
+
+
+        $usuario = [];
+        array_push($usuario,['username' => $user['username'], 'nombre' => $alumno['nombre'],
+        'apellidos' => $alumno['apellidos'], 'codigo_verificacion' => $user['codigo_verificacion']]);
+
+        $correo = new CorreosMailable($usuario, false);
+
+        Mail::to($alumno['email'])->send($correo);
+
 
         return response()->json([
             'message' => 'Registrado con éxito',
@@ -170,7 +183,7 @@ class UsuarioController extends Controller
     {
         $usuario = Usuario::find($id);
         unset($usuario['password']);
-        unset($usuario['token']);
+        unset($usuario['codigo_verificacion	']);
 
         if($usuario->id_profesor){
             $profesor = Profesor::find($usuario->id_profesor);
@@ -203,7 +216,7 @@ class UsuarioController extends Controller
         }
 
         unset($usuario['password']);
-        unset($usuario['token']);
+        unset($usuario['codigo_verificacion	']);
 
         if($usuario->id_alumno){
             $alumno = Alumno::find($usuario->id_alumno);

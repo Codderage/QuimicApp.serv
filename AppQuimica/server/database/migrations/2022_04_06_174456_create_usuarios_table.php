@@ -28,8 +28,7 @@ class CreateUsuariosTable extends Migration
 
             $table->string('username')->unique();
             $table->string('password');
-            $table->string('codigo_verificacion');
-            $table->string('token')->nullable();
+            $table->string('codigo_verificacion')->nullable();
 
             $table->timestamps();
         });

@@ -23,7 +23,7 @@ class Usuario extends Authenticatable implements JWTSubject
         'id_alumno',
         'username',
         'password',
-        'token',
+        'codigo_verificacion',
     ];
 
     /**
