@@ -163,20 +163,40 @@ class UsuarioController extends Controller
 
         // $profesor->save();
 
-        $profesor = Profesor::create(
-            [
-                'nombre' => $request->nombre,
-                'apellidos' => $request->apellidos,
-                'email' => $request->email,
-                'es_admin' => $request->es_admin
-            ]
-        );
-
+        if($request->es_admin != null){
+            $profesor = Profesor::create(
+                [
+                    'nombre' => $request->nombre,
+                    'apellidos' => $request->apellidos,
+                    'email' => $request->email,
+                    'es_admin' => $request->es_admin
+                ]
+            );
+        }else{
+            $profesor = Profesor::create(
+                [
+                    'nombre' => $request->nombre,
+                    'apellidos' => $request->apellidos,
+                    'email' => $request->email,
+                    'es_admin' => 0
+                ]
+            );
+        }
+        
         $user = Usuario::create(array_merge(
             $validator->validated(),
             ['password' => bcrypt($request->password)],
-            ['id_profesor' => $profesor->id]
+            ['id_profesor' => $profesor->id],
+            ['codigo_verificacion' => bin2hex(random_bytes(64))]
         ));
+
+        $usuario = [];
+        array_push($usuario,['username' => $user['username'], 'nombre' => $profesor['nombre'],
+        'apellidos' => $profesor['apellidos'], 'codigo_verificacion' => $user['codigo_verificacion']]);
+
+        $correo = new CorreosMailable($usuario, false);
+
+        Mail::to($profesor['email'])->send($correo);
 
         return response()->json([
             'message' => 'Registrado con éxito',

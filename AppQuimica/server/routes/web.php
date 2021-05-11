@@ -20,11 +20,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('contactanos', function (){
-    $correo = new CorreosMailable("USUARIO123123123123", true);
+// Route::get('contactanos', function (){
+//     $correo = new CorreosMailable("USUARIO123123123123", true);
 
-    Mail::to('jordimartinezz13@gmail.com')->send($correo);
+//     Mail::to('jordimartinezz13@gmail.com')->send($correo);
 
 
-    return "mensaje enviado";
-});
+//     return "mensaje enviado";
+// });
