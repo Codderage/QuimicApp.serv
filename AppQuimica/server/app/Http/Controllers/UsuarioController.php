@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Alumno;
 use App\Models\Profesor;
 
+use App\Mail\CorreosMailable;
+use Illuminate\Support\Facades\Mail;
+
 class UsuarioController extends Controller
 {
     /**
@@ -19,9 +22,8 @@ class UsuarioController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['']]);
+        $this->middleware('auth:api', ['except' => ['register', 'verifyUsuario']]);
     }
-
 
     /**
      * Register a User.
@@ -92,13 +94,45 @@ class UsuarioController extends Controller
         $user = Usuario::create(array_merge(
             $validator->validated(),
             ['password' => bcrypt($request->password)],
-            ['id_alumno' => $alumno->id]
+            ['id_alumno' => $alumno->id],
+            ['codigo_verificacion' => bin2hex(random_bytes(64))]
         ));
+
+
+        $usuario = [];
+        array_push($usuario,['username' => $user['username'], 'nombre' => $alumno['nombre'],
+        'apellidos' => $alumno['apellidos'], 'codigo_verificacion' => $user['codigo_verificacion']]);
+
+        $correo = new CorreosMailable($usuario, false);
+
+        Mail::to($alumno['email'])->send($correo);
+
 
         return response()->json([
             'message' => 'Registrado con éxito',
             'user' => $user
         ], 201);
+    }
+
+    /**
+     * Get a JWT via given credentials.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function verifyUsuario($ref){
+
+        $usuario = Usuario::where('codigo_verificacion', $ref)->first();
+        if($usuario){
+            $usuario->update(['codigo_verificacion' => null]);
+
+            return response()->json([
+                'message' => 'Autorizado',
+            ], 201);
+        }else{
+            return response()->json([
+                'error' => 'No autorizado',
+            ], 401);
+        }
     }
 
     /**
@@ -129,20 +163,40 @@ class UsuarioController extends Controller
 
         // $profesor->save();
 
-        $profesor = Profesor::create(
-            [
-                'nombre' => $request->nombre,
-                'apellidos' => $request->apellidos,
-                'email' => $request->email,
-                'es_admin' => $request->es_admin
-            ]
-        );
-
+        if($request->es_admin != null){
+            $profesor = Profesor::create(
+                [
+                    'nombre' => $request->nombre,
+                    'apellidos' => $request->apellidos,
+                    'email' => $request->email,
+                    'es_admin' => $request->es_admin
+                ]
+            );
+        }else{
+            $profesor = Profesor::create(
+                [
+                    'nombre' => $request->nombre,
+                    'apellidos' => $request->apellidos,
+                    'email' => $request->email,
+                    'es_admin' => 0
+                ]
+            );
+        }
+        
         $user = Usuario::create(array_merge(
             $validator->validated(),
             ['password' => bcrypt($request->password)],
-            ['id_profesor' => $profesor->id]
+            ['id_profesor' => $profesor->id],
+            ['codigo_verificacion' => bin2hex(random_bytes(64))]
         ));
+
+        $usuario = [];
+        array_push($usuario,['username' => $user['username'], 'nombre' => $profesor['nombre'],
+        'apellidos' => $profesor['apellidos'], 'codigo_verificacion' => $user['codigo_verificacion']]);
+
+        $correo = new CorreosMailable($usuario, false);
+
+        Mail::to($profesor['email'])->send($correo);
 
         return response()->json([
             'message' => 'Registrado con éxito',
@@ -156,6 +210,11 @@ class UsuarioController extends Controller
 
         if($usuario->id_profesor){
             $profesor = Profesor::find($usuario->id_profesor);
+            if($profesor['es_admin']){
+                return response()->json([
+                    'Error' => 'No es posible borrar usuarios administradores'
+                ], 401);
+            }
             $profesor->delete();
         }else{
             $alumno = Alumno::find($usuario->id_alumno);
@@ -170,7 +229,7 @@ class UsuarioController extends Controller
     {
         $usuario = Usuario::find($id);
         unset($usuario['password']);
-        unset($usuario['token']);
+        unset($usuario['codigo_verificacion	']);
 
         if($usuario->id_profesor){
             $profesor = Profesor::find($usuario->id_profesor);
@@ -203,7 +262,7 @@ class UsuarioController extends Controller
         }
 
         unset($usuario['password']);
-        unset($usuario['token']);
+        unset($usuario['codigo_verificacion	']);
 
         if($usuario->id_alumno){
             $alumno = Alumno::find($usuario->id_alumno);

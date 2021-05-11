@@ -15,7 +15,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'registro']]);
     }
 
     /**
@@ -117,13 +117,84 @@ class AuthController extends Controller
         unset($usuario['password']);
         unset($usuario['token']);
 
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => $usuario,
-        ]);
+        if(!$usuario['codigo_verificacion']){
+
+            return response()->json([
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth()->factory()->getTTL() * 60,
+                'user' => $usuario,
+            ]);
+        } else{
+            return response()->json([
+                'error' => 'No verificado'
+            ], 209);
+        }
     }
+
+    /**
+     * Register a User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function registro(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|between:2,100',
+            'password' => 'required|string|confirmed|min:6',
+            'id_profesor' => 'integer',
+            'id_alumno' => 'integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        $user = Usuario::create(array_merge(
+            $validator->validated(),
+            ['password' => bcrypt($request->password)]
+        ));
+
+        return response()->json([
+            'message' => 'Registrado con éxito',
+            'user' => $user
+        ], 201);
+    }
+
+
+    // /**
+    //  * Get a JWT via given credentials.
+    //  *
+    //  * @return \Illuminate\Http\JsonResponse
+    //  */
+    // public function register(Request $request)
+    // {
+
+    //     $validator = Validator::make($request->all(), [
+    //         'username' => 'required|string|between:2,100',
+    //         'password' => 'required|string|confirmed|min:6',
+    //         'id_profesor' => 'integer',
+    //         'id_alumno' => 'integer',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json($validator->errors()->toJson(), 400);
+    //     }
+
+    //     $user = Usuario::create(array_merge(
+    //         $validator->validated(),
+    //         ['password' => bcrypt($request->password)]
+    //     ));
+
+    //     return response()->json([
+    //         'message' => 'Registrado con éxito',
+    //         'user' => $user
+    //     ], 201);
+    // }
+
+
+
 
     // /**
     //  * Get a JWT via given credentials.
