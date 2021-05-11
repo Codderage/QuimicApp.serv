@@ -5,14 +5,65 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import "./SideNav.css";
 import { SideNavData } from "./SideNavData";
-import { User } from '../../../App';
+import { User } from "../../../App";
 
 const SideNavBar = () => {
   const { user } = useContext(User);
 
   const [sidebar, setSidebar] = useState(false);
 
-  const logged = user ? <span>Welcome {user.username} | <Link to="/logout" className="logged">Logout</Link></span> : <Link to="/login" className="logged"><FontAwesomeIcon icon={faUser} /><span> Login</span></Link>;
+  const logged = user ? (
+    <span>
+      Welcome {user.username} |{" "}
+      <Link to="/logout" className="logged">
+        Logout
+      </Link>
+    </span>
+  ) : (
+    <Link to="/login" className="logged">
+      <FontAwesomeIcon icon={faUser} />
+      <span> Login</span>
+    </Link>
+  );
+
+  const verifyUser = user ? (
+    // SideNavData.map((item, index) => {
+    //   if (user.id_profesor != null) {
+    //     return (
+    //       <li key={index} className={item.cName}>
+    //         <Link to={item.path}>{item.icon}</Link>
+    //       </li>
+    //     );
+    //   } else {
+    //     return (
+    //       <li key={index} className={item.cName}>
+    //         <Link to={item.path}>{item.icon}</Link>
+    //       </li>
+    //     );
+    //   }
+    // });
+    SideNavData.map((item, index) => {
+      if (user.id_profesor != null) {
+        return (
+          <li key={index} className={item.cName}>
+            <Link to={item.path}>{item.icon}</Link>
+          </li>
+        );
+      } else {
+        if (item.path != "/componentes" && item.path != "/compuestos") {
+          return (
+            <li key={index} className={item.cName}>
+              <Link to={item.path}>{item.icon}</Link>
+            </li>
+          );
+        }
+      }
+    })
+  ) : (
+    <li>
+      <p>Error</p>
+    </li>
+  );
 
   const showSidebar = () => setSidebar(!sidebar);
   return (
@@ -30,13 +81,7 @@ const SideNavBar = () => {
               <FontAwesomeIcon icon={faTimes} onClick={showSidebar} />
             </Link>
           </li>
-          {SideNavData.map((item, index) => {
-            return (
-              <li key={index} className={item.cName}>
-                <Link to={item.path}>{item.icon}</Link>
-              </li>
-            );
-          })}
+          <li>{verifyUser}</li>
         </ul>
       </nav>
     </>

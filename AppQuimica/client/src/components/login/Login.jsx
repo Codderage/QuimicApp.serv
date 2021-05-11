@@ -11,7 +11,7 @@ import {
 import swal from "sweetalert";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { User } from '../../App';
+import { User } from "../../App";
 
 import carga from "../../assets/img/load/ajax-loader.gif";
 
@@ -23,7 +23,6 @@ const Login = () => {
   const { setUser } = useContext(User);
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     if (username.length <= 5 || password.length <= 5) {
@@ -43,13 +42,10 @@ const Login = () => {
       });
       axios
         //.get(
-        .post(
-          "login",
-          {
-            username: username,
-            password: password,
-          }
-        )
+        .post("login", {
+          username: username,
+          password: password,
+        })
         .then((response) => {
           //console.log(response.data);
           if (response.status >= 200 && response.status <= 205) {
@@ -61,9 +57,9 @@ const Login = () => {
               timer: "1800",
             });
 
-            localStorage.setItem('token', response.data.access_token);
+            localStorage.setItem("token", response.data.access_token);
 
-            localStorage.setItem('user', JSON.stringify(response.data.user));
+            localStorage.setItem("user", JSON.stringify(response.data.user));
 
             setUser(response.data.user);
 
