@@ -22,7 +22,7 @@ class UsuarioController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['register']]);
+        $this->middleware('auth:api', ['except' => ['register', 'verifyUsuario']]);
     }
 
     /**
@@ -119,6 +119,27 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    public function verifyUsuario($ref){
+
+        $usuario = Usuario::where('codigo_verificacion', $ref)->first();
+        if($usuario){
+            $usuario->update(['codigo_verificacion' => null]);
+
+            return response()->json([
+                'message' => 'Autorizado',
+            ], 201);
+        }else{
+            return response()->json([
+                'error' => 'No autorizado',
+            ], 401);
+        }
+    }
+
+    /**
+     * Get a JWT via given credentials.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function registerProfesor(Request $request)
     {
         
@@ -169,6 +190,11 @@ class UsuarioController extends Controller
 
         if($usuario->id_profesor){
             $profesor = Profesor::find($usuario->id_profesor);
+            if($profesor['es_admin']){
+                return response()->json([
+                    'Error' => 'No es posible borrar usuarios administradores'
+                ], 401);
+            }
             $profesor->delete();
         }else{
             $alumno = Alumno::find($usuario->id_alumno);

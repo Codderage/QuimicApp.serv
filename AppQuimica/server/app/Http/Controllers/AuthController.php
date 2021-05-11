@@ -117,12 +117,19 @@ class AuthController extends Controller
         unset($usuario['password']);
         unset($usuario['token']);
 
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => $usuario,
-        ]);
+        if(!$usuario['codigo_verificacion']){
+
+            return response()->json([
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth()->factory()->getTTL() * 60,
+                'user' => $usuario,
+            ]);
+        } else{
+            return response()->json([
+                'error' => 'No verificado'
+            ], 209);
+        }
     }
 
     /**

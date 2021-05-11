@@ -38,7 +38,6 @@ use App\Http\Controllers\CompuestosEnMuestraController;
 
 
 //AUTH
-
 //Route::post('auth/register', [AuthController::class, 'registro']); //NOO BORRAR ESTA LÍNEA
 Route::post('auth/login', [AuthController::class, 'login']);
 Route::post('auth/logout', [AuthController::class, 'logout']);
@@ -55,6 +54,7 @@ Route::post('/register-profesor', [UsuarioController::class, 'registerProfesor']
 Route::delete('/delete-usuario/{id}', [UsuarioController::class, 'deleteUsuario']);
 Route::get('/usuario/{id}', [UsuarioController::class, 'getUsuario']);
 Route::put('/update-usuario/{id}', [UsuarioController::class, 'updateUsuario']);
+Route::get('/usr/co_vf/{ref}', [UsuarioController::class, 'verifyUsuario']);
 
 //ALUMNO
 

@@ -20,5 +20,7 @@
 	<body>
 		<h1>Correo electrónico</h1>
         <p>TIENES QUE CONFIRMAR EL CORREO <?php echo $usuario[0]['username']; ?></p>
+        <a href='http://localhost/Clase/ProyectoFinal/Quimica/quimica/AppQuimica/server/public/api/usr/co_vf/<?php echo $usuario[0]['codigo_verificacion']; ?>'>
+        ACTIVAR CUENTA</a>
 	</body>
 </html>
