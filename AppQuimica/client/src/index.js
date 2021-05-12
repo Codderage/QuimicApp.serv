@@ -6,11 +6,9 @@ import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.js";
 import axios from "axios";
 
-//axios.defaults.baseURL = 'http://localhost/M14/Proyecto-final/quimica/AppQuimica/public/api/auth/';
-axios.defaults.baseURL =
-  "http://localhost/Clase/ProyectoFinal/Quimica/quimica/AppQuimica/server/public/api/auth/";
-axios.defaults.headers.common["Authorization"] =
-  "Bearer " + localStorage.getItem("token");
+axios.defaults.baseURL = 'http://localhost/M7_M14/projecte_M14/quimica/AppQuimica/server/public/api/auth/';
+// axios.defaults.baseURL = "http://localhost/Clase/ProyectoFinal/Quimica/quimica/AppQuimica/server/public/api/auth/";
+axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("token");
 
 ReactDOM.render(
   <React.StrictMode>
