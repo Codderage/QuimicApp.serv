@@ -4,7 +4,6 @@ import GlobalFonts from "./assets/fonts/fonts";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./containers/home/home";
-import Logout from "./components/logout/Logout";
 
 export const User = createContext();
 
@@ -27,9 +26,6 @@ const App = () => {
           <Switch>
             <Route path="/login">
               <Login />
-            </Route>
-            <Route path="/logout">
-              <Logout />
             </Route>
             <Route path="/" exact>
               <Home />
