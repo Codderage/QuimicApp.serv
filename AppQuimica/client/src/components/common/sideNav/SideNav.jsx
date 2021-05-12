@@ -7,6 +7,7 @@ import "./SideNav.css";
 import { SideNavData } from "./SideNavData";
 import { User } from "../../../App";
 import axios from "axios";
+import swal from "sweetalert";
 
 const SideNavBar = () => {
   const { user, setUser } = useContext(User);
@@ -14,14 +15,33 @@ const SideNavBar = () => {
   const history = useHistory();
 
   const logout = async () => {
-    await axios.post('logout', {}, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    });
-    setUser(null);
-    localStorage.clear();
-    history.push('/login');
+    try {
+      const out = await axios.post('logout', {}, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      swal({
+        title: "Esperamos volver a verte",
+        text: "  ",
+        icon: "success",
+        button: false,
+        timer: "1800",
+      });
+      setUser(null);
+      localStorage.clear();
+      history.push('/login');
+    } catch (e) {
+      swal({
+        title: "Error interno",
+        text: "Vuelve a intentarlo en unos momentos...",
+        icon: "error",
+        button: false,
+        timer: "3000",
+      });
+      // history.push("/");
+    }
+
   }
 
   const logged = user ? (
