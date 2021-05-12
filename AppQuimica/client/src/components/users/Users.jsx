@@ -57,38 +57,36 @@ const Users = () => {
   const { user } = useContext(User);
   const [datos1, setDatos1] = useState();
 
-  let array1 = [];
+  const array1 = [];
 
   useEffect(async () => {
-    // if (localStorage.getItem("token")) {
-    //   if (user.id_profesor) {
-    //     //LARAVEL CONTROLA SI EL USUARIO QUE PIDE ES ADMIN O NO
-    //     for (let i = 1; i <= 10; i++) {
-    //       data.push({
-    //         key: i,
-    //         nombre: "profesor",
-    //         apellidos: `profesor`,
-    //         rol: `${i % 2 ? "Profesor" : "Alumno"}`,
-    //       });
-    //     }
-    //   } else {
-    //     for (let i = 1; i <= 10; i++) {
-    //       data.push({
-    //         key: i,
-    //         nombre: "alumno",
-    //         apellidos: `alumno`,
-    //       });
-    //     }
-    //   }
-    // }
-    for (let i = 1; i <= 10; i++) {
-      array1.push({
-        key: i,
-        nombre: "profesor",
-        apellidos: `profesor`,
-        rol: `${i % 2 ? "Profesor" : "Alumno"}`,
-      });
+    if (localStorage.getItem("token") && localStorage.getItem("user")) {
+      // console.log(user);
+      //if (user.id_profesor) {
+      var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+      console.log(usuarioLogeado);
+      if (usuarioLogeado.id_profesor) {
+        //LARAVEL CONTROLA SI EL USUARIO QUE PIDE ES ADMIN O NO
+        for (let i = 1; i <= 10; i++) {
+          array1.push({
+            key: i,
+            nombre: "profesor",
+            apellidos: `profesor`,
+            rol: `${i % 2 ? "Profesor" : "Alumno"}`,
+          });
+        }
+      } else {
+        console.log("ALUMNO");
+        for (let i = 1; i <= 10; i++) {
+          array1.push({
+            key: i,
+            nombre: "alumno",
+            apellidos: `alumno`,
+          });
+        }
+      }
     }
+
     console.log(array1);
     setDatos1(array1);
   }, []);
