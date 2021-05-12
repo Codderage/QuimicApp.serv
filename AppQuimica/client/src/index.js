@@ -1,6 +1,7 @@
 import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom";
+import "antd/dist/antd.css";
 import reportWebVitals from "./reportWebVitals";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.js";

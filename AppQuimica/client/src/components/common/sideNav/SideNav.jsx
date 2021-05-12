@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import "./SideNav.css";
 import { SideNavData } from "./SideNavData";
 import { User } from "../../../App";
-import { Logout } from "./Logout";
+// import { Logout } from "./Logout";
 
 const SideNavBar = () => {
   const { user } = useContext(User);
@@ -16,7 +16,8 @@ const SideNavBar = () => {
   const logged = user ? (
     <span>
       Welcome {user.username} |{" "}
-      <Link onClick={Logout.salir} className="logged">
+      {/* <Link onClick={console.log("HOLA")} className="logged"> */}
+      <Link to="/login" className="logged">
         Logout
       </Link>
     </span>
