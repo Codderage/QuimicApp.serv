@@ -1,5 +1,6 @@
 import { Table, Space } from "antd";
-import React, { useEffect, useState, createContext } from "react";
+import React, { useEffect, useState, createContext, useContext } from "react";
+import { User } from "../../App";
 
 const columns = [
   {
@@ -38,23 +39,60 @@ const columns = [
     ),
   },
 ];
-
 const data = [];
-
-for (let i = 1; i <= 10; i++) {
-  data.push({
-    key: i,
-    nombre: "John",
-    apellidos: `Brown`,
-    rol: `${i % 2 ? "Profesor" : "Alumno"}`,
-  });
-}
+// for (let i = 1; i <= 10; i++) {
+//   data.push({
+//     key: i,
+//     nombre: "profesor",
+//     apellidos: `profesor`,
+//     rol: `${i % 2 ? "Profesor" : "Alumno"}`,
+//   });
+// }
 
 const showHeader = true;
 
 const pagination = { position: "bottom" };
 
 const Users = () => {
+  const { user } = useContext(User);
+  const [datos1, setDatos1] = useState();
+
+  let array1 = [];
+
+  useEffect(async () => {
+    // if (localStorage.getItem("token")) {
+    //   if (user.id_profesor) {
+    //     //LARAVEL CONTROLA SI EL USUARIO QUE PIDE ES ADMIN O NO
+    //     for (let i = 1; i <= 10; i++) {
+    //       data.push({
+    //         key: i,
+    //         nombre: "profesor",
+    //         apellidos: `profesor`,
+    //         rol: `${i % 2 ? "Profesor" : "Alumno"}`,
+    //       });
+    //     }
+    //   } else {
+    //     for (let i = 1; i <= 10; i++) {
+    //       data.push({
+    //         key: i,
+    //         nombre: "alumno",
+    //         apellidos: `alumno`,
+    //       });
+    //     }
+    //   }
+    // }
+    for (let i = 1; i <= 10; i++) {
+      array1.push({
+        key: i,
+        nombre: "profesor",
+        apellidos: `profesor`,
+        rol: `${i % 2 ? "Profesor" : "Alumno"}`,
+      });
+    }
+    console.log(array1);
+    setDatos1(array1);
+  }, []);
+
   const [state, setState] = useState({
     bordered: false,
     loading: false,
@@ -94,11 +132,12 @@ const Users = () => {
 
   return (
     <>
+      {/* {peticion} */}
       <Table
         {...state}
         pagination={{ position: [state.top, state.bottom] }}
         columns={tableColumns}
-        dataSource={state.hasData ? data : null}
+        dataSource={datos1 ? datos1 : null}
         scroll={scroll}
       />
     </>
