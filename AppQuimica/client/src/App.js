@@ -13,22 +13,21 @@ const App = () => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
+    const loggedToken = localStorage.getItem("token");
+    if (loggedToken) {
+      const foundToken = loggedToken;
+      setToken(foundToken);
+      axios.defaults.headers.common['Authorization'] = token;
+    }
+  }, []);
+
+  useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
       setUser(foundUser);
     }
   }, []);
-
-  useEffect(() => {
-    const loggedToken = localStorage.getItem("token");
-    if (loggedToken) {
-      const foundToken = loggedToken;
-      setToken(foundToken);
-    }
-  }, []);
-
-  axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 
   return (
     <>
