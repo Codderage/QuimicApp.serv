@@ -5,8 +5,6 @@ import axios from "axios";
 import swal from "sweetalert";
 import carga from "../../assets/img/load/ajax-loader.gif";
 
-const { token } = useContext(User);
-
 const columns = [
   {
     title: "Nombre",
