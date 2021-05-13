@@ -10,6 +10,7 @@ export const User = createContext();
 
 const App = () => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
@@ -19,10 +20,20 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const loggedToken = localStorage.getItem("token");
+    if (loggedToken) {
+      const foundToken = loggedToken;
+      setToken(foundToken);
+    }
+  }, []);
+
+  axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+
   return (
     <>
       <GlobalFonts />
-      <User.Provider value={{ user, setUser }}>
+      <User.Provider value={{ user, setUser, token, setToken }}>
         <Router>
           <Switch>
             <Route path="/login">
