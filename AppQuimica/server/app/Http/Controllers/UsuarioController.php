@@ -204,6 +204,36 @@ class UsuarioController extends Controller
         ], 201);
     }
 
+    public function deleteUsuarioAlum($id)
+    {
+        $usuario = Usuario::where('id_alumno', $id)->first();
+        //return $usuario;
+        $alumno = Alumno::find($usuario->id_alumno);
+        $alumno->delete();
+
+        $usuario->delete();
+
+        return $usuario;
+    }
+
+    public function deleteUsuarioProf($id)
+    {
+        $usuario = Usuario::find($id);
+        //return $usuario;
+
+        $profesor = Profesor::find($usuario->id_profesor);
+        if($profesor['es_admin']){
+            return response()->json([
+                'Error' => 'No es posible borrar usuarios administradores'
+            ], 401);
+        }
+        $profesor->delete();
+        
+        $usuario->delete();
+
+        return $usuario;
+    }
+
     public function deleteUsuario($id)
     {
         $usuario = Usuario::find($id);

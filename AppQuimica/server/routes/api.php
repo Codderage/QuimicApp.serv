@@ -52,6 +52,8 @@ Route::post('/register', [UsuarioController::class, 'register']);//ESTA COMENTAR
 Route::post('/register-alumno', [UsuarioController::class, 'registerAlumno']);
 Route::post('/register-profesor', [UsuarioController::class, 'registerProfesor']);
 Route::delete('/delete-usuario/{id}', [UsuarioController::class, 'deleteUsuario']);
+Route::delete('/delete-usuario-al/{id}', [UsuarioController::class, 'deleteUsuarioAlum']);
+Route::delete('/delete-usuario-pr/{id}', [UsuarioController::class, 'deleteUsuarioProf']);
 Route::get('/usuario/{id}', [UsuarioController::class, 'getUsuario']);
 Route::put('/update-usuario/{id}', [UsuarioController::class, 'updateUsuario']);
 Route::get('/usr/co_vf/{ref}', [UsuarioController::class, 'verifyUsuario']);

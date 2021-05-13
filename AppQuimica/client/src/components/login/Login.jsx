@@ -42,7 +42,7 @@ const Login = () => {
       });
       axios
         //.get(
-        .post("login", {
+        .post("auth/login", {
           username: username,
           password: password,
         })

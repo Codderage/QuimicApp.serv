@@ -16,11 +16,15 @@ const SideNavBar = () => {
 
   const logout = async () => {
     try {
-      const out = await axios.post('logout', {}, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
+      const out = await axios.post(
+        "auth/logout",
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
       swal({
         title: "Esperamos volver a verte",
         text: "  ",
@@ -30,7 +34,7 @@ const SideNavBar = () => {
       });
       setUser(null);
       localStorage.clear();
-      history.push('/login');
+      history.push("/login");
     } catch (e) {
       swal({
         title: "Error interno",
@@ -39,14 +43,17 @@ const SideNavBar = () => {
         button: false,
         timer: "3000",
       });
+      localStorage.clear();
       // history.push("/");
     }
-
-  }
+  };
 
   const logged = user ? (
     <span>
-      Welcome {user.username} | <Link onClick={logout} className="logged">Logout</Link>
+      Welcome {user.username} |{" "}
+      <Link onClick={logout} className="logged">
+        Logout
+      </Link>
     </span>
   ) : (
     <Link to="/login" className="logged">

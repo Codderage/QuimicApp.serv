@@ -1,6 +1,9 @@
 import { Table, Space } from "antd";
 import React, { useEffect, useState, createContext, useContext } from "react";
 import { User } from "../../App";
+import axios from "axios";
+import swal from "sweetalert";
+import carga from "../../assets/img/load/ajax-loader.gif";
 
 const columns = [
   {
@@ -14,11 +17,6 @@ const columns = [
     sorter: (a, b) => a.apellidos - b.apellidos,
   },
   {
-    title: "Rol",
-    dataIndex: "rol",
-    sorter: (a, b) => a.rol - b.rol,
-  },
-  {
     title: "Grupo",
     dataIndex: "grupo",
     sorter: (a, b) => a.grupo - b.grupo,
@@ -29,16 +27,37 @@ const columns = [
     sorter: (a, b) => a.email - b.email,
   },
   {
-    title: "Accion",
+    title: "Rol",
+    dataIndex: "rol",
+    sorter: (a, b) => a.rol - b.rol,
+  },
+  {
+    title: "",
     key: "accion",
-    render: () => (
+    dataIndex: "accion",
+    render: (text, record) => (
       <Space size="middle">
-        <button>Editar</button>
-        <button>Borrar</button>
+        <button
+          className=""
+          onClick={(e) => {
+            onUpdate(record.id, e);
+          }}
+        >
+          Editar
+        </button>
+        <button
+          className=""
+          onClick={(e) => {
+            onDelete(record.id, record.rol, record.key);
+          }}
+        >
+          Delete
+        </button>
       </Space>
     ),
   },
 ];
+
 const data = [];
 // for (let i = 1; i <= 10; i++) {
 //   data.push({
@@ -48,6 +67,66 @@ const data = [];
 //     rol: `${i % 2 ? "Profesor" : "Alumno"}`,
 //   });
 // }
+
+const onDelete = (id, rol, key) => {
+  swal({
+    title: "¿Estás seguro?",
+    text: "Una vez eliminado no podrás volver a recuperar el usuario",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((willDelete) => {
+    if (willDelete) {
+      //SI
+      //console.log(rol);
+      let ruta = "";
+      if (rol == "Alumno") ruta = "delete-usuario-al/" + id;
+      else if (rol == "Profesor") ruta = "delete-usuario-pr/" + id;
+      swal({
+        //title: "Comprobando ...",
+        icon: carga,
+        button: false,
+        allowOutsideClick: false,
+      });
+      axios
+        .delete(ruta)
+        .then((response) => {
+          //console.log(response.data);
+          if (response.status >= 200 && response.status <= 205) {
+            window.location.reload(true);
+
+            swal({
+              title: "Usuario eliminado",
+              text: "  ",
+              icon: "success",
+              button: false,
+              timer: "1800",
+            });
+          }
+        })
+        .catch(function (error) {
+          swal({
+            title: "Error interno " + error.response.status,
+            text: "Error interno, vuelve a intentarlo en unos momentos.",
+            icon: "error",
+            button: "Aceptar",
+            timer: "3000",
+          });
+        });
+    } else {
+      //swal("Usuario no eliminado");
+    }
+  });
+
+  //console.log(key, e);
+};
+
+const onUpdate = (key, e) => {
+  //e.preventDefault();
+  //const data = this.state.data.filter(item => item.key !== key);
+  //this.setState({ data, isPageTween: false });
+  console.log(key, e);
+};
 
 const showHeader = true;
 
@@ -67,17 +146,48 @@ const Users = () => {
       console.log(usuarioLogeado);
       if (usuarioLogeado.id_profesor) {
         //LARAVEL CONTROLA SI EL USUARIO QUE PIDE ES ADMIN O NO
-        for (let i = 1; i <= 10; i++) {
-          array1.push({
-            key: i,
-            nombre: "profesor",
-            apellidos: `profesor`,
-            rol: `${i % 2 ? "Profesor" : "Alumno"}`,
+        await axios
+          .get(
+            "alumnos",
+            {},
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+            }
+          )
+          .then((response) => {
+            //console.log(response.data);
+            if (response.status >= 200 && response.status <= 205) {
+              //console.log(response.data[1].nombre);
+              console.log(response.data);
+              for (let i = 0; i < response.data.length; i++) {
+                //console.log(response.data[i].nombre);
+                array1.push({
+                  key: i,
+                  nombre: response.data[i].nombre,
+                  apellidos: response.data[i].apellidos,
+                  email: response.data[i].email,
+                  rol: "Alumno",
+                  id: response.data[i].id,
+                });
+              }
+              //history.push("/");
+            }
+          })
+          .catch(function (error) {
+            swal({
+              title: "Error interno " + error.response.status,
+              text: "Error interno, vuelve a intentarlo en unos momentos.",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
           });
-        }
       } else {
         console.log("ALUMNO");
-        for (let i = 1; i <= 10; i++) {
+        columns.splice(4);
+        for (let i = 1; i <= 3; i++) {
           array1.push({
             key: i,
             nombre: "alumno",
@@ -86,8 +196,8 @@ const Users = () => {
         }
       }
     }
-
-    console.log(array1);
+    //console.log(array1);
+    //console.log(array1);
     setDatos1(array1);
   }, []);
 
