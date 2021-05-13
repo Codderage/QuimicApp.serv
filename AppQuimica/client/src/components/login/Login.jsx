@@ -20,7 +20,7 @@ const Login = () => {
   const [password, setPassword] = useState(0);
   const history = useHistory();
 
-  const { setUser } = useContext(User);
+  const { setUser, setToken } = useContext(User);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,6 +62,8 @@ const Login = () => {
             localStorage.setItem("user", JSON.stringify(response.data.user));
 
             setUser(response.data.user);
+
+            setToken(response.data.access_token);
 
             history.push("/");
           }
