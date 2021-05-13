@@ -65,7 +65,8 @@ const Login = () => {
 
             setToken(response.data.access_token);
 
-            history.push("/");
+            //history.push("/");
+            window.location.href = "/";
           }
           if (response.status == 209) {
             swal({
