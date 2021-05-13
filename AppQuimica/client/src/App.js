@@ -2,6 +2,7 @@ import React, { useEffect, useState, createContext } from "react";
 import Login from "./containers/login/Login";
 import GlobalFonts from "./assets/fonts/fonts";
 import "./App.css";
+import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./containers/home/home";
 import UsersLanding from "./containers/users/usersLanding/UsersLanding";
