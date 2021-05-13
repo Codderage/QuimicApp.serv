@@ -65,11 +65,10 @@ const Login = () => {
 
             history.push("/");
           }
-        })
-        .catch(function (error) {
-          if (error.response.status >= 400 && error.response.status <= 403) {
+          if (response.status == 209) {
             swal({
-              title: "Usuario no encontrado",
+              title: "Error",
+              text: "Usuario con correo no verificado",
               icon: "error",
               button: "Aceptar",
               timer: "3000",
