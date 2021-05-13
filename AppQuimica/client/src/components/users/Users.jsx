@@ -4,9 +4,6 @@ import { User } from "../../App";
 import axios from "axios";
 import swal from "sweetalert";
 import carga from "../../assets/img/load/ajax-loader.gif";
-import { User } from "../../App";
-
-const { token } = useContext(User);
 
 const columns = [
   {
@@ -150,8 +147,7 @@ const Users = () => {
       if (usuarioLogeado.id_profesor) {
         //LARAVEL CONTROLA SI EL USUARIO QUE PIDE ES ADMIN O NO
         await axios
-          .get(
-            "alumnos")
+          .get("alumnos")
           .then((response) => {
             //console.log(response.data);
             if (response.status >= 200 && response.status <= 205) {

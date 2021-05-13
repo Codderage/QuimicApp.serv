@@ -67,6 +67,15 @@ const Login = () => {
 
             history.push("/");
           }
+          if (response.status == 209) {
+            swal({
+              title: "Error",
+              text: "Usuario con correo no verificado",
+              icon: "error",
+              button: false,
+              timer: "2000",
+            });
+          }
         })
         .catch(function (error) {
           if (error.response.status >= 400 && error.response.status <= 403) {
