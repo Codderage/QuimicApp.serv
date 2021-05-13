@@ -9,7 +9,7 @@ import {
   Seccion,
 } from "./login.styled";
 import swal from "sweetalert";
-import axios from "axios";
+import axios from "../common/http/index";
 import { useHistory } from "react-router-dom";
 import { User } from "../../App";
 

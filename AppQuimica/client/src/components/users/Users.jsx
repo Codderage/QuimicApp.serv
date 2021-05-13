@@ -1,7 +1,7 @@
 import { Table, Space } from "antd";
 import React, { useEffect, useState, createContext, useContext } from "react";
 import { User } from "../../App";
-import axios from "axios";
+import axios from "../common/http";
 import swal from "sweetalert";
 import carga from "../../assets/img/load/ajax-loader.gif";
 
@@ -133,12 +133,13 @@ const showHeader = true;
 const pagination = { position: "bottom" };
 
 const Users = () => {
-  const { user } = useContext(User);
+  const { token } = useContext(User);
   const [datos1, setDatos1] = useState();
 
   const array1 = [];
 
   useEffect(async () => {
+    console.log(token, axios, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa");
     if (localStorage.getItem("token") && localStorage.getItem("user")) {
       // console.log(user);
       //if (user.id_profesor) {

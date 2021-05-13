@@ -2,7 +2,7 @@ import React, { useEffect, useState, createContext } from "react";
 import Login from "./containers/login/Login";
 import GlobalFonts from "./assets/fonts/fonts";
 import "./App.css";
-import axios from "axios";
+import axios from "./components/common/http";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./containers/home/home";
 import UsersLanding from "./containers/users/usersLanding/UsersLanding";
@@ -15,11 +15,16 @@ const App = () => {
 
   useEffect(() => {
     const loggedToken = localStorage.getItem("token");
-    if (loggedToken) {
-      const foundToken = loggedToken;
-      setToken(foundToken);
-      axios.defaults.headers.common['Authorization'] = token;
-    }
+    // if (loggedToken) {
+    //const foundToken = loggedToken;
+    //setToken(loggedToken);
+    axios.defaults.headers.common.Authorization = `Bearer ${loggedToken}`;
+    console.log(
+      loggedToken,
+      axios.defaults.headers.common.Authorization,
+      "1111111111111111111"
+    );
+    //}
   }, []);
 
   useEffect(() => {

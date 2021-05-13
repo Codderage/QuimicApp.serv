@@ -6,7 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import "./SideNav.css";
 import { SideNavData } from "./SideNavData";
 import { User } from "../../../App";
-import axios from "axios";
+import axios from "../http";
 import swal from "sweetalert";
 
 const SideNavBar = () => {
