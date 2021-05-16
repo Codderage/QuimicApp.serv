@@ -7,6 +7,7 @@ use App\Models\Usuario;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Grupo;
 use App\Models\Alumno;
 use App\Models\Profesor;
 
@@ -35,6 +36,7 @@ class UsuarioController extends Controller
             foreach ($alumnos as &$valor) {
                 $usuario = Usuario::where('id_alumno', $valor->id)->first();
                 //array_push($valor, "nombreUsuario"=>$usuario->username);
+                if($valor->id_grupo) $valor["nombre_grupo"] = Grupo::find($valor->id_grupo)->nombre;
                 $valor["nombreUsuario"] = $usuario->username;
                 $valor["idUsuario"] = $usuario->id;
                 $valor["tipo"] = "Alumno";
@@ -53,8 +55,47 @@ class UsuarioController extends Controller
                 }
 
             //$usuarios = array_merge($alumnos, $profesor);
-            
+            return $usuarios;
         }
+    }else if(auth()->user()->id_alumno){
+        $usuarios = [];
+        $alumno1 = Alumno::find(auth()->user()->id_alumno);
+
+        if($alumno1->id_grupo){
+            $nombreGrupo = Grupo::find($alumno1->id_grupo)->nombre;
+        }else{
+            $nombreGrupo = "Sin grupo asignado";
+        }
+        
+        $alumno1["nombreUsuario"] = auth()->user()->username;
+            $alumno1["nombre_grupo"] = $nombreGrupo;
+            $alumno1["tipo"] = "Alumno";
+            $alumno1["idUsuario"] = auth()->user()->id;
+            array_push($usuarios, $alumno1);
+
+        // if($alumno1->id_grupo){
+        //     $alumnos = Alumno::where('id_grupo', $alumno1->id_grupo)->get();
+        //     $nombreGrupo = Grupo::find($alumno1->id_grupo)->nombre;
+        //     foreach ($alumnos as &$valor) {
+                
+        //         if($valor->id == auth()->user()->id){
+        //             $usuario = Usuario::where('id_alumno', auth()->user()->id_alumno)->first();
+        //             $valor["nombreUsuario"] = $usuario->username;
+        //         }
+        //         $valor["nombre_grupo"] = $nombreGrupo;
+        //         $valor["tipo"] = "Alumno";
+
+        //         array_push($usuarios, $valor);
+                
+        //     }
+        // }else{
+        //     $alumno = Alumno::find(auth()->user()->id_alumno);
+        //     $usuario = Usuario::where('id_alumno', auth()->user()->id_alumno)->first();
+        //     $alumno["nombreUsuario"] = $usuario->username;
+        //     $alumno["nombre_grupo"] = "Sin grupo asignado";
+        //     $alumno["tipo"] = "Alumno";
+        //     array_push($usuarios, $alumno);
+        // }
         return $usuarios;
     }
     return response()->json([
@@ -319,6 +360,24 @@ class UsuarioController extends Controller
             $usuario->delete();
 
             return $usuario;
+        }else if(auth()->user()->id == $id){
+            $usuario = Usuario::find(auth()->user()->id);
+
+            if($usuario->id_profesor){
+                $profesor = Profesor::find($usuario->id_profesor);
+                if($profesor['es_admin']){
+                    return response()->json([
+                        'Error' => 'No es posible borrar usuarios administradores'
+                    ], 401);
+                }
+                $profesor->delete();
+            }else{
+                $alumno = Alumno::find($usuario->id_alumno);
+                $alumno->delete();
+            }
+            $usuario->delete();
+
+            return $usuario;
         }else{
             return response()->json([
                 'error' => 'No autorizado',
@@ -341,6 +400,42 @@ class UsuarioController extends Controller
                 $alumno = Alumno::find($usuario->id_alumno);
                 return [$usuario, $alumno];
             }
+        }else{
+            return response()->json([
+                'error' => 'No autorizado',
+            ], 401);
+        }
+    }
+
+    public function getGrupoUsuario()
+    {
+        if(auth()->user()->id_alumno){
+            $usuarios = [];
+            $usuario = Usuario::find(auth()->user()->id);
+            $alumno1 = Alumno::find($usuario->id_alumno);
+
+            if($alumno1->id_grupo){
+                $alumnos = Alumno::where('id_grupo', $alumno1->id_grupo)->get();
+                $nombreGrupo = Grupo::find($alumno1->id_grupo)->nombre;
+                foreach ($alumnos as &$valor) {
+                    if($valor->id == auth()->user()->id){
+                        $usuario = Usuario::where('id_alumno', auth()->user()->id_alumno)->first();
+                        $valor["nombreUsuario"] = $usuario->username;
+                    }
+                    $valor["nombre_grupo"] = $nombreGrupo;
+                    $valor["tipo"] = "Alumno";
+            
+                    array_push($usuarios, $valor);         
+                }
+            }else{
+                $alumno = Alumno::find(auth()->user()->id_alumno);
+                $usuario = Usuario::where('id_alumno', auth()->user()->id_alumno)->first();
+                $alumno["nombreUsuario"] = $usuario->username;
+                $alumno["nombre_grupo"] = "Sin grupo asignado";
+                $alumno["tipo"] = "Alumno";
+                array_push($usuarios, $alumno);
+            }
+            return $usuarios;
         }else{
             return response()->json([
                 'error' => 'No autorizado',
@@ -391,6 +486,45 @@ class UsuarioController extends Controller
             }
 
             return $respuesta;
+
+        }else if(auth()->user()->id == $id){
+
+            $usuario = Usuario::find(auth()->user()->id);
+            
+            if($request->password){
+                $request->password = bcrypt($request->password);
+                $usuario->update(array_merge($request->all(),
+                ['password' => bcrypt($request->password)]));
+            }else{
+                $usuario->update($request->all());
+            }
+
+            unset($usuario['password']);
+            unset($usuario['codigo_verificacion	']);
+
+            if($usuario->id_alumno){
+                $alumno = Alumno::find($usuario->id_alumno);
+                $grupo_origen = $alumno->id_grupo;
+                //return $grupo_origen;
+                $alumno->update($request->all());
+                $alumno->update(['id_grupo' => $grupo_origen]);
+                
+                $respuesta = response()->json([
+                    'message' => 'Actualizado con éxito',
+                    'user' => [$usuario, $alumno]
+                ], 200);
+            }else{
+                $profesor = Profesor::find($usuario->id_profesor);
+                $profesor->update($request->all());
+                unset($profesor['es_admin']);
+                $respuesta = response()->json([
+                    'message' => 'Actualizado con éxito',
+                    'user' => [$usuario, $profesor]
+                ], 200);
+            }
+
+            return $respuesta;
+
 
         }else{
             return response()->json([

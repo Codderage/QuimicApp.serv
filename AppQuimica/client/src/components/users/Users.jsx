@@ -56,6 +56,9 @@ const columns = [
               record.email,
               record.nombreUsuario,
               record.idUsuario,
+              record.rol,
+              record.id_grupo,
+              record.grupo,
               e
             );
           }}
@@ -108,8 +111,13 @@ const onDelete = (id) => {
         .then((response) => {
           //console.log(response.data);
           if (response.status >= 200 && response.status <= 205) {
-            window.location.reload(true);
-
+            var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+            if (usuarioLogeado.id_profesor) {
+              window.location.reload(true);
+            } else {
+              localStorage.clear();
+              window.location.href = "/";
+            }
             swal({
               title: "Usuario eliminado",
               text: "  ",
@@ -146,21 +154,81 @@ const onDelete = (id) => {
   //console.log(key, e);
 };
 
-const onUpdate = (
+const groups = async (rol, id_grupo, grupo) => {
+  let grupos = `<input type="hidden" class="swal2-input" id='Egrupo' type='text' value="null">`;
+  //console.log(rol, "AAAAAAAAAAAAAAAAAAAAAA");
+  var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  if (usuarioLogeado.id_profesor) {
+    if (rol == "Alumno") {
+      //console.log(grupos, "BBBBBBBBBBB");
+      await axios
+        .get("grupos")
+        .then((response) => {
+          //console.log(response.data);
+          if (response.status >= 200 && response.status <= 205) {
+            grupos = `<label for='Egrupo'>Grupo:</label><br>
+                        <select class="swal2-input" id="Egrupo">`;
+            if (id_grupo) {
+              grupos += `<option value="-1">Sin grupo</option>`;
+            } else {
+              grupos += `<option value="-1" selected>Sin grupo</option>`;
+            }
+            for (let i = 0; i < response.data.length; i++) {
+              if (grupo == response.data[i].nombre) {
+                grupos += `<option value="${response.data[i].id}" selected>${response.data[i].nombre}</option>`;
+              } else {
+                grupos += `<option value="${response.data[i].id}">${response.data[i].nombre}</option>`;
+              }
+            }
+            grupos += `</select>`;
+          }
+        })
+        .catch(function (error) {
+          if (error.status == 401) {
+            swal({
+              title: "Error acceso " + error.response.status,
+              text: "Error, no tienes acceso a esta sección.",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
+          } else {
+            swal({
+              title: "Error interno " + error.response.status,
+              text: "Error interno, vuelve a intentarlo en unos momentos.",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
+          }
+        });
+    }
+    //console.log("ALUMNO");
+    //columns.splice(5);
+  }
+  return grupos;
+  //console.log(grupos, "BBBBBBBBBBB");
+};
+
+const onUpdate = async (
   key,
   nombre,
   apellidos,
   email,
   nombreUsuario,
   idUsuario,
+  rol,
+  id_grupo,
+  grupo,
   e
 ) => {
   //e.preventDefault();
   //const data = this.state.data.filter(item => item.key !== key);
   //this.setState({ data, isPageTween: false });
-  console.log(key, e);
+  //console.log(key, e);
   //history.push("/editUsuario");
-
+  const grupos = await groups(rol, id_grupo, grupo);
+  //console.log(grupos, "AAAAAAAAAAAAAAAAAAAAAA");
   Swal.fire({
     title: "Editar",
     html: `<label for='EnombreUsuario'>Usuario:</label>
@@ -171,6 +239,7 @@ const onUpdate = (
     <input class="swal2-input" id='Eapellidos' type='text' value=${apellidos}>
     <label for='Eemail'>Email:</label>
     <input class="swal2-input" id='Eemail' type='email' value=${email}>
+    ${grupos}
     `,
     // <input id='Eprofe' type='checkbox'>
     // <label class="swal2-input" for='Eprofe'>&nbsp;Es profesor</label><br>
@@ -188,6 +257,8 @@ const onUpdate = (
       const Eemail = Swal.getPopup().querySelector("#Eemail").value;
       const EnombreUsuario =
         Swal.getPopup().querySelector("#EnombreUsuario").value;
+      const Egrupo = Swal.getPopup().querySelector("#Egrupo").value;
+      //alert(Egrupo);
       //const Eprofe = Swal.getPopup().querySelector("#Eprofe").checked;
       //const Eadmin = Swal.getPopup().querySelector("#Eadmin").checked;
       if (!Enombre || !Eapellidos || !Eemail || !EnombreUsuario) {
@@ -198,6 +269,7 @@ const onUpdate = (
         Eapellidos: Eapellidos,
         Eemail: Eemail,
         EnombreUsuario: EnombreUsuario,
+        Egrupo: Egrupo,
         //Eadmin: Eadmin,
       };
     },
@@ -209,13 +281,33 @@ const onUpdate = (
         button: false,
         allowOutsideClick: false,
       });
-      axios
-        .put("update-usuario/" + `${idUsuario}`, {
+      let peticion = [];
+      if (result.value.Egrupo == "-1") {
+        peticion = {
           nombre: `${result.value.Enombre}`,
           apellidos: `${result.value.Eapellidos}`,
           email: `${result.value.Eemail}`,
           username: `${result.value.EnombreUsuario}`,
-        })
+          id_grupo: null,
+        };
+      } else if (result.value.Egrupo != "null") {
+        peticion = {
+          nombre: `${result.value.Enombre}`,
+          apellidos: `${result.value.Eapellidos}`,
+          email: `${result.value.Eemail}`,
+          username: `${result.value.EnombreUsuario}`,
+          id_grupo: `${result.value.Egrupo}`,
+        };
+      } else {
+        peticion = {
+          nombre: `${result.value.Enombre}`,
+          apellidos: `${result.value.Eapellidos}`,
+          email: `${result.value.Eemail}`,
+          username: `${result.value.EnombreUsuario}`,
+        };
+      }
+      axios
+        .put("update-usuario/" + `${idUsuario}`, peticion)
         .then((response) => {
           //console.log(response.data);
           if (response.status >= 200 && response.status <= 205) {
@@ -279,97 +371,59 @@ const Users = () => {
       //if (user.id_profesor) {
       var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
       //console.log(usuarioLogeado);
-      if (usuarioLogeado.id_profesor) {
-        //LARAVEL CONTROLA SI EL USUARIO QUE PIDE ES ADMIN O NO
-        await axios
-          .get("usuarios")
-          .then((response) => {
-            //console.log(response.data);
-            if (response.status >= 200 && response.status <= 205) {
-              //console.log(response.data[1].nombre);
-              //console.log(response.data);
-              for (let i = 0; i < response.data.length; i++) {
-                //console.log(response.data[i]);
-                array1.push({
-                  key: i,
-                  nombreUsuario: response.data[i].nombreUsuario,
-                  nombre: response.data[i].nombre,
-                  apellidos: response.data[i].apellidos,
-                  email: response.data[i].email,
-                  rol: response.data[i].tipo,
-                  id: response.data[i].id,
-                  idUsuario: response.data[i].idUsuario,
-                });
-              }
 
-              //history.push("/");
-            }
-          })
-          .catch(function (error) {
-            if (error.status == 401) {
-              swal({
-                title: "Error acceso " + error.response.status,
-                text: "Error, no tienes acceso a esta sección.",
-                icon: "error",
-                button: "Aceptar",
-                timer: "3000",
-              });
-            } else {
-              swal({
-                title: "Error interno " + error.response.status,
-                text: "Error interno, vuelve a intentarlo en unos momentos.",
-                icon: "error",
-                button: "Aceptar",
-                timer: "3000",
+      //LARAVEL CONTROLA SI EL USUARIO QUE PIDE ES ADMIN O NO
+      await axios
+        .get("usuarios")
+        .then((response) => {
+          //console.log(response.data);
+          if (response.status >= 200 && response.status <= 205) {
+            //console.log(response.data[1].nombre);
+            //console.log(response.data, response.data.length);
+            for (let i = 0; i < response.data.length; i++) {
+              //console.log(response.data[i]);
+              array1.push({
+                key: i,
+                nombreUsuario: response.data[i].nombreUsuario,
+                nombre: response.data[i].nombre,
+                apellidos: response.data[i].apellidos,
+                email: response.data[i].email,
+                id_grupo: response.data[i].id_grupo,
+                grupo: response.data[i].nombre_grupo,
+                rol: response.data[i].tipo,
+                id: response.data[i].id,
+                idUsuario: response.data[i].idUsuario,
               });
             }
-          });
+            //console.log(array1);
 
-        //   if (usuarioLogeado.es_admin) {
-        //     await axios
-        //       .get("profesores")
-        //       .then((response) => {
-        //         //console.log(response.data);
-        //         if (response.status >= 200 && response.status <= 205) {
-        //           //console.log(response.data[1].nombre);
-        //           //console.log(response.data);
-        //           for (let e = i; e < response.data.length + i; e++) {
-        //             //console.log(response.data[i].nombre);
-        //             array1.push({
-        //               key: e,
-        //               nombreUsuario: response.data[e].nombreUsuario,
-        //               nombre: response.data[e].nombre,
-        //               apellidos: response.data[e].apellidos,
-        //               email: response.data[e].email,
-        //               rol: "Profesor",
-        //               id: response.data[e].id,
-        //               idUsuario: response.data[e].idUsuario,
-        //             });
-        //           }
-        //           //history.push("/");
-        //         }
-        //       })
-        //       .catch(function (error) {
-        //         swal({
-        //           title: "Error interno " + error.response.status,
-        //           text: "Error interno, vuelve a intentarlo en unos momentos.",
-        //           icon: "error",
-        //           button: "Aceptar",
-        //           timer: "3000",
-        //         });
-        //       });
-        // }
-      } else {
-        //console.log("ALUMNO");
-        columns.splice(4);
-        for (let i = 1; i <= 3; i++) {
-          array1.push({
-            key: i,
-            nombre: "alumno",
-            apellidos: `alumno`,
-          });
-        }
-      }
+            //history.push("/");
+          }
+        })
+        .catch(function (error) {
+          if (error.status == 401) {
+            swal({
+              title: "Error acceso " + error.response.status,
+              text: "Error, no tienes acceso a esta sección.",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
+          } else {
+            swal({
+              title: "Error interno " + error.response.status,
+              text: "Error interno, vuelve a intentarlo en unos momentos.",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
+          }
+        });
+      //if (usuarioLogeado.id_profesor) {
+      //} else {
+      //console.log("ALUMNO");
+      //columns.splice(5);
+      //}
     }
     //console.log(array1);
     //console.log(array1);

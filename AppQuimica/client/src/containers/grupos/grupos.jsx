@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
 // import styled from "styled-components";
 // import { User } from "../../../App";
-import SideNavBar from "../../../components/common/sideNav/SideNav";
-import EditUsers from "../../../components/users/editUser/editUser";
+import SideNavBar from "../../components/common/sideNav/SideNav";
+import Grupos from "../../components/grupos/Grupos";
 
-const editUser = () => {
+const grupos = () => {
   // const { user } = useContext(User);
 
   return (
     <div>
       <SideNavBar />
-      <EditUsers />
+      <Grupos />
     </div>
   );
 };
 
-export default editUser;
+export default grupos;

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProfesorController;
@@ -58,6 +59,7 @@ Route::delete('/delete-usuario/{id}', [UsuarioController::class, 'deleteUsuario'
 Route::get('/usuario/{id}', [UsuarioController::class, 'getUsuario']);//OK
 Route::put('/update-usuario/{id}', [UsuarioController::class, 'updateUsuario']);//OK
 Route::get('/usr/co_vf/{ref}', [UsuarioController::class, 'verifyUsuario']);//OK
+Route::get('/group-usuario', [UsuarioController::class, 'getGrupoUsuario']);//OK
 
 //ALUMNO
 

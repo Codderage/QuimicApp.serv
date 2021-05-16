@@ -11,13 +11,14 @@ import "./App.css";
 import axios from "./components/common/http";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./containers/home/home";
-import EditUser from "./containers/users/editUsers/editUser";
+//import Grupos from "./containers/grupos/grupos";
 import carga from "./assets/img/load/ajax-loader.gif";
 import { render } from "react-dom";
 //import UsersLanding from "./containers/users/usersLanding/UsersLanding";
 const UsersLanding = lazy(() =>
   import("./containers/users/usersLanding/UsersLanding")
 );
+const Grupos = lazy(() => import("./containers/grupos/grupos"));
 
 export const User = createContext();
 
@@ -76,8 +77,8 @@ const App = () => {
                 <UsersLanding />
               </Route>
 
-              <Route path="/editUsuario">
-                <EditUser />
+              <Route path="/grupos">
+                <Grupos />
               </Route>
 
               <Route path="/" exact>
