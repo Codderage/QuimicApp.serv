@@ -47,7 +47,7 @@ const columns = [
     render: (text, record) => (
       <Space size="middle">
         <button
-          className=""
+          className="btn btn-primary"
           onClick={(e) => {
             onUpdate(
               record.id,
@@ -66,7 +66,7 @@ const columns = [
           Editar
         </button>
         <button
-          className=""
+          className="btn btn-danger"
           onClick={(e) => {
             onDelete(record.idUsuario);
           }}

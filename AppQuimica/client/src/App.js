@@ -14,6 +14,7 @@ import Home from "./containers/home/home";
 //import Grupos from "./containers/grupos/grupos";
 import carga from "./assets/img/load/ajax-loader.gif";
 import { render } from "react-dom";
+//import { PageNotFound } from "./containers/error/PageNotFound";
 //import UsersLanding from "./containers/users/usersLanding/UsersLanding";
 const UsersLanding = lazy(() =>
   import("./containers/users/usersLanding/UsersLanding")
@@ -84,6 +85,10 @@ const App = () => {
               <Route path="/" exact>
                 <Home />
               </Route>
+
+              {/* <Route>
+                <PageNotFound />
+              </Route> */}
             </Switch>
           </Router>
         </Suspense>

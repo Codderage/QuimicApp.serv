@@ -55,8 +55,9 @@ class UsuarioController extends Controller
                 }
 
             //$usuarios = array_merge($alumnos, $profesor);
-            return $usuarios;
+            
         }
+        return $usuarios;
     }else if(auth()->user()->id_alumno){
         $usuarios = [];
         $alumno1 = Alumno::find(auth()->user()->id_alumno);
