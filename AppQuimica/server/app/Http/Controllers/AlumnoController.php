@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use App\Models\Usuario;
 
 /**
  * @OA\Info(title="API Química", version="1.0")
@@ -47,7 +48,18 @@ class AlumnoController extends BaseController
      */
     public function getAlumnos()
     {
-        return Alumno::all();
+        $alumnos = Alumno::all();
+
+        foreach ($alumnos as &$valor) {
+            $usuario = Usuario::where('id_alumno', $valor->id)->first();
+            //array_push($valor, "nombreUsuario"=>$usuario->username);
+            $valor["nombreUsuario"] = $usuario->username;
+            $valor["idUsuario"] = $usuario->id;
+            
+        }
+
+        return $alumnos;
+        //return Alumno::all();
     }
 
     /**

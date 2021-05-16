@@ -48,12 +48,13 @@ Route::get('auth/perfil-usuario', [AuthController::class, 'perfilUsuario']);
 //Route::post('auth/registroAlumno', [AuthController::class, 'registroAlumno']);
 
 //USUARIO
-Route::post('/register', [UsuarioController::class, 'register']);//ESTA COMENTAR, CREA USUARIOS GENERALES
+//Route::post('/register', [UsuarioController::class, 'register']);//ESTA COMENTAR, CREA USUARIOS GENERALES
+Route::get('/usuarios', [UsuarioController::class, 'getUsuarios']);
 Route::post('/register-alumno', [UsuarioController::class, 'registerAlumno']);
 Route::post('/register-profesor', [UsuarioController::class, 'registerProfesor']);
 Route::delete('/delete-usuario/{id}', [UsuarioController::class, 'deleteUsuario']);
-Route::delete('/delete-usuario-al/{id}', [UsuarioController::class, 'deleteUsuarioAlum']);
-Route::delete('/delete-usuario-pr/{id}', [UsuarioController::class, 'deleteUsuarioProf']);
+//Route::delete('/delete-usuario-al/{id}', [UsuarioController::class, 'deleteUsuarioAlum']);
+//Route::delete('/delete-usuario-pr/{id}', [UsuarioController::class, 'deleteUsuarioProf']);
 Route::get('/usuario/{id}', [UsuarioController::class, 'getUsuario']);
 Route::put('/update-usuario/{id}', [UsuarioController::class, 'updateUsuario']);
 Route::get('/usr/co_vf/{ref}', [UsuarioController::class, 'verifyUsuario']);

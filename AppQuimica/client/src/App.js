@@ -11,6 +11,7 @@ import "./App.css";
 import axios from "./components/common/http";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./containers/home/home";
+import EditUser from "./containers/users/editUsers/editUser";
 import carga from "./assets/img/load/ajax-loader.gif";
 import { render } from "react-dom";
 //import UsersLanding from "./containers/users/usersLanding/UsersLanding";
@@ -30,11 +31,11 @@ const App = () => {
     //const foundToken = loggedToken;
     //setToken(loggedToken);
     axios.defaults.headers.common.Authorization = `Bearer ${loggedToken}`;
-    console.log(
-      loggedToken,
-      axios.defaults.headers.common.Authorization,
-      "1111111111111111111"
-    );
+    // console.log(
+    //   loggedToken,
+    //   axios.defaults.headers.common.Authorization,
+    //   "1111111111111111111"
+    // );
     //}
   }, []);
 
@@ -73,6 +74,10 @@ const App = () => {
 
               <Route path="/usuarios" exact>
                 <UsersLanding />
+              </Route>
+
+              <Route path="/editUsuario">
+                <EditUser />
               </Route>
 
               <Route path="/" exact>

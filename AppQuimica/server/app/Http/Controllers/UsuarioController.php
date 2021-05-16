@@ -25,6 +25,34 @@ class UsuarioController extends Controller
         $this->middleware('auth:api', ['except' => ['register', 'verifyUsuario']]);
     }
 
+    public function getUsuarios()
+    {
+        $usuarios = [];
+        $alumnos = Alumno::all();
+
+        foreach ($alumnos as &$valor) {
+            $usuario = Usuario::where('id_alumno', $valor->id)->first();
+            //array_push($valor, "nombreUsuario"=>$usuario->username);
+            $valor["nombreUsuario"] = $usuario->username;
+            $valor["idUsuario"] = $usuario->id;
+            array_push($usuarios, $valor);
+        }
+
+        $profesor = Profesor::all();
+
+        foreach ($profesor as &$valor) {
+            $usuario = Usuario::where('id_profesor', $valor->id)->first();
+            //array_push($valor, "nombreUsuario"=>$usuario->username);
+            $valor["nombreUsuario"] = $usuario->username;
+            $valor["idUsuario"] = $usuario->id;
+            array_push($usuarios, $valor);
+        }
+
+        //$usuarios = array_merge($alumnos, $profesor);
+        return $usuarios;
+    }
+    
+
     /**
      * Register a User.
      *
