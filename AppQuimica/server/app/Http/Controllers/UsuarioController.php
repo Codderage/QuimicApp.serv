@@ -27,6 +27,43 @@ class UsuarioController extends Controller
 
     public function getUsuarios()
     {
+        if(auth()->user()->id_profesor){
+            
+            $usuarios = [];
+            $alumnos = Alumno::all();
+
+            foreach ($alumnos as &$valor) {
+                $usuario = Usuario::where('id_alumno', $valor->id)->first();
+                //array_push($valor, "nombreUsuario"=>$usuario->username);
+                $valor["nombreUsuario"] = $usuario->username;
+                $valor["idUsuario"] = $usuario->id;
+                $valor["tipo"] = "Alumno";
+                array_push($usuarios, $valor);
+            }
+            if(Profesor::find(auth()->user()->id_profesor)->es_admin){
+                $profesor = Profesor::all();
+
+                foreach ($profesor as &$valor) {
+                    $usuario = Usuario::where('id_profesor', $valor->id)->first();
+                    //array_push($valor, "nombreUsuario"=>$usuario->username);
+                    $valor["nombreUsuario"] = $usuario->username;
+                    $valor["idUsuario"] = $usuario->id;
+                    $valor["tipo"] = "Profesor";
+                    array_push($usuarios, $valor);
+                }
+
+            //$usuarios = array_merge($alumnos, $profesor);
+            
+        }
+        return $usuarios;
+    }
+    return response()->json([
+        'error' => 'No autorizado',
+    ], 401);
+    }
+
+    public function getUsuarios1()
+    {
         $usuarios = [];
         $alumnos = Alumno::all();
 
@@ -264,38 +301,50 @@ class UsuarioController extends Controller
 
     public function deleteUsuario($id)
     {
-        $usuario = Usuario::find($id);
+        if(auth()->user()->id_profesor){
+            $usuario = Usuario::find($id);
 
-        if($usuario->id_profesor){
-            $profesor = Profesor::find($usuario->id_profesor);
-            if($profesor['es_admin']){
-                return response()->json([
-                    'Error' => 'No es posible borrar usuarios administradores'
-                ], 401);
+            if($usuario->id_profesor){
+                $profesor = Profesor::find($usuario->id_profesor);
+                if($profesor['es_admin']){
+                    return response()->json([
+                        'Error' => 'No es posible borrar usuarios administradores'
+                    ], 401);
+                }
+                $profesor->delete();
+            }else{
+                $alumno = Alumno::find($usuario->id_alumno);
+                $alumno->delete();
             }
-            $profesor->delete();
-        }else{
-            $alumno = Alumno::find($usuario->id_alumno);
-            $alumno->delete();
-        }
-        $usuario->delete();
+            $usuario->delete();
 
-        return $usuario;
+            return $usuario;
+        }else{
+            return response()->json([
+                'error' => 'No autorizado',
+            ], 401);
+        }
     }
 
     public function getUsuario($id)
     {
-        $usuario = Usuario::find($id);
-        unset($usuario['password']);
-        unset($usuario['codigo_verificacion	']);
+        if(auth()->user()->id_profesor){
+            $usuario = Usuario::find($id);
+            unset($usuario['password']);
+            unset($usuario['codigo_verificacion	']);
 
-        if($usuario->id_profesor){
-            $profesor = Profesor::find($usuario->id_profesor);
-            unset($profesor['es_admin']);
-            return [$usuario, $profesor];
+            if($usuario->id_profesor){
+                $profesor = Profesor::find($usuario->id_profesor);
+                unset($profesor['es_admin']);
+                return [$usuario, $profesor];
+            }else{
+                $alumno = Alumno::find($usuario->id_alumno);
+                return [$usuario, $alumno];
+            }
         }else{
-            $alumno = Alumno::find($usuario->id_alumno);
-            return [$usuario, $alumno];
+            return response()->json([
+                'error' => 'No autorizado',
+            ], 401);
         }
     }
 
@@ -306,39 +355,47 @@ class UsuarioController extends Controller
      */
     public function updateUsuario(Request $request, $id)
     {
-        $usuario = Usuario::find($id);
-        
+        if(auth()->user()->id_profesor){
 
-        if($request->password){
-            //$password = bcrypt($request->password);
-            //$usuario->update("password"->$password);
-            $request->password = bcrypt($request->password);
-            $usuario->update(array_merge($request->all(),
-            ['password' => bcrypt($request->password)]));
+            $usuario = Usuario::find($id);
+            
+
+            if($request->password){
+                //$password = bcrypt($request->password);
+                //$usuario->update("password"->$password);
+                $request->password = bcrypt($request->password);
+                $usuario->update(array_merge($request->all(),
+                ['password' => bcrypt($request->password)]));
+            }else{
+                $usuario->update($request->all());
+            }
+
+            unset($usuario['password']);
+            unset($usuario['codigo_verificacion	']);
+
+            if($usuario->id_alumno){
+                $alumno = Alumno::find($usuario->id_alumno);
+                $alumno->update($request->all());
+                $respuesta = response()->json([
+                    'message' => 'Actualizado con éxito',
+                    'user' => [$usuario, $alumno]
+                ], 200);
+            }else{
+                $profesor = Profesor::find($usuario->id_profesor);
+                $profesor->update($request->all());
+                unset($profesor['es_admin']);
+                $respuesta = response()->json([
+                    'message' => 'Actualizado con éxito',
+                    'user' => [$usuario, $profesor]
+                ], 200);
+            }
+
+            return $respuesta;
+
         }else{
-            $usuario->update($request->all());
+            return response()->json([
+                'error' => 'No autorizado',
+            ], 401);
         }
-
-        unset($usuario['password']);
-        unset($usuario['codigo_verificacion	']);
-
-        if($usuario->id_alumno){
-            $alumno = Alumno::find($usuario->id_alumno);
-            $alumno->update($request->all());
-            $respuesta = response()->json([
-                'message' => 'Actualizado con éxito',
-                'user' => [$usuario, $alumno]
-            ], 200);
-        }else{
-            $profesor = Profesor::find($usuario->id_profesor);
-            $profesor->update($request->all());
-            unset($profesor['es_admin']);
-            $respuesta = response()->json([
-                'message' => 'Actualizado con éxito',
-                'user' => [$usuario, $profesor]
-            ], 200);
-        }
-
-        return $respuesta;
     }
 }

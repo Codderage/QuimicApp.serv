@@ -120,13 +120,23 @@ const onDelete = (id) => {
           }
         })
         .catch(function (error) {
-          swal({
-            title: "Error interno " + error.response.status,
-            text: "Error interno, vuelve a intentarlo en unos momentos.",
-            icon: "error",
-            button: "Aceptar",
-            timer: "3000",
-          });
+          if (error.status == 401) {
+            swal({
+              title: "Error acceso " + error.response.status,
+              text: "Error, no tienes acceso a esta sección.",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
+          } else {
+            swal({
+              title: "Error interno " + error.response.status,
+              text: "Error interno, vuelve a intentarlo en unos momentos.",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
+          }
         });
     } else {
       //swal("Usuario no eliminado");
@@ -229,13 +239,23 @@ const onUpdate = (
           }
         })
         .catch(function (error) {
-          swal({
-            title: "Error interno " + error.response.status,
-            text: "Error interno, vuelve a intentarlo en unos momentos.",
-            icon: "error",
-            button: "Aceptar",
-            timer: "3000",
-          });
+          if (error.status == 401) {
+            swal({
+              title: "Error acceso " + error.response.status,
+              text: "Error, no tienes acceso a esta sección.",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
+          } else {
+            swal({
+              title: "Error interno " + error.response.status,
+              text: "Error interno, vuelve a intentarlo en unos momentos.",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
+          }
         });
     }
   });
@@ -269,14 +289,14 @@ const Users = () => {
               //console.log(response.data[1].nombre);
               //console.log(response.data);
               for (let i = 0; i < response.data.length; i++) {
-                //console.log(response.data[i].nombre);
+                //console.log(response.data[i]);
                 array1.push({
                   key: i,
                   nombreUsuario: response.data[i].nombreUsuario,
                   nombre: response.data[i].nombre,
                   apellidos: response.data[i].apellidos,
                   email: response.data[i].email,
-                  rol: "Alumno",
+                  rol: response.data[i].tipo,
                   id: response.data[i].id,
                   idUsuario: response.data[i].idUsuario,
                 });
@@ -286,13 +306,23 @@ const Users = () => {
             }
           })
           .catch(function (error) {
-            swal({
-              title: "Error interno " + error.response.status,
-              text: "Error interno, vuelve a intentarlo en unos momentos.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
+            if (error.status == 401) {
+              swal({
+                title: "Error acceso " + error.response.status,
+                text: "Error, no tienes acceso a esta sección.",
+                icon: "error",
+                button: "Aceptar",
+                timer: "3000",
+              });
+            } else {
+              swal({
+                title: "Error interno " + error.response.status,
+                text: "Error interno, vuelve a intentarlo en unos momentos.",
+                icon: "error",
+                button: "Aceptar",
+                timer: "3000",
+              });
+            }
           });
 
         //   if (usuarioLogeado.es_admin) {
