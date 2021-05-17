@@ -7,9 +7,9 @@ use App\Models\Usuario;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\Grupo;
 use App\Models\Alumno;
 use App\Models\Profesor;
+use App\Models\Grupo;
 
 use App\Mail\CorreosMailable;
 use Illuminate\Support\Facades\Mail;
@@ -437,6 +437,8 @@ class UsuarioController extends Controller
                 array_push($usuarios, $alumno);
             }
             return $usuarios;
+        }else if(auth()->user()->id_profesor){
+            return Grupo::all();
         }else{
             return response()->json([
                 'error' => 'No autorizado',

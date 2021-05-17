@@ -167,7 +167,7 @@ const Grupos = () => {
   return (
     <>
       {/* {peticion} */}
-      <h1>Estos son los datos de tu grupo.</h1>
+      <h3>Estos son los datos de tu grupo.</h3>
       <Table
         {...state}
         pagination={{ position: [state.top, state.bottom] }}
