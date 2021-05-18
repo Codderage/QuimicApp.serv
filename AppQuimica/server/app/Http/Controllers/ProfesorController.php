@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use App\Models\Usuario;
 
 /**
  * @OA\Info(title="API Química", version="1.0")
@@ -34,20 +35,25 @@ class ProfesorController extends BaseController
      * @OA\Get(
      *   path="/api/profesores",
      *   tags={"profesores"},
-     *   summary="Ver todos los profesores.",
-     *   @OA\Response(
-     *     response=200,
-     *     description="Retorna todos los profesores.",
-     *   ),
-     *   @OA\Response(
-     *     response="default",
+     *   summary="Ver todos los profuse App\Models\Usuario;
      *     description="Se ha producido un error.",
      *   )
      * )
      */
     public function getProfesores()
     {
-        return Profesor::all();
+        $profesor = Profesor::all();
+
+        foreach ($profesor as &$valor) {
+            $usuario = Usuario::where('id_profesor', $valor->id)->first();
+            //array_push($valor, "nombreUsuario"=>$usuario->username);
+            $valor["nombreUsuario"] = $usuario->username;
+            $valor["idUsuario"] = $usuario->id;
+            
+        }
+
+        return $profesor;
+        //return Profesor::all();
     }
 
     /**

@@ -1,14 +1,16 @@
 import App from "./App";
-import React from "react";
+import React, { createContext } from "react";
 import ReactDOM from "react-dom";
+import "antd/dist/antd.css";
 import reportWebVitals from "./reportWebVitals";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.js";
 import axios from "axios";
 
-axios.defaults.baseURL = 'http://localhost/M7_M14/projecte_M14/quimica/AppQuimica/server/public/api/auth/';
-// axios.defaults.baseURL = "http://localhost/Clase/ProyectoFinal/Quimica/quimica/AppQuimica/server/public/api/auth/";
-axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("token");
+//axios.defaults.baseURL = 'http://localhost/M14/Proyecto-final/quimica/AppQuimica/public/api/';
+//axios.defaults.baseURL =
+//  "http://localhost/Clase/ProyectoFinal/Quimica/quimica/AppQuimica/server/public/api/";
+// axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("token");
 
 ReactDOM.render(
   <React.StrictMode>

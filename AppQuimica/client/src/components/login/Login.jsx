@@ -9,7 +9,7 @@ import {
   Seccion,
 } from "./login.styled";
 import swal from "sweetalert";
-import axios from "axios";
+import axios from "../common/http/index";
 import { useHistory } from "react-router-dom";
 import { User } from "../../App";
 
@@ -20,7 +20,7 @@ const Login = () => {
   const [password, setPassword] = useState(0);
   const history = useHistory();
 
-  const { setUser } = useContext(User);
+  const { setUser, setToken } = useContext(User);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +42,7 @@ const Login = () => {
       });
       axios
         //.get(
-        .post("login", {
+        .post("auth/login", {
           username: username,
           password: password,
         })
@@ -63,7 +63,19 @@ const Login = () => {
 
             setUser(response.data.user);
 
-            history.push("/");
+            setToken(response.data.access_token);
+
+            //history.push("/");
+            window.location.href = "/";
+          }
+          if (response.status == 209) {
+            swal({
+              title: "Error",
+              text: "Usuario con correo no verificado",
+              icon: "error",
+              button: false,
+              timer: "2000",
+            });
           }
         })
         .catch(function (error) {

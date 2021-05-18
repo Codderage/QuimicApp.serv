@@ -12,16 +12,10 @@ const Footer = () => {
     <SFooter className="d-flex justify-content-center align-items-center fixed-bottom">
       <div id="social-wrapper">
         {/* <a href="#"> */}
-        <FontAwesomeIcon
-          icon={faFacebook}
-          className="mx-4 my-3 social-icon"
-        />
+        <FontAwesomeIcon icon={faFacebook} className="mx-4 my-3 social-icon" />
         {/* </a> */}
         {/* <a href="#"> */}
-        <FontAwesomeIcon
-          icon={faInstagram}
-          className="mx-4 my-3 social-icon"
-        />
+        <FontAwesomeIcon icon={faInstagram} className="mx-4 my-3 social-icon" />
         {/* </a> */}
         {/* <a href="#"> */}
         <FontAwesomeIcon
@@ -31,7 +25,7 @@ const Footer = () => {
         />
         {/* </a> */}
       </div>
-    </SFooter >
+    </SFooter>
   );
 };
 

@@ -1,11 +1,11 @@
-.logged{
-    text-decoration: none !important;
-    color: unset !important;
-    margin-right: 40px;
+.logged {
+  text-decoration: none !important;
+  color: unset !important;
+  margin-right: 40px;
 }
 
-span{
-    font-size: 20px;
+span {
+  font-size: 20px;
 }
 
 .menu-bars {
@@ -41,11 +41,13 @@ span{
   top: 0;
   left: -100%;
   transition: 1s;
+  z-index: 1;
 }
 
 .nav-menu.active {
   left: 0;
   transition: 350ms;
+  z-index: 1;
 }
 
 .nav-icon {

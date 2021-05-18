@@ -6,7 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import "./SideNav.css";
 import { SideNavData } from "./SideNavData";
 import { User } from "../../../App";
-import axios from "axios";
+import axios from "../http";
 import swal from "sweetalert";
 
 const SideNavBar = () => {
@@ -16,11 +16,23 @@ const SideNavBar = () => {
 
   const logout = async () => {
     try {
+<<<<<<< HEAD
       const out = await axios.post('logout', {}, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
+=======
+      const out = await axios.post(
+        "auth/logout",
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+>>>>>>> jordi
       swal({
         title: "Esperamos volver a verte",
         text: "  ",
@@ -30,7 +42,7 @@ const SideNavBar = () => {
       });
       setUser(null);
       localStorage.clear();
-      history.push('/login');
+      history.push("/login");
     } catch (e) {
       swal({
         title: "Error interno",
@@ -39,14 +51,17 @@ const SideNavBar = () => {
         button: false,
         timer: "3000",
       });
+      localStorage.clear();
       // history.push("/");
     }
-
-  }
+  };
 
   const logged = user ? (
     <span>
-      Welcome {user.username} | <Link onClick={logout} className="logged">Logout</Link>
+      Welcome {user.username} |{" "}
+      <Link onClick={logout} className="logged">
+        Logout
+      </Link>
     </span>
   ) : (
     <Link to="/login" className="logged">
