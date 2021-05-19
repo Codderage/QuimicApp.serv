@@ -113,6 +113,33 @@ const Login = () => {
     //console.log(peticionGet("usuarios"));
     //<peticionGet ruta="usuarios" />;
   };
+
+  const pwOl = async (mail) => {
+    swal({
+      title: "Se enviará un mail para que se valide ...",
+      icon: carga,
+      button: false,
+      allowOutsideClick: false,
+    });
+    await axios
+      .get(`mail-pw/${mail}`)
+      .then((response) => {
+        //console.log(response.data);
+        if (response.status >= 200 && response.status <= 205) {
+          swal(`Te hemos enviado un coreo a '${mail}'`);
+        }
+      })
+      .catch(function (error) {
+        swal({
+          title: "No encontrado",
+          text: "Error, usuario no encontrado.",
+          icon: "error",
+          button: "Aceptar",
+          timer: "3000",
+        });
+      });
+  };
+
   return (
     <Seccion className="container d-flex flex-column justify-content-centre align-items-center">
       <div>
@@ -147,7 +174,9 @@ const Login = () => {
               swal("Escribe tu correo electronico:", {
                 content: "input",
               }).then((value) => {
-                swal(`Te hemos enviado un coreo a '${value}'`);
+                {
+                  pwOl(value);
+                }
               });
             }}
           >

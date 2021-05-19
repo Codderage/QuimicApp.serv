@@ -126,6 +126,12 @@ const Grupos = () => {
     xScroll: false,
     yScroll: false,
   });
+  var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  var hola = "Estos son los datos de tu grupo.";
+  if (JSON.parse(usuarioLogeado.id_profesor)) {
+    columns.splice(1);
+    hola = "Estos son los grupos que hay registrados.";
+  }
 
   const handleDataChange = (hasData) => {
     this.setState({ hasData });
@@ -167,7 +173,8 @@ const Grupos = () => {
   return (
     <>
       {/* {peticion} */}
-      <h3>Estos son los datos de tu grupo.</h3>
+
+      <h3>{hola} Crud de grupos</h3>
       <Table
         {...state}
         pagination={{ position: [state.top, state.bottom] }}
