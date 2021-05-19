@@ -13,39 +13,40 @@ const columns = [
   {
     title: "Usuario",
     dataIndex: "nombreUsuario",
-    sorter: (a, b) => a.nombreUsuario - b.nombreUsuario,
+    //sorter: (a, b) => a.nombreUsuario - b.nombreUsuario,
   },
   {
     title: "Nombre",
     dataIndex: "nombre",
-    sorter: (a, b) => a.nombre - b.nombre,
+    //sorter: (a, b) => a.nombre - b.nombre,
   },
   {
     title: "Apellidos",
     dataIndex: "apellidos",
-    sorter: (a, b) => a.apellidos - b.apellidos,
+    //sorter: (a, b) => a.apellidos - b.apellidos,
   },
   {
     title: "Grupo",
     dataIndex: "grupo",
-    sorter: (a, b) => a.grupo - b.grupo,
+    //sorter: (a, b) => a.grupo - b.grupo,
   },
   {
     title: "Email",
     dataIndex: "email",
-    sorter: (a, b) => a.email - b.email,
+    //sorter: (a, b) => a.email - b.email,
   },
   {
     title: "Rol",
     dataIndex: "rol",
-    sorter: (a, b) => a.rol - b.rol,
+    //sorter: (a, b) => a.rol - b.rol,
   },
   {
     title: "",
     key: "accion",
+    width: 300,
     dataIndex: "accion",
     render: (text, record) => (
-      <Space size="middle">
+      <Space>
         <button
           className="btn btn-primary"
           onClick={(e) => {
@@ -111,27 +112,9 @@ const onCreateBut = () => {
           >
             Crear usuario
           </button>
-          <button
-            className="btn btn-primary "
-            onClick={(e) => {
-              onUpPass();
-            }}
-          >
-            Solicitar cambio contraseña
-          </button>
         </div>
       );
     } else {
-      <div className="justify-content-center row">
-        <button
-          className="btn btn-primary "
-          onClick={(e) => {
-            onUpPass();
-          }}
-        >
-          Solicitar cambio contraseña
-        </button>
-      </div>;
     }
   }
 };
@@ -822,7 +805,7 @@ const Users = () => {
     bordered: false,
     loading: false,
     pagination,
-    size: "default",
+    size: "Middle",
     showHeader,
     rowSelection: {},
     scroll: undefined,
@@ -860,13 +843,15 @@ const Users = () => {
       {/* {peticion} */}
 
       {onCreateBut()}
-      <Table
-        {...state}
-        pagination={{ position: [state.top, state.bottom] }}
-        columns={tableColumns}
-        dataSource={datos1 ? datos1 : null}
-        scroll={scroll}
-      />
+      <div style={{ height: 100 }}>
+        <Table
+          {...state}
+          pagination={{ position: [state.top, state.bottom] }}
+          columns={tableColumns}
+          dataSource={datos1 ? datos1 : null}
+          scroll={scroll}
+        />
+      </div>
     </>
   );
 };

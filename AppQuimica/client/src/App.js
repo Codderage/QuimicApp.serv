@@ -11,6 +11,8 @@ import "./App.css";
 import axios from "./components/common/http";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./containers/home/home";
+import Auth from "./containers/verif/Auth";
+import VerAuth from "./containers/verif/VerAuth";
 //import Grupos from "./containers/grupos/grupos";
 import carga from "./assets/img/load/ajax-loader.gif";
 import { render } from "react-dom";
@@ -80,6 +82,14 @@ const App = () => {
 
               <Route path="/grupos">
                 <Grupos />
+              </Route>
+
+              <Route path="/auth">
+                <Auth />
+              </Route>
+
+              <Route path="/verificar-pw">
+                <VerAuth />
               </Route>
 
               <Route path="/" exact>
