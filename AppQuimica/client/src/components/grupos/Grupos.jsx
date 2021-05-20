@@ -10,22 +10,22 @@ const columns = [
   {
     title: "Nombre",
     dataIndex: "nombre",
-    sorter: (a, b) => a.nombre - b.nombre,
+    //sorter: (a, b) => a.nombre - b.nombre,
   },
   {
     title: "Apellidos",
     dataIndex: "apellidos",
-    sorter: (a, b) => a.apellidos - b.apellidos,
+    //sorter: (a, b) => a.apellidos - b.apellidos,
   },
   {
     title: "Grupo",
     dataIndex: "grupo",
-    sorter: (a, b) => a.grupo - b.grupo,
+    //sorter: (a, b) => a.grupo - b.grupo,
   },
   {
     title: "Email",
     dataIndex: "email",
-    sorter: (a, b) => a.email - b.email,
+    //sorter: (a, b) => a.email - b.email,
   },
 ];
 

@@ -83,7 +83,7 @@ Route::put('/usr/co-pw/{id}', [UsuarioController::class, 'actCnt']);//OK
 
 //GRUPO
 
-//Route::get('/grupos', [GrupoController::class, 'getGrupos']);
+Route::get('/grupos', [GrupoController::class, 'getGrupos']);
 //Route::get('/grupo/{id}', [GrupoController::class, 'getGrupo']);
 Route::put('/grupo/{id}', [GrupoController::class, 'updateGrupo']); //OK
 Route::post('/grupo', [GrupoController::class, 'insertGrupo']); //OK

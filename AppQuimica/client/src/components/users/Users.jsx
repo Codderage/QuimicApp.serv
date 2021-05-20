@@ -520,23 +520,7 @@ const groups = async (rol, id_grupo, grupo) => {
           }
         })
         .catch(function (error) {
-          if (error.status == 401) {
-            swal({
-              title: "Error acceso " + error.response.status,
-              text: "Error, no tienes acceso a esta sección.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
-          } else {
-            swal({
-              title: "Error interno " + error.response.status,
-              text: "Error interno, vuelve a intentarlo en unos momentos.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
-          }
+          return "NO HAY GRUPOS";
         });
     } else if (rol == "Profesor") {
       await axios
@@ -555,23 +539,7 @@ const groups = async (rol, id_grupo, grupo) => {
           }
         })
         .catch(function (error) {
-          if (error.status == 401) {
-            swal({
-              title: "Error acceso " + error.response.status,
-              text: "Error, no tienes acceso a esta sección.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
-          } else {
-            swal({
-              title: "Error interno " + error.response.status,
-              text: "Error interno, vuelve a intentarlo en unos momentos.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
-          }
+          return "NO HAY GRUPOS";
         });
     }
     //console.log("ALUMNO");
