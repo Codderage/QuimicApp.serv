@@ -4,6 +4,7 @@ import { User } from "../../App";
 import axios from "../common/http";
 import swal from "sweetalert";
 import carga from "../../assets/img/load/ajax-loader.gif";
+import Swal from "sweetalert2";
 
 const columns = [
   {
@@ -66,15 +67,47 @@ const Grupos = () => {
             //console.log(response.data[1].nombre);
             //console.log(response.data, response.data.length);
             for (let i = 0; i < response.data.length; i++) {
-              //console.log(response.data[i]);
-              array1.push({
-                key: i,
-                nombre: response.data[i].nombre,
-                apellidos: response.data[i].apellidos,
-                email: response.data[i].email,
-                id_grupo: response.data[i].id_grupo,
-                grupo: response.data[i].nombre_grupo,
-              });
+              //console.log(response.data[i].email);
+              if (response.data[i].email) {
+                array1.push({
+                  key: i,
+                  nombre: response.data[i].nombre,
+                  apellidos: response.data[i].apellidos,
+                  email: response.data[i].email,
+                  id_grupo: response.data[i].id_grupo,
+                  grupo: response.data[i].nombre_grupo,
+                });
+              } else {
+                array1.push({
+                  key: i,
+                  nombre: (
+                    <>
+                      {response.data[i].nombre}&nbsp;&nbsp;
+                      <button
+                        className="btn btn-primary"
+                        onClick={(e) => {
+                          onEdit(response.data[i].id, response.data[i].nombre);
+                        }}
+                      >
+                        Editar
+                      </button>
+                      &nbsp;&nbsp;
+                      <button
+                        className="btn btn-danger"
+                        onClick={(e) => {
+                          onDelete(response.data[i].id);
+                        }}
+                      >
+                        Eliminar
+                      </button>
+                    </>
+                  ),
+                  apellidos: response.data[i].apellidos,
+                  email: response.data[i].email,
+                  id_grupo: response.data[i].id_grupo,
+                  grupo: response.data[i].nombre_grupo,
+                });
+              }
             }
             //console.log(array1);
 
@@ -110,6 +143,159 @@ const Grupos = () => {
     //console.log(array1);
     setDatos1(array1);
   }, []);
+
+  const onEdit = async (id, nombreUsuario) => {
+    // swal({
+    //   title: "Error acceso " + id,
+    // });
+    Swal.fire({
+      title: "Editar",
+      html: `<label for='Enombre'>Nombre:</label>
+      <input class="swal2-input" id='Enombre' type='text' value=${nombreUsuario}>
+      `,
+      // <input id='Eprofe' type='checkbox'>
+      // <label class="swal2-input" for='Eprofe'>&nbsp;Es profesor</label><br>
+      // <input id='Eadmin' type='checkbox'>
+      // <label class="swal2-input" for='Eadmin'>&nbsp;Es admin</label>
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Editar",
+      cancelButtonText: "Cancelar",
+      focusConfirm: false,
+      preConfirm: () => {
+        const Enombre = Swal.getPopup().querySelector("#Enombre").value;
+        if (!Enombre) {
+          Swal.showValidationMessage(`Algún campo obligatorio vacío`);
+        }
+        return {
+          Enombre: Enombre,
+        };
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        swal({
+          //title: "Comprobando ...",
+          icon: carga,
+          button: false,
+          allowOutsideClick: false,
+        });
+        let peticion = [];
+        peticion = {
+          nombre: `${result.value.Enombre}`,
+        };
+        axios
+          .put("grupo/" + `${id}`, peticion)
+          .then((response) => {
+            //console.log(response.data);
+            if (response.status >= 200 && response.status <= 205) {
+              //console.log(response.data[1].nombre);
+              //console.log(response.data);
+              window.location.reload(true);
+              //Users.array1[key].nombreUsuario = response.data.nombreUsuario;
+              //Users.array1[key].nombre = response.data.nombre;
+              //Users.array1[key].apellidos = response.data.apellidos;
+
+              // swal({
+              //   icon: "success",
+              //   title: "Actualizado",
+              //   text: `
+              //     Usuario: ${result.value.EnombreUsuario}
+              //     Nombre: ${result.value.Enombre}
+              //     Apellidos: ${result.value.Eapellidos}
+              //     Email: ${result.value.Eemail}
+              //   `,
+              // });
+            }
+          })
+          .catch(function (error) {
+            if (error.status == 401) {
+              swal({
+                title: "Error acceso " + error.response.status,
+                text: "Error, no tienes acceso a esta sección.",
+                icon: "error",
+                button: "Aceptar",
+                timer: "3000",
+              });
+            } else {
+              swal({
+                title: "Error interno " + error.response.status,
+                text: "Error interno, vuelve a intentarlo en unos momentos.",
+                icon: "error",
+                button: "Aceptar",
+                timer: "3000",
+              });
+            }
+          });
+      }
+    });
+  };
+
+  const onDelete = (id) => {
+    swal({
+      title: "¿Estás seguro?",
+      text: "Una vez eliminado no podrás volver a recuperar el grupo",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        //SI
+        //console.log(rol);
+
+        swal({
+          //title: "Comprobando ...",
+          icon: carga,
+          button: false,
+          allowOutsideClick: false,
+        });
+        axios
+          .delete("grupo/" + id)
+          .then((response) => {
+            //console.log(response.data);
+            if (response.status >= 200 && response.status <= 205) {
+              var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+              if (usuarioLogeado.id_profesor) {
+                window.location.reload(true);
+              } else {
+                localStorage.clear();
+                window.location.href = "/";
+              }
+              swal({
+                title: "Grupo eliminado",
+                text: "  ",
+                icon: "success",
+                button: false,
+                timer: "1800",
+              });
+            }
+          })
+          .catch(function (error) {
+            //console.log("EEEEEEEEEEEEEEEE", error, "AAAAAAAAAAAAAAAAAAA");
+            if (error.status == 401) {
+              swal({
+                title: "Error acceso " + error.response.status,
+                text: "Error, no tienes acceso a esta sección.",
+                icon: "error",
+                button: "Aceptar",
+                timer: "3000",
+              });
+            } else {
+              //console.log(error.response.data["Error"]);
+              swal({
+                title: "Error " + error.response.status,
+                text: "El grupo tiene alumnos asignados",
+                icon: "error",
+                button: "Aceptar",
+                timer: "3000",
+              });
+            }
+          });
+      } else {
+        //swal("Grupo no eliminado");
+      }
+    });
+  };
 
   const [state, setState] = useState({
     bordered: false,

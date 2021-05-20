@@ -114,10 +114,17 @@ class GrupoController extends BaseController
      */
     public function updateGrupo(Request $request)
     {
+        if(auth()->user()->id_profesor){
         $grupo = Grupo::find($request->id);
         $grupo->update($request->all());
 
         return $grupo;
+
+    }else{
+        return response()->json([
+            'error' => 'No autorizado',
+        ], 401);
+    }
     }
 
     /**
@@ -179,10 +186,16 @@ class GrupoController extends BaseController
      */
     public function deleteGrupo($id)
     {
+        if(auth()->user()->id_profesor){
         $grupo = Grupo::find($id);
 
         $grupo->delete();
 
         return $grupo;
+    }else{
+        return response()->json([
+            'error' => 'No autorizado',
+        ], 401);
+    }
     }
 }
