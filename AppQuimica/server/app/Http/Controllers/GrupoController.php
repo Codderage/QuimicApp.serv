@@ -153,11 +153,17 @@ class GrupoController extends BaseController
      */
     public function insertGrupo(Request $request)
     {
+        if(auth()->user()->id_profesor){
         $grupo = new Grupo;
         $grupo->nombre = $request->nombre;
 
         $grupo->save();
         return $grupo;
+    }else{
+        return response()->json([
+            'error' => 'No autorizado',
+        ], 401);
+    }
     }
 
     /**

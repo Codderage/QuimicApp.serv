@@ -231,10 +231,97 @@ const Grupos = () => {
     });
   };
 
+  const onCreateBut = () => {
+    const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+
+    if (usuarioLogeado) {
+      if (usuarioLogeado.id_profesor) {
+        return (
+          <div className="justify-content-center row">
+            <button
+              className="btn btn-primary "
+              onClick={(e) => {
+                onCreate();
+              }}
+            >
+              Crear Grupo
+            </button>
+          </div>
+        );
+      } else {
+      }
+    }
+  };
+
+  const onCreate = async () => {
+    var peticion = [];
+
+    Swal.fire({
+      title: "Crear grupo",
+      html: `
+      <label for='Enombre'>Nombre:</label>
+      <input class="swal2-input" id='Enombre' type='text' placeholder="Nombre">`,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Crear",
+      cancelButtonText: "Cancelar",
+      focusConfirm: false,
+      preConfirm: () => {
+        const Enombre = Swal.getPopup().querySelector("#Enombre").value;
+        if (!Enombre) {
+          Swal.showValidationMessage(`Algún campo obligatorio vacío`);
+        }
+        return {
+          Enombre: Enombre,
+        };
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        peticion = {
+          nombre: `${result.value.Enombre}`,
+        };
+        peticionCrear(peticion);
+      }
+    });
+  };
+
+  const peticionCrear = async (peticion) => {
+    await axios
+      .post("grupo", peticion)
+      .then((response) => {
+        //console.log(response.data);
+        if (response.status >= 200 && response.status <= 205) {
+          //console.log(response.data[1].nombre);
+          //console.log(response.data);
+          window.location.reload(true);
+        }
+      })
+      .catch(function (error) {
+        if (error.status == 401) {
+          swal({
+            title: "Error acceso " + error.response.status,
+            text: "Error, no tienes acceso a esta sección.",
+            icon: "error",
+            button: "Aceptar",
+            timer: "3000",
+          });
+        } else {
+          swal({
+            title: "Error interno " + error.response.status,
+            text: "Error interno, vuelve a intentarlo en unos momentos.",
+            icon: "error",
+            button: "Aceptar",
+            timer: "3000",
+          });
+        }
+      });
+  };
+
   const onDelete = (id) => {
     swal({
       title: "¿Estás seguro?",
-      text: "Una vez eliminado no podrás volver a recuperar el grupo",
+      text: "Eliminarás a todos los usuarios del grupo y una vez eliminado no podrás volver a recuperarlo.",
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -359,8 +446,8 @@ const Grupos = () => {
   return (
     <>
       {/* {peticion} */}
-
-      <h3>{hola} Crud de grupos</h3>
+      {onCreateBut()}
+      <h3>{hola}</h3>
       <Table
         {...state}
         pagination={{ position: [state.top, state.bottom] }}
