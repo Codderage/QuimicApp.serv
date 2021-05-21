@@ -1,9 +1,9 @@
-import { Table, Space } from "antd";
-import React, { useEffect, useState, createContext, useContext } from "react";
-import { User } from "../../App";
+import { Table } from "antd";
+import React, { useEffect, useState } from "react";
+// import { User } from "../../App";
 import axios from "../common/http";
 import swal from "sweetalert";
-import carga from "../../assets/img/load/ajax-loader.gif";
+// import carga from "../../assets/img/load/ajax-loader.gif";
 
 const columns = [
   {
@@ -28,7 +28,7 @@ const columns = [
   },
 ];
 
-const data = [];
+// const data = [];
 // for (let i = 1; i <= 10; i++) {
 //   data.push({
 //     key: i,
@@ -43,20 +43,20 @@ const showHeader = true;
 const pagination = { position: "bottom" };
 
 const Grupos = () => {
-  const { token } = useContext(User);
+  // const { token } = useContext(User);
   const [datos1, setDatos1] = useState();
 
   const array1 = [];
 
   useEffect(async () => {
-    if (localStorage.getItem("token") && localStorage.getItem("user")) {
+    if (sessionStorage.getItem("token") && sessionStorage.getItem("user")) {
       await axios
         .get(
           "group-usuario" //,
           // {},
           // {
           //   headers: {
-          //     Authorization: "Bearer " + localStorage.getItem("token"),
+          //     Authorization: "Bearer " + sessionStorage.getItem("token"),
           //   },
           // }
         )
@@ -148,10 +148,10 @@ const Grupos = () => {
     tableColumns[tableColumns.length - 1].fixed = "right";
   }
 
-  const nombreUsu = localStorage.getItem("user").username;
+  const nombreUsu = sessionStorage.getItem("user").username;
 
   const mensajeGrupo = () => {
-    var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+    var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
     if (array1[0].grupo) {
       return (
         usuarioLogeado.username +

@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { SNav } from "./SideNav.styled";
 import { faBars, faTimes, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./SideNav.css";
 import { SideNavData } from "./SideNavData";
 import { User } from "../../../App";
@@ -10,29 +10,13 @@ import axios from "../http";
 import swal from "sweetalert";
 
 const SideNavBar = () => {
-  const { user, setUser } = useContext(User);
+  const { user, setUser, setToken } = useContext(User);
   const [sidebar, setSidebar] = useState(false);
-  const history = useHistory();
+  // const history = useHistory();
 
   const logout = async () => {
     try {
-<<<<<<< HEAD
-      const out = await axios.post('logout', {}, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-=======
-      const out = await axios.post(
-        "auth/logout",
-        {},
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      );
->>>>>>> jordi
+      await axios.post("auth/logout");
       swal({
         title: "Esperamos volver a verte",
         text: "  ",
@@ -41,8 +25,12 @@ const SideNavBar = () => {
         timer: "1800",
       });
       setUser(null);
-      localStorage.clear();
-      history.push("/login");
+      setToken(null);
+      sessionStorage.clear();
+      // history.push("/login");
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1800);
     } catch (e) {
       swal({
         title: "Error interno",
@@ -51,7 +39,7 @@ const SideNavBar = () => {
         button: false,
         timer: "3000",
       });
-      localStorage.clear();
+      // sessionStorage.clear();
       // history.push("/");
     }
   };

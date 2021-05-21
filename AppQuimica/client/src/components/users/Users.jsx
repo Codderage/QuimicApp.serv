@@ -1,14 +1,19 @@
+import React, { useEffect, useState, useContext } from "react";
+
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEdit, faTimes, faEye } from "@fortawesome/free-solid-svg-icons";
+import { CreateButton, TableWrapper } from "./Users.styled";
 import { Table, Space } from "antd";
-import React, { useEffect, useState, createContext, useContext } from "react";
 import { User } from "../../App";
+
 import axios from "../common/http";
 import swal from "sweetalert";
 import carga from "../../assets/img/load/ajax-loader.gif";
 import Swal from "sweetalert2";
 
 // import { Link, useHistory } from "react-router-dom";
-
 // const history = useHistory();
+
 const columns = [
   {
     title: "Usuario",
@@ -54,40 +59,46 @@ const columns = [
     key: "accion",
     dataIndex: "accion",
     render: (text, record) => (
-      <Space size="middle">
-        <button
-          className="btn btn-primary"
-          onClick={(e) => {
-            onUpdate(
-              record.id,
-              record.nombre,
-              record.apellidos,
-              record.email,
-              record.nombreUsuario,
-              record.idUsuario,
-              record.rol,
-              record.id_grupo,
-              record.grupo,
-              e
-            );
-          }}
-        >
-          Editar
-        </button>
-        <button
-          className="btn btn-danger"
-          onClick={(e) => {
-            onDelete(record.idUsuario);
-          }}
-        >
-          Eliminar
-        </button>
-      </Space>
+      <>
+        <Space size="middle">
+          <button
+            className="btn btn-primary"
+            onClick={(e) => {
+              onUpdate(
+                record.id,
+                record.nombre,
+                record.apellidos,
+                record.email,
+                record.nombreUsuario,
+                record.idUsuario,
+                record.rol,
+                record.id_grupo,
+                record.grupo,
+                e
+              );
+            }}
+          >
+            Editar
+          </button>
+        </Space>
+        <br />
+        <br />
+        <Space size="middle">
+          <button
+            className="btn btn-danger"
+            onClick={(e) => {
+              onDelete(record.idUsuario);
+            }}
+          >
+            Eliminar
+          </button>
+        </Space>
+      </>
     ),
   },
 ];
 
-const data = [];
+// const data = [];
 // for (let i = 1; i <= 10; i++) {
 //   data.push({
 //     key: i,
@@ -246,11 +257,11 @@ const onDelete = (id) => {
         .then((response) => {
           //console.log(response.data);
           if (response.status >= 200 && response.status <= 205) {
-            var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+            var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
             if (usuarioLogeado.id_profesor) {
               window.location.reload(true);
             } else {
-              localStorage.clear();
+              sessionStorage.clear();
               window.location.href = "/";
             }
             swal({
@@ -292,7 +303,7 @@ const onDelete = (id) => {
 const groups = async (rol, id_grupo, grupo) => {
   let grupos = `<input type="hidden" class="swal2-input" id='Egrupo' type='text' value="null">`;
   //console.log(rol, "AAAAAAAAAAAAAAAAAAAAAA");
-  var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
   if (usuarioLogeado.id_profesor) {
     if (rol == "Alumno") {
       //console.log(grupos, "BBBBBBBBBBB");
@@ -494,17 +505,16 @@ const pagination = { position: "bottom" };
 
 const Users = () => {
   const { token } = useContext(User);
-  const [datos1, setDatos1] = useState();
+  const [datos, setDatos] = useState();
 
   const array = [];
-  const array1 = [];
 
   useEffect(async () => {
     //console.log(token, axios, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa");
-    if (localStorage.getItem("token") && localStorage.getItem("user")) {
+    if (sessionStorage.getItem("token") && sessionStorage.getItem("user")) {
       // console.log(user);
       //if (user.id_profesor) {
-      var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+      var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
       //console.log(usuarioLogeado);
 
       //LARAVEL CONTROLA SI EL USUARIO QUE PIDE ES ADMIN O NO
@@ -517,7 +527,7 @@ const Users = () => {
             //console.log(response.data, response.data.length);
             for (let i = 0; i < response.data.length; i++) {
               //console.log(response.data[i]);
-              array1.push({
+              array.push({
                 key: i,
                 nombreUsuario: response.data[i].nombreUsuario,
                 nombre: response.data[i].nombre,
@@ -562,7 +572,7 @@ const Users = () => {
     }
     //console.log(array1);
     //console.log(array1);
-    setDatos1(array1);
+    setDatos(array);
   }, []);
 
   const [state, setState] = useState({
@@ -604,14 +614,17 @@ const Users = () => {
 
   return (
     <>
-      {/* {peticion} */}
-      <Table
-        {...state}
-        pagination={{ position: [state.top, state.bottom] }}
-        columns={tableColumns}
-        dataSource={datos1 ? datos1 : null}
-        scroll={scroll}
-      />
+      <TableWrapper>
+        {/* <CreateButton>+ Crear usuario</CreateButton> */}
+        <Table
+          {...state}
+          pagination={{ position: [state.top, state.bottom] }}
+          columns={tableColumns}
+          dataSource={datos ? datos : null}
+          scroll={scroll}
+          className="users-table"
+        />
+      </TableWrapper>
     </>
   );
 };

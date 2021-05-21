@@ -57,16 +57,20 @@ const Login = () => {
               timer: "1800",
             });
 
-            localStorage.setItem("token", response.data.access_token);
+            sessionStorage.setItem("token", response.data.access_token);
 
-            localStorage.setItem("user", JSON.stringify(response.data.user));
+            sessionStorage.setItem("user", JSON.stringify(response.data.user));
 
             setUser(response.data.user);
 
             setToken(response.data.access_token);
 
-            //history.push("/");
-            window.location.href = "/";
+            // history.push("/");
+            // window.location.href = "/";
+
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 1800);
           }
           if (response.status == 209) {
             swal({
