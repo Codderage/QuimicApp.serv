@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Profesor;
 
 class AuthController extends Controller
 {
@@ -118,6 +119,11 @@ class AuthController extends Controller
         unset($usuario['token']);
 
         if(!$usuario['codigo_verificacion']){
+
+            if($usuario['id_profesor']){
+                $prof = Profesor::find($usuario['id_profesor']);
+                $usuario['es_admin'] = $prof['es_admin'];
+            }
 
             return response()->json([
                 'access_token' => $token,

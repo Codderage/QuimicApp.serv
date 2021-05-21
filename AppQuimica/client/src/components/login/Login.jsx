@@ -9,9 +9,9 @@ import {
   Seccion,
 } from "./login.styled";
 import swal from "sweetalert";
-import axios from "axios";
+import axios from "../common/http/index";
 import { useHistory } from "react-router-dom";
-import { User } from '../../App';
+import { User } from "../../App";
 
 import carga from "../../assets/img/load/ajax-loader.gif";
 
@@ -20,10 +20,9 @@ const Login = () => {
   const [password, setPassword] = useState(0);
   const history = useHistory();
 
-  const { setUser } = useContext(User);
+  const { setUser, setToken } = useContext(User);
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     if (username.length <= 5 || password.length <= 5) {
@@ -43,13 +42,10 @@ const Login = () => {
       });
       axios
         //.get(
-        .post(
-          "login",
-          {
-            username: username,
-            password: password,
-          }
-        )
+        .post("auth/login", {
+          username: username,
+          password: password,
+        })
         .then((response) => {
           //console.log(response.data);
           if (response.status >= 200 && response.status <= 205) {
@@ -61,13 +57,25 @@ const Login = () => {
               timer: "1800",
             });
 
-            localStorage.setItem('token', response.data.access_token);
+            localStorage.setItem("token", response.data.access_token);
 
-            localStorage.setItem('user', JSON.stringify(response.data.user));
+            localStorage.setItem("user", JSON.stringify(response.data.user));
 
             setUser(response.data.user);
 
-            history.push("/");
+            setToken(response.data.access_token);
+
+            //history.push("/");
+            window.location.href = "/";
+          }
+          if (response.status == 209) {
+            swal({
+              title: "Error",
+              text: "Usuario con correo no verificado",
+              icon: "error",
+              button: false,
+              timer: "2000",
+            });
           }
         })
         .catch(function (error) {
@@ -105,6 +113,33 @@ const Login = () => {
     //console.log(peticionGet("usuarios"));
     //<peticionGet ruta="usuarios" />;
   };
+
+  const pwOl = async (mail) => {
+    swal({
+      title: "Se enviará un mail para que se valide ...",
+      icon: carga,
+      button: false,
+      allowOutsideClick: false,
+    });
+    await axios
+      .get(`mail-pw/${mail}`)
+      .then((response) => {
+        //console.log(response.data);
+        if (response.status >= 200 && response.status <= 205) {
+          swal(`Te hemos enviado un coreo a '${mail}'`);
+        }
+      })
+      .catch(function (error) {
+        swal({
+          title: "No encontrado",
+          text: "Error, usuario no encontrado.",
+          icon: "error",
+          button: "Aceptar",
+          timer: "3000",
+        });
+      });
+  };
+
   return (
     <Seccion className="container d-flex flex-column justify-content-centre align-items-center">
       <div>
@@ -139,7 +174,9 @@ const Login = () => {
               swal("Escribe tu correo electronico:", {
                 content: "input",
               }).then((value) => {
-                swal(`Te hemos enviado un coreo a '${value}'`);
+                {
+                  pwOl(value);
+                }
               });
             }}
           >
