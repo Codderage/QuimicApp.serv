@@ -5,6 +5,14 @@ import React, {
   Suspense,
   lazy,
 } from "react";
+
+
+import GroupsLanding from "./containers/groups/groupsLanding/GroupsLanding";
+import PracticesLanding from "./containers/practices/practicesLanding/PracticesLanding";
+import PracticePage from "./containers/practices/view/PracticePage";
+import CompoundsLanding from "./containers/compounds/compoundsLanding/CompoundsLanding";
+import ComponentsLanding from "./containers/components/componentsLanding/ComponentsLanding";
+
 import Login from "./containers/login/Login";
 import GlobalFonts from "./assets/fonts/fonts";
 import "./App.css";
@@ -19,7 +27,7 @@ import { render } from "react-dom";
 const UsersLanding = lazy(() =>
   import("./containers/users/usersLanding/UsersLanding")
 );
-const Grupos = lazy(() => import("./containers/grupos/grupos"));
+
 
 export const User = createContext();
 
@@ -70,20 +78,29 @@ const App = () => {
         >
           <Router>
             <Switch>
+              <Route path="/" exact>
+                <Home />
+              </Route>
               <Route path="/login">
                 <Login />
               </Route>
-
               <Route path="/usuarios" exact>
                 <UsersLanding />
               </Route>
-
               <Route path="/grupos">
-                <Grupos />
+                <GroupsLanding />
               </Route>
-
-              <Route path="/" exact>
-                <Home />
+              <Route path="/practicas" exact>
+                <PracticesLanding />
+              </Route>
+              <Route path="/practicas/practica" exact>
+                <PracticePage />
+              </Route>
+              <Route path="/compuestos" exact>
+                <CompoundsLanding />
+              </Route>
+              <Route path="/componentes" exact>
+                <ComponentsLanding />
               </Route>
 
               {/* <Route>
