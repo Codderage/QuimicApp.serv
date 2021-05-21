@@ -61,7 +61,7 @@ const columns = [
             onUpdate(
               record.id,
               record.nombre,
-              record.apellidos,
+              String(record.apellidos),
               record.email,
               record.nombreUsuario,
               record.idUsuario,
@@ -561,6 +561,7 @@ const onUpdate = async (
   grupo,
   e
 ) => {
+  //console.log(apellidos);
   //e.preventDefault();
   //const data = this.state.data.filter(item => item.key !== key);
   //this.setState({ data, isPageTween: false });
@@ -568,16 +569,18 @@ const onUpdate = async (
   //history.push("/editUsuario");
   const grupos = await groups(rol, id_grupo, grupo);
   //console.log(grupos, "AAAAAAAAAAAAAAAAAAAAAA");
+  //apellidos = String("AAAAA aA AAaaa aaaaaaaaaa");
+
   Swal.fire({
     title: "Editar",
     html: `<label for='EnombreUsuario'>Usuario:</label>
-    <input class="swal2-input" id='EnombreUsuario' type='text' value=${nombreUsuario}>
+    <input class="swal2-input" id='EnombreUsuario' type='text' value='${nombreUsuario}'>
     <label for='Enombre'>Nombre:</label>
-    <input class="swal2-input" id='Enombre' type='text' value=${nombre}>
+    <input class="swal2-input" id='Enombre' type='text' value='${nombre}'>
     <label for='Eapellidos'>Apellidos:</label>
-    <input class="swal2-input" id='Eapellidos' type='text' value=${apellidos}>
+    <input class="swal2-input" id='Eapellidos' type='text' value='${apellidos}'>
     <label for='Eemail'>Email:</label>
-    <input class="swal2-input" id='Eemail' type='email' value=${email}>
+    <input class="swal2-input" id='Eemail' type='email' value='${email}'>
     ${grupos}
     `,
     // <input id='Eprofe' type='checkbox'>

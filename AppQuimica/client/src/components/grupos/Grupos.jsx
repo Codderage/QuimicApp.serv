@@ -151,7 +151,7 @@ const Grupos = () => {
     Swal.fire({
       title: "Editar",
       html: `<label for='Enombre'>Nombre:</label>
-      <input class="swal2-input" id='Enombre' type='text' value=${nombreUsuario}>
+      <input class="swal2-input" id='Enombre' type='text' value='${nombreUsuario}'>
       `,
       // <input id='Eprofe' type='checkbox'>
       // <label class="swal2-input" for='Eprofe'>&nbsp;Es profesor</label><br>
