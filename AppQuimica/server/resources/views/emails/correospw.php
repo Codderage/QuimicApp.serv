@@ -220,7 +220,7 @@
                                                 <td align="center">
                                                     <div>
                                                         <a href='http://localhost:3000/verificar-pw?verificar=<?php echo $usuario['codigo_verificacion']; ?>'
-                                                            class="button button--blue">Actualizar contraseña
+                                                            class="button button--blue" style="color:white">Actualizar contraseña
                                                         </a>
                                                     </div>
                                                 </td>

@@ -12,6 +12,7 @@ use App\Models\Profesor;
 use App\Models\Grupo;
 
 use App\Mail\CorreosMailable;
+use App\Mail\CorreosMailable1;
 use Illuminate\Support\Facades\Mail;
 
 class UsuarioController extends Controller
@@ -193,7 +194,7 @@ class UsuarioController extends Controller
             }else{
                 $usuarioAP = Alumno::find($usuario->id_alumno);
             }
-            $correo = new CorreosMailable($usuario, true);
+            $correo = new CorreosMailable1($usuario, true);
 
             Mail::to($usuarioAP['email'])->send($correo);
 
@@ -237,7 +238,7 @@ class UsuarioController extends Controller
             }else{
                 $usuarioAP = Alumno::find($usuario->id_alumno);
             }
-            $correo = new CorreosMailable($usuario, true);
+            $correo = new CorreosMailable1($usuario, true);
 
             Mail::to($usuarioAP['email'])->send($correo);
 

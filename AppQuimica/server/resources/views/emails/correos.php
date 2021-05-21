@@ -220,7 +220,7 @@
                                                 <td align="center">
                                                     <div>
                                                         <a href='http://localhost/Clase/ProyectoFinal/Quimica/quimica/AppQuimica/server/public/api/usr/co_vf/<?php echo $usuario[0]['codigo_verificacion']; ?>'
-                                                            class="button button--blue">Verificar Correo
+                                                            class="button button--blue" style="color:white">Verificar Correo
                                                         </a>
                                                     </div>
                                                 </td>
