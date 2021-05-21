@@ -45,3 +45,8 @@ body {
   font-family: "Lexend";
   border-radius: 0.25em;
 }
+
+.ant-space-horizontal {
+  display: flex;
+  flex-wrap: wrap;
+}
