@@ -373,14 +373,10 @@ class UsuarioController extends Controller
         $usuario = Usuario::where('codigo_verificacion', $ref)->first();
         if ($usuario) {
             $usuario->update(['codigo_verificacion' => null]);
-
-            return response()->json([
-                'message' => 'Autorizado',
-            ], 201);
+            
+            return redirect()->away('https://quimicapp.herokuapp.com/auth');
         } else {
-            return response()->json([
-                'error' => 'No autorizado',
-            ], 401);
+            return redirect()->away('https://quimicapp.herokuapp.com/noauth');
         }
     }
 
