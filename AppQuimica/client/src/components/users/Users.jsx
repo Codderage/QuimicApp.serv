@@ -1,6 +1,10 @@
+import React, { useEffect, useState, useContext } from "react";
+
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEdit, faTimes, faEye } from "@fortawesome/free-solid-svg-icons";
 import { Table, Space } from "antd";
-import React, { useEffect, useState, createContext, useContext } from "react";
 import { User } from "../../App";
+
 import axios from "../common/http";
 import swal from "sweetalert";
 import carga from "../../assets/img/load/ajax-loader.gif";
@@ -11,8 +15,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTimes, faKey } from "@fortawesome/free-solid-svg-icons";
 
 // import { Link, useHistory } from "react-router-dom";
-
 // const history = useHistory();
+
 const columns = [
   {
     title: "Usuario",
@@ -61,7 +65,7 @@ const columns = [
         </a>
 
         <a
-          href="http://localhost:3000/usuarios"
+          // href="http://localhost:3000/usuarios"
           title="Editar"
           onClick={(e) => {
             onUpdate(
@@ -81,7 +85,7 @@ const columns = [
           <FontAwesomeIcon icon={faEdit} className="edit-icon" />
         </a>
         <a
-          href="http://localhost:3000/usuarios"
+          // href="http://localhost:3000/usuarios"
           title="Eliminar"
           onClick={(e) => {
             onDelete(record.idUsuario);
@@ -93,16 +97,6 @@ const columns = [
     ),
   },
 ];
-
-const data = [];
-// for (let i = 1; i <= 10; i++) {
-//   data.push({
-//     key: i,
-//     nombre: "profesor",
-//     apellidos: `profesor`,
-//     rol: `${i % 2 ? "Profesor" : "Alumno"}`,
-//   });
-// }
 
 const onCreateBut = () => {
   const usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
@@ -706,10 +700,9 @@ const pagination = { position: "bottom" };
 
 const Users = () => {
   const { token } = useContext(User);
-  const [datos1, setDatos1] = useState();
+  const [datos, setDatos] = useState();
 
   const array = [];
-  const array1 = [];
 
   useEffect(async () => {
     //console.log(token, axios, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa");
@@ -729,7 +722,7 @@ const Users = () => {
             //console.log(response.data, response.data.length);
             for (let i = 0; i < response.data.length; i++) {
               //console.log(response.data[i]);
-              array1.push({
+              array.push({
                 key: i,
                 nombreUsuario: response.data[i].nombreUsuario,
                 nombre: response.data[i].nombre,
@@ -774,7 +767,7 @@ const Users = () => {
     }
     //console.log(array1);
     //console.log(array1);
-    setDatos1(array1);
+    setDatos(array);
   }, []);
 
   const [state, setState] = useState({
@@ -836,7 +829,7 @@ const Users = () => {
           {...state}
           pagination={{ position: [state.top, state.bottom] }}
           columns={tableColumns}
-          dataSource={datos1 ? datos1 : null}
+          dataSource={datos ? datos : null}
           scroll={scroll}
           className="users-table"
         />

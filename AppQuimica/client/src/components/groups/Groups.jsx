@@ -1,13 +1,13 @@
+
+import React, { useEffect, useState } from "react";
 import { Table, Space } from "antd";
-import React, { useEffect, useState, createContext, useContext } from "react";
-import { User } from "../../App";
 import axios from "../common/http";
 import swal from "sweetalert";
-import carga from "../../assets/img/load/ajax-loader.gif";
 import Swal from "sweetalert2";
+import carga from "../../assets/img/load/ajax-loader.gif";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTimes, faEye } from "@fortawesome/free-solid-svg-icons";
-
 import { CreateButton, TableWrapper } from "./Groups.styled";
 
 const columns = [
@@ -24,6 +24,7 @@ const columns = [
 
   {
     title: "Grupo",
+
     dataIndex: "grupo",
     //sorter: (a, b) => a.grupo - b.grupo,
   },
@@ -35,18 +36,20 @@ const columns = [
     dataIndex: "profesor",
     sorter: (a, b) => a.profesor - b.profesor,
   },
+
   {
     title: "",
     key: "accion",
-    render: () => (
+    dataIndex: "accion",
+    render: (text, record) => (
       <Space size="middle">
-        <a href="http://localhost:3000/grupos" title="Ver">
+        <a title="Ver">
           <FontAwesomeIcon icon={faEye} className="view-icon" />
         </a>
-        <a href="http://localhost:3000/grupos" title="Editar">
+        <a title="Editar">
           <FontAwesomeIcon icon={faEdit} className="view-icon" />
         </a>
-        <a href="http://localhost:3000/grupos" title="Eliminar">
+        <a title="Eliminar">
           <FontAwesomeIcon icon={faTimes} className="delete-icon" />
         </a>
       </Space>
@@ -54,36 +57,30 @@ const columns = [
   },
 ];
 
-const data = [];
+// const data = [];
 
 const showHeader = true;
 
 const pagination = { position: "bottom" };
 
 const Grupos = () => {
-  const { token } = useContext(User);
-  const [datos1, setDatos1] = useState();
+  // const { token } = useContext(User);
+  const [datos, setDatos] = useState();
 
-  const array1 = [];
+  const array = [];
 
   useEffect(async () => {
     if (sessionStorage.getItem("token") && sessionStorage.getItem("user")) {
       await axios
-        .get(
-          "group-usuario" //,
-          // {},
-          // {
-          //   headers: {
-          //     Authorization: "Bearer " + sessionStorage.getItem("token"),
-          //   },
-          // }
-        )
+        .get("group-usuario")
+
         .then((response) => {
           //console.log(response.data);
           if (response.status >= 200 && response.status <= 205) {
             //console.log(response.data[1].nombre);
             //console.log(response.data, response.data.length);
             for (let i = 0; i < response.data.length; i++) {
+
               //console.log(response.data[i].email);
               if (response.data[i].email) {
                 array1.push({
@@ -125,6 +122,7 @@ const Grupos = () => {
                   grupo: response.data[i].nombre_grupo,
                 });
               }
+
             }
             //console.log(array1);
 
@@ -158,7 +156,7 @@ const Grupos = () => {
     }
     //console.log(array1);
     //console.log(array1);
-    setDatos1(array1);
+    setDatos(array);
   }, []);
 
   const onEdit = async (id, nombreUsuario) => {
@@ -448,11 +446,13 @@ const Grupos = () => {
 
   const mensajeGrupo = () => {
     var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
-    if (array1[0].grupo) {
+
+    if (array[0].grupo) {
+
       return (
         usuarioLogeado.username +
         " estas en el grupo " +
-        array1[0].grupo +
+        array[0].grupo +
         " con estos otros usuarios."
       );
     } else {
@@ -462,21 +462,20 @@ const Grupos = () => {
 
   return (
     <>
-      {/* {peticion} */}
       {onCreateBut()}
-      <h3>{hola}</h3>
       <TableWrapper>
         <CreateButton>+ Crear grupo</CreateButton>
         <Table
           {...state}
           pagination={{ position: [state.top, state.bottom] }}
           columns={tableColumns}
-          dataSource={state.hasData ? data : null}
+          dataSource={datos ? datos : null}
           scroll={scroll}
           className="groups-table"
         />
       </TableWrapper>
     </>
+
   );
 };
 

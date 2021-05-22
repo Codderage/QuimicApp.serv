@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profesor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Profesor;
 
 class AuthController extends Controller
 {
@@ -118,9 +118,9 @@ class AuthController extends Controller
         unset($usuario['password']);
         unset($usuario['token']);
 
-        if(!$usuario['codigo_verificacion']){
+        if (!$usuario['codigo_verificacion']) {
 
-            if($usuario['id_profesor']){
+            if ($usuario['id_profesor']) {
                 $prof = Profesor::find($usuario['id_profesor']);
                 $usuario['es_admin'] = $prof['es_admin'];
             }
@@ -131,9 +131,9 @@ class AuthController extends Controller
                 // 'expires_in' => auth()->factory()->getTTL() * 60,
                 'user' => $usuario,
             ]);
-        } else{
+        } else {
             return response()->json([
-                'error' => 'No verificado'
+                'error' => 'No verificado',
             ], 209);
         }
     }
@@ -164,10 +164,9 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Registrado con éxito',
-            'user' => $user
+            'user' => $user,
         ], 201);
     }
-
 
     // /**
     //  * Get a JWT via given credentials.
@@ -198,9 +197,6 @@ class AuthController extends Controller
     //         'user' => $user
     //     ], 201);
     // }
-
-
-
 
     // /**
     //  * Get a JWT via given credentials.
