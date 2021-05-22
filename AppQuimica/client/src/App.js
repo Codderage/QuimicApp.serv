@@ -8,27 +8,24 @@ import React, {
 } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import "antd/dist/antd.css";
-import "./App.css";
-import axios from "./components/common/http";
-import carga from "./assets/img/load/ajax-loader.gif";
-
-import GlobalFonts from "./assets/fonts/fonts";
-import Login from "./containers/login/Login";
-import Home from "./containers/home/home";
-// import UsersLanding from "./containers/users/usersLanding/UsersLanding";
-// import GroupsLanding from "./containers/groups/groupsLanding/GroupsLanding";
-// import PracticesLanding from "./containers/practices/practicesLanding/PracticesLanding";
-// import PracticePage from "./containers/practices/view/PracticePage";
-// import CompoundsLanding from "./containers/compounds/compoundsLanding/CompoundsLanding";
-// import ComponentsLanding from "./containers/components/componentsLanding/ComponentsLanding";
-
 const UsersLanding = lazy(() => import("./containers/users/usersLanding/UsersLanding"));
 const GroupsLanding = lazy(() => import("./containers/groups/groupsLanding/GroupsLanding"));
 const PracticesLanding = lazy(() => import("./containers/practices/practicesLanding/PracticesLanding"));
 const PracticePage = lazy(() => import("./containers/practices/view/PracticePage"));
 const CompoundsLanding = lazy(() => import("./containers/compounds/compoundsLanding/CompoundsLanding"));
 const ComponentsLanding = lazy(() => import("./containers/components/componentsLanding/ComponentsLanding"));
+
+import Login from "./containers/login/Login";
+import GlobalFonts from "./assets/fonts/fonts";
+import Home from "./containers/home/home";
+import Auth from "./containers/verif/Auth";
+import VerAuth from "./containers/verif/VerAuth";
+
+import "./App.css";
+import "antd/dist/antd.css";
+import axios from "./components/common/http";
+import carga from "./assets/img/load/ajax-loader.gif";
+
 
 export const User = createContext();
 
@@ -84,6 +81,15 @@ const App = () => {
               <Route path="/grupos">
                 <GroupsLanding />
               </Route>
+
+              <Route path="/auth">
+                <Auth />
+              </Route>
+
+              <Route path="/verificar-pw">
+                <VerAuth />
+              </Route>
+
               <Route path="/practicas" exact>
                 <PracticesLanding />
               </Route>

@@ -255,14 +255,11 @@ const HomePage = () => {
             <div id="nosotros" class="row">
               <div class="col-4 col-12-narrow">
                 <h2>Jordi Martínez</h2>
-                <p>FOTO</p>
+                <br></br>
                 <p>
-                  Gravida dis placerat lectus ante vel nunc euismod est turpis
-                  sodales. Diam tempor dui lacinia eget ornare varius gravida.
-                  Gravida dis placerat lectus ante vel nunc euismod est turpis
-                  sodales. Diam tempor dui lacinia accumsan vivamus augue
-                  cubilia vivamus nisi eu eget ornare varius gravida euismod.
-                  Gravida dis lorem ipsum dolor placerat magna tempus feugiat.
+                  Alegre y adaptativo, me encantan los nuevos retos. Soy una
+                  persona que se esfuerza en sacar lo mejor de si misma y de los
+                  demás. Soy una persona muy lógica y con iniciativa.
                 </p>
                 <ul class="icons">
                   <li>
@@ -294,14 +291,13 @@ const HomePage = () => {
               </div>
               <div class="col-4 col-12-narrow">
                 <h2>Toni Soria</h2>
-                <p>FOTO</p>
+                <br></br>
                 <p>
-                  Gravida dis placerat lectus ante vel nunc euismod est turpis
-                  sodales. Diam tempor dui lacinia eget ornare varius gravida.
-                  Gravida dis placerat lectus ante vel nunc euismod est turpis
-                  sodales. Diam tempor dui lacinia accumsan vivamus augue
-                  cubilia vivamus nisi eu eget ornare varius gravida euismod.
-                  Gravida dis lorem ipsum dolor placerat magna tempus feugiat.
+                  Tengo una mente muy creativa. Siempre tengo una perspectiva
+                  única al abordar un problema debido a mi amplia gama de
+                  intereses y aficiones. La creatividad es la fuente de la
+                  diferenciación y, por tanto, en la raíz de la ventaja
+                  competitiva
                 </p>
                 <ul class="icons">
                   <li>
@@ -333,14 +329,11 @@ const HomePage = () => {
               </div>
               <div class="col-4 col-12-narrow">
                 <h2>Sherab Pereira</h2>
-                <p>FOTO</p>
+                <br></br>
                 <p>
-                  Gravida dis placerat lectus ante vel nunc euismod est turpis
-                  sodales. Diam tempor dui lacinia eget ornare varius gravida.
-                  Gravida dis placerat lectus ante vel nunc euismod est turpis
-                  sodales. Diam tempor dui lacinia accumsan vivamus augue
-                  cubilia vivamus nisi eu eget ornare varius gravida euismod.
-                  Gravida dis lorem ipsum dolor placerat magna tempus feugiat.
+                  Me gusta innovar de forma continua para crear valor. Veo
+                  oportunidades donde otros ven nada: convierto ideas en
+                  proyectos, y los proyectos en éxito
                 </p>
                 <ul class="icons">
                   <li>

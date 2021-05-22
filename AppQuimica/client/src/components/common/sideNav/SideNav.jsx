@@ -58,44 +58,48 @@ const SideNavBar = () => {
     </Link>
   );
 
-  const verifyUser = user ? (
-    // SideNavData.map((item, index) => {
-    //   if (user.id_profesor != null) {
-    //     return (
-    //       <li key={index} className={item.cName}>
-    //         <Link to={item.path}>{item.icon}</Link>
-    //       </li>
-    //     );
-    //   } else {
-    //     return (
-    //       <li key={index} className={item.cName}>
-    //         <Link to={item.path}>{item.icon}</Link>
-    //       </li>
-    //     );
-    //   }
-    // });
-    SideNavData.map((item, index) => {
-      if (user.id_profesor !== null) {
-        return (
-          <li key={index} className={item.cName}>
-            <Link to={item.path}>{item.icon}</Link>
-          </li>
-        );
-      } else {
-        if (item.path !== "/componentes" && item.path !== "/compuestos") {
+  const verifyUser = user
+    ? // SideNavData.map((item, index) => {
+      //   if (user.id_profesor != null) {
+      //     return (
+      //       <li key={index} className={item.cName}>
+      //         <Link to={item.path}>{item.icon}</Link>
+      //       </li>
+      //     );
+      //   } else {
+      //     return (
+      //       <li key={index} className={item.cName}>
+      //         <Link to={item.path}>{item.icon}</Link>
+      //       </li>
+      //     );
+      //   }
+      // });
+      SideNavData.map((item, index) => {
+        if (user.id_profesor !== null) {
+          return (
+            <li key={index} className={item.cName}>
+              <Link to={item.path}>{item.icon}</Link>
+            </li>
+          );
+        } else {
+          if (item.path !== "/componentes" && item.path !== "/compuestos") {
+            return (
+              <li key={index} className={item.cName}>
+                <Link to={item.path}>{item.icon}</Link>
+              </li>
+            );
+          }
+        }
+      })
+    : SideNavData.map((item, index) => {
+        if (item.path == "/") {
           return (
             <li key={index} className={item.cName}>
               <Link to={item.path}>{item.icon}</Link>
             </li>
           );
         }
-      }
-    })
-  ) : (
-    <li>
-      <p></p>
-    </li>
-  );
+      });
 
   const showSidebar = () => setSidebar(!sidebar);
   return (

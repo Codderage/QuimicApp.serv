@@ -219,8 +219,8 @@
                                             <tr>
                                                 <td align="center">
                                                     <div>
-                                                        <a href='http://localhost/Clase/ProyectoFinal/Quimica/quimica/AppQuimica/server/public/api/usr/co_vf/<?php echo $usuario['codigo_verificacion']; ?>'
-                                                            class="button button--blue">Actualizar contraseña
+                                                        <a href='http://localhost:3000/verificar-pw?verificar=<?php echo $usuario['codigo_verificacion']; ?>'
+                                                            class="button button--blue" style="color:white">Actualizar contraseña
                                                         </a>
                                                     </div>
                                                 </td>

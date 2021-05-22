@@ -62,27 +62,27 @@ Route::put('/usr/co-pw/{id}', [UsuarioController::class, 'actCnt']); //OK
 
 //ALUMNO
 
-Route::get('/alumnos', [AlumnoController::class, 'getAlumnos']);
-Route::get('/alumno/{id}', [AlumnoController::class, 'getAlumno']);
-Route::put('/alumno/{id}', [AlumnoController::class, 'updatealumno']);
-Route::post('/alumno', [AlumnoController::class, 'insertAlumno']);
-Route::delete('/alumno/{id}', [AlumnoController::class, 'deleteAlumno']);
+// Route::get('/alumnos', [AlumnoController::class, 'getAlumnos']);
+// Route::get('/alumno/{id}', [AlumnoController::class, 'getAlumno']);
+// Route::put('/alumno/{id}', [AlumnoController::class, 'updatealumno']);
+// Route::post('/alumno', [AlumnoController::class, 'insertAlumno']);
+// Route::delete('/alumno/{id}', [AlumnoController::class, 'deleteAlumno']);
 
 //PROFESOR
 
-Route::get('/profesores', [ProfesorController::class, 'getProfesores']);
-Route::get('/profesor/{id}', [ProfesorController::class, 'getProfesor']);
-Route::put('/profesor/{id}', [ProfesorController::class, 'updateProfesor']);
-Route::post('/profesor', [ProfesorController::class, 'insertProfesor']);
-Route::delete('/profesor/{id}', [ProfesorController::class, 'deleteProfesor']);
+// Route::get('/profesores', [ProfesorController::class, 'getProfesores']);
+// Route::get('/profesor/{id}', [ProfesorController::class, 'getProfesor']);
+// Route::put('/profesor/{id}', [ProfesorController::class, 'updateProfesor']);
+// Route::post('/profesor', [ProfesorController::class, 'insertProfesor']);
+// Route::delete('/profesor/{id}', [ProfesorController::class, 'deleteProfesor']);
 
 //GRUPO
 
 Route::get('/grupos', [GrupoController::class, 'getGrupos']);
-Route::get('/grupo/{id}', [GrupoController::class, 'getGrupo']);
-Route::put('/grupo/{id}', [GrupoController::class, 'updateGrupo']);
-Route::post('/grupo', [GrupoController::class, 'insertGrupo']);
-Route::delete('/grupo/{id}', [GrupoController::class, 'deleteGrupo']);
+//Route::get('/grupo/{id}', [GrupoController::class, 'getGrupo']);
+Route::put('/grupo/{id}', [GrupoController::class, 'updateGrupo']); //OK
+Route::post('/grupo', [GrupoController::class, 'insertGrupo']); //OK
+Route::delete('/grupo/{id}', [GrupoController::class, 'deleteGrupo']); //OK
 
 //PRACTICA
 

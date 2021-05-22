@@ -71,7 +71,7 @@ const columns = [
             onUpdate(
               record.id,
               record.nombre,
-              record.apellidos,
+              String(record.apellidos),
               record.email,
               record.nombreUsuario,
               record.idUsuario,
@@ -99,7 +99,7 @@ const columns = [
 ];
 
 const onCreateBut = () => {
-  const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  const usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
 
   if (usuarioLogeado) {
     if (usuarioLogeado.id_profesor) {
@@ -119,7 +119,7 @@ const onCreateBut = () => {
 };
 
 const onUpPass = async () => {
-  const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  const usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
   if (usuarioLogeado.id_profesor) {
     //seleccionar usuario, si es admin el conectado también a profesores
   } else {
@@ -187,7 +187,7 @@ const onUpPassUni = async (nombre, apellido, idUsuario) => {
 };
 
 const onCreate = async () => {
-  const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  const usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
 
   // let adm = `<input type="hidden" class="swal2-input" id='Eadmin'>`;
   let tipo = `<option value="al" selected="">Alumno</option>`;
@@ -519,23 +519,7 @@ const groups = async (rol, id_grupo, grupo) => {
           }
         })
         .catch(function (error) {
-          if (error.status == 401) {
-            swal({
-              title: "Error acceso " + error.response.status,
-              text: "Error, no tienes acceso a esta sección.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
-          } else {
-            swal({
-              title: "Error interno " + error.response.status,
-              text: "Error interno, vuelve a intentarlo en unos momentos.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
-          }
+          return "NO HAY GRUPOS";
         });
     } else if (rol == "Profesor") {
       await axios
@@ -554,23 +538,7 @@ const groups = async (rol, id_grupo, grupo) => {
           }
         })
         .catch(function (error) {
-          if (error.status == 401) {
-            swal({
-              title: "Error acceso " + error.response.status,
-              text: "Error, no tienes acceso a esta sección.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
-          } else {
-            swal({
-              title: "Error interno " + error.response.status,
-              text: "Error interno, vuelve a intentarlo en unos momentos.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
-          }
+          return "NO HAY GRUPOS";
         });
     }
     //console.log("ALUMNO");
@@ -592,6 +560,7 @@ const onUpdate = async (
   grupo,
   e
 ) => {
+  //console.log(apellidos);
   //e.preventDefault();
   //const data = this.state.data.filter(item => item.key !== key);
   //this.setState({ data, isPageTween: false });
@@ -599,16 +568,18 @@ const onUpdate = async (
   //history.push("/editUsuario");
   const grupos = await groups(rol, id_grupo, grupo);
   //console.log(grupos, "AAAAAAAAAAAAAAAAAAAAAA");
+  //apellidos = String("AAAAA aA AAaaa aaaaaaaaaa");
+
   Swal.fire({
     title: "Editar",
     html: `<label for='EnombreUsuario'>Usuario:</label>
-    <input class="swal2-input" id='EnombreUsuario' type='text' value=${nombreUsuario}>
+    <input class="swal2-input" id='EnombreUsuario' type='text' value='${nombreUsuario}'>
     <label for='Enombre'>Nombre:</label>
-    <input class="swal2-input" id='Enombre' type='text' value=${nombre}>
+    <input class="swal2-input" id='Enombre' type='text' value='${nombre}'>
     <label for='Eapellidos'>Apellidos:</label>
-    <input class="swal2-input" id='Eapellidos' type='text' value=${apellidos}>
+    <input class="swal2-input" id='Eapellidos' type='text' value='${apellidos}'>
     <label for='Eemail'>Email:</label>
-    <input class="swal2-input" id='Eemail' type='email' value=${email}>
+    <input class="swal2-input" id='Eemail' type='email' value='${email}'>
     ${grupos}
     `,
     // <input id='Eprofe' type='checkbox'>
@@ -838,6 +809,9 @@ const Users = () => {
 
   return (
     <>
+      {/* {peticion} */}
+
+      {onCreateBut()}
       {/* {onCreateBut()}
       <div style={{ height: 100 }}>
         <Table

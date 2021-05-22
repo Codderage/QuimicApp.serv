@@ -7,11 +7,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class CorreosMailable extends Mailable
+class CorreosMailable1 extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $subject = "Verificación QuimicApp";
+    public $subject = "Recuperar password QuimicApp";
 
     /**
      * Create a new message instance.
