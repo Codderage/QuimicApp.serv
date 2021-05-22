@@ -34,6 +34,9 @@ class UsuarioController extends Controller
 
         try {
 
+            // echo auth()->user();
+            // exit;
+
             if (auth()->user()->id_profesor) {
 
                 $usuarios = [];
@@ -105,10 +108,6 @@ class UsuarioController extends Controller
                 // }
                 return $usuarios;
             }
-
-
-
-
 
             return response()->json([
                 'error' => 'No autorizado',
