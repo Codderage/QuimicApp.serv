@@ -1,6 +1,10 @@
+import React, { useEffect, useState, useContext } from "react";
+
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEdit, faTimes, faEye } from "@fortawesome/free-solid-svg-icons";
 import { Table, Space } from "antd";
-import React, { useEffect, useState, createContext, useContext } from "react";
 import { User } from "../../App";
+
 import axios from "../common/http";
 import swal from "sweetalert";
 import carga from "../../assets/img/load/ajax-loader.gif";
@@ -11,8 +15,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTimes, faKey } from "@fortawesome/free-solid-svg-icons";
 
 // import { Link, useHistory } from "react-router-dom";
-
 // const history = useHistory();
+
 const columns = [
   {
     title: "Usuario",
@@ -61,13 +65,13 @@ const columns = [
         </a>
 
         <a
-          href="http://localhost:3000/usuarios"
+          // href="http://localhost:3000/usuarios"
           title="Editar"
           onClick={(e) => {
             onUpdate(
               record.id,
               record.nombre,
-              record.apellidos,
+              String(record.apellidos),
               record.email,
               record.nombreUsuario,
               record.idUsuario,
@@ -81,7 +85,7 @@ const columns = [
           <FontAwesomeIcon icon={faEdit} className="edit-icon" />
         </a>
         <a
-          href="http://localhost:3000/usuarios"
+          // href="http://localhost:3000/usuarios"
           title="Eliminar"
           onClick={(e) => {
             onDelete(record.idUsuario);
@@ -94,18 +98,8 @@ const columns = [
   },
 ];
 
-const data = [];
-// for (let i = 1; i <= 10; i++) {
-//   data.push({
-//     key: i,
-//     nombre: "profesor",
-//     apellidos: `profesor`,
-//     rol: `${i % 2 ? "Profesor" : "Alumno"}`,
-//   });
-// }
-
 const onCreateBut = () => {
-  const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  const usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
 
   if (usuarioLogeado) {
     if (usuarioLogeado.id_profesor) {
@@ -125,7 +119,7 @@ const onCreateBut = () => {
 };
 
 const onUpPass = async () => {
-  const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  const usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
   if (usuarioLogeado.id_profesor) {
     //seleccionar usuario, si es admin el conectado también a profesores
   } else {
@@ -193,7 +187,7 @@ const onUpPassUni = async (nombre, apellido, idUsuario) => {
 };
 
 const onCreate = async () => {
-  const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  const usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
 
   // let adm = `<input type="hidden" class="swal2-input" id='Eadmin'>`;
   let tipo = `<option value="al" selected="">Alumno</option>`;
@@ -437,11 +431,11 @@ const onDelete = (id) => {
         .then((response) => {
           //console.log(response.data);
           if (response.status >= 200 && response.status <= 205) {
-            var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+            var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
             if (usuarioLogeado.id_profesor) {
               window.location.reload(true);
             } else {
-              localStorage.clear();
+              sessionStorage.clear();
               window.location.href = "/";
             }
             swal({
@@ -498,7 +492,7 @@ const onDelete = (id) => {
 const groups = async (rol, id_grupo, grupo) => {
   let grupos = `<input type="hidden" class="swal2-input" id='Egrupo' type='text' value="null">`;
   //console.log(rol, "AAAAAAAAAAAAAAAAAAAAAA");
-  var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
   if (usuarioLogeado.id_profesor) {
     if (rol == "Alumno") {
       //console.log(grupos, "BBBBBBBBBBB");
@@ -525,23 +519,7 @@ const groups = async (rol, id_grupo, grupo) => {
           }
         })
         .catch(function (error) {
-          if (error.status == 401) {
-            swal({
-              title: "Error acceso " + error.response.status,
-              text: "Error, no tienes acceso a esta sección.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
-          } else {
-            swal({
-              title: "Error interno " + error.response.status,
-              text: "Error interno, vuelve a intentarlo en unos momentos.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
-          }
+          return "NO HAY GRUPOS";
         });
     } else if (rol == "Profesor") {
       await axios
@@ -560,23 +538,7 @@ const groups = async (rol, id_grupo, grupo) => {
           }
         })
         .catch(function (error) {
-          if (error.status == 401) {
-            swal({
-              title: "Error acceso " + error.response.status,
-              text: "Error, no tienes acceso a esta sección.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
-          } else {
-            swal({
-              title: "Error interno " + error.response.status,
-              text: "Error interno, vuelve a intentarlo en unos momentos.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
-          }
+          return "NO HAY GRUPOS";
         });
     }
     //console.log("ALUMNO");
@@ -598,6 +560,7 @@ const onUpdate = async (
   grupo,
   e
 ) => {
+  //console.log(apellidos);
   //e.preventDefault();
   //const data = this.state.data.filter(item => item.key !== key);
   //this.setState({ data, isPageTween: false });
@@ -605,16 +568,18 @@ const onUpdate = async (
   //history.push("/editUsuario");
   const grupos = await groups(rol, id_grupo, grupo);
   //console.log(grupos, "AAAAAAAAAAAAAAAAAAAAAA");
+  //apellidos = String("AAAAA aA AAaaa aaaaaaaaaa");
+
   Swal.fire({
     title: "Editar",
     html: `<label for='EnombreUsuario'>Usuario:</label>
-    <input class="swal2-input" id='EnombreUsuario' type='text' value=${nombreUsuario}>
+    <input class="swal2-input" id='EnombreUsuario' type='text' value='${nombreUsuario}'>
     <label for='Enombre'>Nombre:</label>
-    <input class="swal2-input" id='Enombre' type='text' value=${nombre}>
+    <input class="swal2-input" id='Enombre' type='text' value='${nombre}'>
     <label for='Eapellidos'>Apellidos:</label>
-    <input class="swal2-input" id='Eapellidos' type='text' value=${apellidos}>
+    <input class="swal2-input" id='Eapellidos' type='text' value='${apellidos}'>
     <label for='Eemail'>Email:</label>
-    <input class="swal2-input" id='Eemail' type='email' value=${email}>
+    <input class="swal2-input" id='Eemail' type='email' value='${email}'>
     ${grupos}
     `,
     // <input id='Eprofe' type='checkbox'>
@@ -735,17 +700,16 @@ const pagination = { position: "bottom" };
 
 const Users = () => {
   const { token } = useContext(User);
-  const [datos1, setDatos1] = useState();
+  const [datos, setDatos] = useState();
 
   const array = [];
-  const array1 = [];
 
   useEffect(async () => {
     //console.log(token, axios, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa");
-    if (localStorage.getItem("token") && localStorage.getItem("user")) {
+    if (sessionStorage.getItem("token") && sessionStorage.getItem("user")) {
       // console.log(user);
       //if (user.id_profesor) {
-      var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+      var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
       //console.log(usuarioLogeado);
 
       //LARAVEL CONTROLA SI EL USUARIO QUE PIDE ES ADMIN O NO
@@ -758,7 +722,7 @@ const Users = () => {
             //console.log(response.data, response.data.length);
             for (let i = 0; i < response.data.length; i++) {
               //console.log(response.data[i]);
-              array1.push({
+              array.push({
                 key: i,
                 nombreUsuario: response.data[i].nombreUsuario,
                 nombre: response.data[i].nombre,
@@ -803,7 +767,7 @@ const Users = () => {
     }
     //console.log(array1);
     //console.log(array1);
-    setDatos1(array1);
+    setDatos(array);
   }, []);
 
   const [state, setState] = useState({
@@ -845,24 +809,13 @@ const Users = () => {
 
   return (
     <>
-      {/* {onCreateBut()}
-      <div style={{ height: 100 }}>
-        <Table
-          {...state}
-          pagination={{ position: [state.top, state.bottom] }}
-          columns={tableColumns}
-          dataSource={datos1 ? datos1 : null}
-          scroll={scroll}
-        />
-      </div> */}
       <TableWrapper>
-        {/* <CreateButton>+ Crear usuario</CreateButton>  */}
         {onCreateBut()}
         <Table
           {...state}
           pagination={{ position: [state.top, state.bottom] }}
           columns={tableColumns}
-          dataSource={datos1 ? datos1 : null}
+          dataSource={datos ? datos : null}
           scroll={scroll}
           className="users-table"
         />
