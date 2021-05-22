@@ -3,31 +3,43 @@ import React, { useEffect, useState } from "react";
 // import { User } from "../../App";
 import axios from "../common/http";
 import swal from "sweetalert";
-// import carga from "../../assets/img/load/ajax-loader.gif";
+import carga from "../../assets/img/load/ajax-loader.gif";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTimes, faEye } from "@fortawesome/free-solid-svg-icons";
+
+import { CreateButton, TableWrapper } from "./Groups.styled";
 
 const columns = [
-  {
-    title: "Nombre",
-    dataIndex: "nombre",
-    sorter: (a, b) => a.nombre - b.nombre,
-  },
-  {
-    title: "Apellidos",
-    dataIndex: "apellidos",
-    sorter: (a, b) => a.apellidos - b.apellidos,
-  },
   {
     title: "Grupo",
     dataIndex: "grupo",
     sorter: (a, b) => a.grupo - b.grupo,
   },
   {
-    title: "Email",
-    dataIndex: "email",
-    sorter: (a, b) => a.email - b.email,
+    title: "Profesor",
+    dataIndex: "profesor",
+    sorter: (a, b) => a.profesor - b.profesor,
+  },
+  {
+    title: "",
+    key: "accion",
+    render: () => (
+      <Space size="middle">
+        <a href="http://localhost:3000/grupos" title="Ver">
+          <FontAwesomeIcon icon={faEye} className="view-icon" />
+        </a>
+        <a href="http://localhost:3000/grupos" title="Editar">
+          <FontAwesomeIcon icon={faEdit} className="view-icon" />
+        </a>
+        <a href="http://localhost:3000/grupos" title="Eliminar">
+          <FontAwesomeIcon icon={faTimes} className="delete-icon" />
+        </a>
+      </Space>
+    ),
   },
 ];
 
+<<<<<<< HEAD:AppQuimica/client/src/components/grupos/Grupos.jsx
 // const data = [];
 // for (let i = 1; i <= 10; i++) {
 //   data.push({
@@ -37,6 +49,9 @@ const columns = [
 //     rol: `${i % 2 ? "Profesor" : "Alumno"}`,
 //   });
 // }
+=======
+const data = [];
+>>>>>>> master:AppQuimica/client/src/components/groups/Groups.jsx
 
 const showHeader = true;
 
@@ -126,6 +141,12 @@ const Grupos = () => {
     xScroll: false,
     yScroll: false,
   });
+  var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  var hola = "Estos son los datos de tu grupo.";
+  if (JSON.parse(usuarioLogeado.id_profesor)) {
+    columns.splice(1);
+    hola = "Estos son los grupos que hay registrados.";
+  }
 
   const handleDataChange = (hasData) => {
     this.setState({ hasData });
@@ -165,17 +186,17 @@ const Grupos = () => {
   };
 
   return (
-    <>
-      {/* {peticion} */}
-      <h3>Estos son los datos de tu grupo.</h3>
+    <TableWrapper>
+      <CreateButton>+ Crear grupo</CreateButton>
       <Table
         {...state}
         pagination={{ position: [state.top, state.bottom] }}
         columns={tableColumns}
-        dataSource={datos1 ? datos1 : null}
+        dataSource={state.hasData ? data : null}
         scroll={scroll}
+        className="groups-table"
       />
-    </>
+    </TableWrapper>
   );
 };
 

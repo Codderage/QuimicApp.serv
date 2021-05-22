@@ -37,7 +37,7 @@ class CorreosMailable extends Mailable
     {
         if($this->recuperarCONT){
             $data = array('usuario' => $this->usuario);
-            return $this->view('emails.correos')->with($data);
+            return $this->view('emails.correospw')->with($data);
         }
         else{
             $data = array('usuario' => $this->usuario);

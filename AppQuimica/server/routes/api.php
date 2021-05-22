@@ -45,10 +45,10 @@ Route::get('auth/perfil-usuario', [AuthController::class, 'perfilUsuario']); //O
 //Route::post('auth/registroAlumno', [AuthController::class, 'registroAlumno']);
 
 //USUARIO
-// Route::post('/register', [UsuarioController::class, 'register']); //ESTA COMENTAR, CREA USUARIOS GENERALES
+//Route::post('/register', [UsuarioController::class, 'register']);//ESTA COMENTAR, CREA USUARIOS GENERALES
 Route::get('/usuarios', [UsuarioController::class, 'getUsuarios']); //OK
-//Route::post('/register-alumno', [UsuarioController::class, 'registerAlumno']);//ESTA COMENTAR
-//Route::post('/register-profesor', [UsuarioController::class, 'registerProfesor']);//ESTA COMENTAR
+Route::post('/register-alumno', [UsuarioController::class, 'registerAlumno']); //ESTA COMENTAR
+Route::post('/register-profesor', [UsuarioController::class, 'registerProfesor']); //ESTA COMENTAR
 Route::delete('/delete-usuario/{id}', [UsuarioController::class, 'deleteUsuario']); //OK
 //Route::delete('/delete-usuario-al/{id}', [UsuarioController::class, 'deleteUsuarioAlum']);//ESTA COMENTAR
 //Route::delete('/delete-usuario-pr/{id}', [UsuarioController::class, 'deleteUsuarioProf']);//ESTA COMENTAR
@@ -56,6 +56,9 @@ Route::get('/usuario/{id}', [UsuarioController::class, 'getUsuario']); //OK
 Route::put('/update-usuario/{id}', [UsuarioController::class, 'updateUsuario']); //OK
 Route::get('/usr/co_vf/{ref}', [UsuarioController::class, 'verifyUsuario']); //OK
 Route::get('/group-usuario', [UsuarioController::class, 'getGrupoUsuario']); //OK
+Route::get('/update-pw/{id}', [UsuarioController::class, 'petActContra']); //OK
+Route::get('/mail-pw/{id}', [UsuarioController::class, 'petActContra1']); //OK
+Route::put('/usr/co-pw/{id}', [UsuarioController::class, 'actCnt']); //OK
 
 //ALUMNO
 

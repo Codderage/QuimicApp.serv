@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 // import { User } from "../../../App";
 import SideNavBar from "../../../components/common/sideNav/SideNav";
-// import SearchBar from "../../../components/searchBar/SearchBar";
+import SearchBar from "../../../components/searchBar/SearchBar";
 import Users from "../../../components/users/Users";
 
 const UsersLanding = () => {
@@ -11,7 +11,7 @@ const UsersLanding = () => {
     <>
       <SideNavBar />
       <div className="container">
-        {/* <SearchBar /> */}
+        <SearchBar />
         <Users />
       </div>
     </>

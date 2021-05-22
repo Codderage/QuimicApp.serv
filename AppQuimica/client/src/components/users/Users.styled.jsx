@@ -50,7 +50,7 @@ export const TableWrapper = styled.div`
         }
       }
       & a {
-        padding: 0rem 1rem;
+        padding: 0rem 0rem;
         border: none;
         border-radius: 0.2rem;
         font-weight: 400;
@@ -78,4 +78,8 @@ export const CreateButton = styled.a`
   &:hover {
     color: white;
   }
+<<<<<<< HEAD
 `;
+=======
+`;
+>>>>>>> master

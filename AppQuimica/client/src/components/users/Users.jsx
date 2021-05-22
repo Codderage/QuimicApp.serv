@@ -9,7 +9,11 @@ import { User } from "../../App";
 import axios from "../common/http";
 import swal from "sweetalert";
 import carga from "../../assets/img/load/ajax-loader.gif";
+import { CreateButton, TableWrapper } from "./Users.styled";
 import Swal from "sweetalert2";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTimes, faKey } from "@fortawesome/free-solid-svg-icons";
 
 // import { Link, useHistory } from "react-router-dom";
 // const history = useHistory();
@@ -18,82 +22,79 @@ const columns = [
   {
     title: "Usuario",
     dataIndex: "nombreUsuario",
-    sorter: (a, b) => a.nombreUsuario - b.nombreUsuario,
+    //sorter: (a, b) => a.nombreUsuario - b.nombreUsuario,
   },
   {
     title: "Nombre",
     dataIndex: "nombre",
-    sorter: (a, b) => a.nombre - b.nombre,
+    //sorter: (a, b) => a.nombre - b.nombre,
   },
   {
     title: "Apellidos",
     dataIndex: "apellidos",
-    sorter: (a, b) => a.apellidos - b.apellidos,
+    //sorter: (a, b) => a.apellidos - b.apellidos,
   },
   {
     title: "Grupo",
     dataIndex: "grupo",
-    sorter: (a, b) => a.grupo - b.grupo,
+    //sorter: (a, b) => a.grupo - b.grupo,
   },
   {
     title: "Email",
     dataIndex: "email",
-    sorter: (a, b) => a.email - b.email,
+    //sorter: (a, b) => a.email - b.email,
   },
   {
     title: "Rol",
     dataIndex: "rol",
-    sorter: (a, b) => a.rol - b.rol,
+    //sorter: (a, b) => a.rol - b.rol,
   },
   {
-    title: (
-      <button
-        className="btn btn-danger"
-        onClick={(e) => {
-          onCreate();
-        }}
-      >
-        Crear usuario
-      </button>
-    ),
+    title: "",
     key: "accion",
+    width: 300,
     dataIndex: "accion",
     render: (text, record) => (
-      <>
-        <Space size="middle">
-          <button
-            className="btn btn-primary"
-            onClick={(e) => {
-              onUpdate(
-                record.id,
-                record.nombre,
-                record.apellidos,
-                record.email,
-                record.nombreUsuario,
-                record.idUsuario,
-                record.rol,
-                record.id_grupo,
-                record.grupo,
-                e
-              );
-            }}
-          >
-            Editar
-          </button>
-        </Space>
-        <br />
-        <br />
-        <Space size="middle">
-          <button
-            className="btn btn-danger"
-            onClick={(e) => {
-              onDelete(record.idUsuario);
-            }}
-          >
-            Eliminar
-          </button>
-        </Space>
-      </>
+      <Space size="middle">
+        <a
+          title="Contraseña"
+          onClick={(e) => {
+            onUpPassUni(record.nombre, record.apellidos, record.idUsuario);
+          }}
+        >
+          <FontAwesomeIcon icon={faKey} className="view-icon" />
+        </a>
+
+        <a
+          href="http://localhost:3000/usuarios"
+          title="Editar"
+          onClick={(e) => {
+            onUpdate(
+              record.id,
+              record.nombre,
+              record.apellidos,
+              record.email,
+              record.nombreUsuario,
+              record.idUsuario,
+              record.rol,
+              record.id_grupo,
+              record.grupo,
+              e
+            );
+          }}
+        >
+          <FontAwesomeIcon icon={faEdit} className="edit-icon" />
+        </a>
+        <a
+          href="http://localhost:3000/usuarios"
+          title="Eliminar"
+          onClick={(e) => {
+            onDelete(record.idUsuario);
+          }}
+        >
+          <FontAwesomeIcon icon={faTimes} className="delete-icon" />
+        </a>
+      </Space>
     ),
   },
 ];
@@ -108,20 +109,124 @@ const columns = [
 //   });
 // }
 
-const onCreate = () => {
+const onCreateBut = () => {
+  const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+
+  if (usuarioLogeado) {
+    if (usuarioLogeado.id_profesor) {
+      return (
+        <CreateButton
+          className="btn "
+          onClick={(e) => {
+            onCreate();
+          }}
+        >
+          + Crear usuario
+        </CreateButton>
+      );
+    } else {
+    }
+  }
+};
+
+const onUpPass = async () => {
+  const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  if (usuarioLogeado.id_profesor) {
+    //seleccionar usuario, si es admin el conectado también a profesores
+  } else {
+    //petición de su contraseña
+  }
+};
+
+const petActPw = async (idUsuario) => {
+  swal({
+    title: "Se enviará un mail al usuario para que se valide ...",
+    icon: carga,
+    button: false,
+    allowOutsideClick: false,
+  });
+  await axios
+    .get(`update-pw/${idUsuario}`)
+    .then((response) => {
+      //console.log(response.data);
+      if (response.status >= 200 && response.status <= 205) {
+        //console.log(response.data[1].nombre);
+        //console.log(response.data);
+        window.location.reload(true);
+      }
+    })
+    .catch(function (error) {
+      if (error.status == 401) {
+        swal({
+          title: "Error acceso " + error.response.status,
+          text: "Error, no tienes acceso a esta sección.",
+          icon: "error",
+          button: "Aceptar",
+          timer: "3000",
+        });
+      } else {
+        swal({
+          title: "Error interno " + error.response.status,
+          text: "Error interno, vuelve a intentarlo en unos momentos.",
+          icon: "error",
+          button: "Aceptar",
+          timer: "3000",
+        });
+      }
+    });
+};
+
+const onUpPassUni = async (nombre, apellido, idUsuario) => {
+  Swal.fire({
+    title: "Solicitud de nueva contraseña",
+    html: `¿ Seguro que deseas solicitar una nueva contraseña para <b> ${nombre} ${apellido} </b> ?<br>&nbsp;<br>
+    Esta acción dejará el usuario inhabilitado hasta que actualice su contraseña.`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Solicitar",
+    cancelButtonText: "Cancelar",
+    focusConfirm: false,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      petActPw(idUsuario);
+    } else {
+      //swal("Cancelado");
+    }
+  });
+};
+
+const onCreate = async () => {
+  const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+
+  // let adm = `<input type="hidden" class="swal2-input" id='Eadmin'>`;
+  let tipo = `<option value="al" selected="">Alumno</option>`;
+  if (usuarioLogeado.es_admin) {
+    tipo = `<option value="al" selected="">Alumno</option>
+    <option value="pr">Profesor</option>`;
+  }
+
+  const grupos = await groups("Profesor", 0, "");
+  var peticion = [];
+  var ruta = "";
+
   Swal.fire({
     title: "Crear usuario",
-    html: `<label for='EnombreUsuario'>Usuario:</label>
+    html: `<label for='EnombreUsuario'>Nombre inicio sesión:</label>
     <input class="swal2-input" id='EnombreUsuario' type='text' placeholder="Nombre usuario">
     <label for='Epassword'>Password:</label>
-    <input class="swal2-input" id='Enombre' type='text'>
+    <input class="swal2-input" id='Epassword' type='password' placeholder="Contraseña">
     <label for='Enombre'>Nombre:</label>
     <input class="swal2-input" id='Enombre' type='text' placeholder="Nombre">
     <label for='Eapellidos'>Apellidos:</label>
     <input class="swal2-input" id='Eapellidos' type='text' placeholder="Apellidos">
     <label for='Eemail'>Email:</label>
     <input class="swal2-input" id='Eemail' type='email' placeholder="Email">
-    `,
+    <label for="Etipo">Tipo usuario:</label><br>
+    <select class="swal2-input" id="Etipo">
+    ${tipo}
+    </select>`, //${grupos}
     // <input id='Eprofe' type='checkbox'>
     // <label class="swal2-input" for='Eprofe'>&nbsp;Es profesor</label><br>
     // <input id='Eadmin' type='checkbox'>
@@ -129,7 +234,7 @@ const onCreate = () => {
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Editar",
+    confirmButtonText: "Crear",
     cancelButtonText: "Cancelar",
     focusConfirm: false,
     preConfirm: () => {
@@ -138,98 +243,178 @@ const onCreate = () => {
       const Eemail = Swal.getPopup().querySelector("#Eemail").value;
       const EnombreUsuario =
         Swal.getPopup().querySelector("#EnombreUsuario").value;
-      const Egrupo = Swal.getPopup().querySelector("#Egrupo").value;
+      const Epassword = Swal.getPopup().querySelector("#Epassword").value;
+      const Etipo = Swal.getPopup().querySelector("#Etipo").value;
+      //const Eadmin = Swal.getPopup().querySelector("#Eadmin").checked;
       //alert(Egrupo);
       //const Eprofe = Swal.getPopup().querySelector("#Eprofe").checked;
       //const Eadmin = Swal.getPopup().querySelector("#Eadmin").checked;
-      if (!Enombre || !Eapellidos || !Eemail || !EnombreUsuario) {
+      if (!Enombre || !Eapellidos || !Eemail || !EnombreUsuario || !Epassword) {
         Swal.showValidationMessage(`Algún campo obligatorio vacío`);
+      } else if (EnombreUsuario.length < 6 || Epassword.length < 6) {
+        Swal.showValidationMessage(
+          `Nombre de usuario o password inferior a 6 digitos`
+        );
       }
       return {
         Enombre: Enombre,
         Eapellidos: Eapellidos,
         Eemail: Eemail,
         EnombreUsuario: EnombreUsuario,
-        Egrupo: Egrupo,
+        Epassword: Epassword,
+        Etipo: Etipo,
         //Eadmin: Eadmin,
       };
     },
   }).then((result) => {
     if (result.isConfirmed) {
-      swal({
-        //title: "Comprobando ...",
-        icon: carga,
-        button: false,
-        allowOutsideClick: false,
-      });
-      let peticion = [];
-      if (result.value.Egrupo == "-1") {
-        peticion = {
-          nombre: `${result.value.Enombre}`,
-          apellidos: `${result.value.Eapellidos}`,
-          email: `${result.value.Eemail}`,
-          username: `${result.value.EnombreUsuario}`,
-          id_grupo: null,
-        };
-      } else if (result.value.Egrupo != "null") {
-        peticion = {
-          nombre: `${result.value.Enombre}`,
-          apellidos: `${result.value.Eapellidos}`,
-          email: `${result.value.Eemail}`,
-          username: `${result.value.EnombreUsuario}`,
-          id_grupo: `${result.value.Egrupo}`,
-        };
-      } else {
-        peticion = {
-          nombre: `${result.value.Enombre}`,
-          apellidos: `${result.value.Eapellidos}`,
-          email: `${result.value.Eemail}`,
-          username: `${result.value.EnombreUsuario}`,
-        };
-      }
-      axios
-        .put("update-usuario/" + ``, peticion)
-        .then((response) => {
-          //console.log(response.data);
-          if (response.status >= 200 && response.status <= 205) {
-            //console.log(response.data[1].nombre);
-            //console.log(response.data);
-            window.location.reload(true);
-            //Users.array1[key].nombreUsuario = response.data.nombreUsuario;
-            //Users.array1[key].nombre = response.data.nombre;
-            //Users.array1[key].apellidos = response.data.apellidos;
-
-            // swal({
-            //   icon: "success",
-            //   title: "Actualizado",
-            //   text: `
-            //     Usuario: ${result.value.EnombreUsuario}
-            //     Nombre: ${result.value.Enombre}
-            //     Apellidos: ${result.value.Eapellidos}
-            //     Email: ${result.value.Eemail}
-            //   `,
-            // });
-          }
-        })
-        .catch(function (error) {
-          if (error.status == 401) {
-            swal({
-              title: "Error acceso " + error.response.status,
-              text: "Error, no tienes acceso a esta sección.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
+      if (result.value.Etipo == "al") {
+        Swal.fire({
+          title: "Quieres asignarle un grupo",
+          html: `${grupos}`,
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Asignar",
+          cancelButtonText: "Continuar sin asignar",
+          preConfirm: () => {
+            const Egrupo = Swal.getPopup().querySelector("#Egrupo").value;
+            return {
+              Egrupo: Egrupo,
+            };
+          },
+        }).then((resulta) => {
+          if (resulta.isConfirmed) {
+            if (resulta.value.Egrupo == "-1") {
+              peticion = {
+                nombre: `${result.value.Enombre}`,
+                apellidos: `${result.value.Eapellidos}`,
+                email: `${result.value.Eemail}`,
+                username: `${result.value.EnombreUsuario}`,
+                password: `${result.value.Epassword}`,
+                password_confirmation: `${result.value.Epassword}`,
+                id_grupo: null,
+              };
+            } else {
+              peticion = {
+                nombre: `${result.value.Enombre}`,
+                apellidos: `${result.value.Eapellidos}`,
+                email: `${result.value.Eemail}`,
+                username: `${result.value.EnombreUsuario}`,
+                password: `${result.value.Epassword}`,
+                password_confirmation: `${result.value.Epassword}`,
+                id_grupo: `${resulta.value.Egrupo}`,
+              };
+            }
           } else {
-            swal({
-              title: "Error interno " + error.response.status,
-              text: "Error interno, vuelve a intentarlo en unos momentos.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
+            peticion = {
+              nombre: `${result.value.Enombre}`,
+              apellidos: `${result.value.Eapellidos}`,
+              email: `${result.value.Eemail}`,
+              username: `${result.value.EnombreUsuario}`,
+              password: `${result.value.Epassword}`,
+              password_confirmation: `${result.value.Epassword}`,
+              id_grupo: null,
+            };
           }
+          ruta = "register-alumno";
+          peticionCrear(peticion, ruta);
         });
+      } else {
+        if (usuarioLogeado.es_admin) {
+          Swal.fire({
+            title: "¿Quieres que sea administrador?",
+            text: "Cuidado, un usuario administrador tendrá total dominio de la aplicación, contenido y usuarios, solo otorga estos permisos a usuarios que sean de tu confianza",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Administrador",
+            cancelButtonText: "Profesor",
+          }).then((resulta1) => {
+            if (resulta1.isConfirmed) {
+              peticion = {
+                nombre: `${result.value.Enombre}`,
+                apellidos: `${result.value.Eapellidos}`,
+                email: `${result.value.Eemail}`,
+                username: `${result.value.EnombreUsuario}`,
+                password: `${result.value.Epassword}`,
+                password_confirmation: `${result.value.Epassword}`,
+                es_admin: true,
+              };
+            } else {
+              peticion = {
+                nombre: `${result.value.Enombre}`,
+                apellidos: `${result.value.Eapellidos}`,
+                email: `${result.value.Eemail}`,
+                username: `${result.value.EnombreUsuario}`,
+                password: `${result.value.Epassword}`,
+                password_confirmation: `${result.value.Epassword}`,
+                es_admin: false,
+              };
+            }
+            ruta = "register-profesor";
+            peticionCrear(peticion, ruta);
+          });
+        }
+      }
+    }
+  });
+};
+const peticionCrearAxios = async (peticion, ruta) => {
+  swal({
+    title: "Se enviará un mail al usuario para que se valide ...",
+    icon: carga,
+    button: false,
+    allowOutsideClick: false,
+  });
+  await axios
+    .post(ruta, peticion)
+    .then((response) => {
+      //console.log(response.data);
+      if (response.status >= 200 && response.status <= 205) {
+        //console.log(response.data[1].nombre);
+        //console.log(response.data);
+        window.location.reload(true);
+      }
+    })
+    .catch(function (error) {
+      if (error.status == 401) {
+        swal({
+          title: "Error acceso " + error.response.status,
+          text: "Error, no tienes acceso a esta sección.",
+          icon: "error",
+          button: "Aceptar",
+          timer: "3000",
+        });
+      } else {
+        swal({
+          title: "Error interno " + error.response.status,
+          text: "Error interno, vuelve a intentarlo en unos momentos.",
+          icon: "error",
+          button: "Aceptar",
+          timer: "3000",
+        });
+      }
+    });
+};
+
+const peticionCrear = async (peticion, ruta) => {
+  Swal.fire({
+    title: "Revisión de datos",
+    html: `${peticion.username}, ${peticion.nombre}, ${peticion.apellidos}, ${peticion.email}`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Enviar",
+    cancelButtonText: "Cancelar",
+  }).then((resulta1) => {
+    if (resulta1.isConfirmed) {
+      peticionCrearAxios(peticion, ruta);
+    } else {
+      swal({ title: "Cancelado por el usuario" });
     }
   });
 };
@@ -274,6 +459,7 @@ const onDelete = (id) => {
           }
         })
         .catch(function (error) {
+          //console.log("EEEEEEEEEEEEEEEE", error, "AAAAAAAAAAAAAAAAAAA");
           if (error.status == 401) {
             swal({
               title: "Error acceso " + error.response.status,
@@ -283,13 +469,27 @@ const onDelete = (id) => {
               timer: "3000",
             });
           } else {
-            swal({
-              title: "Error interno " + error.response.status,
-              text: "Error interno, vuelve a intentarlo en unos momentos.",
-              icon: "error",
-              button: "Aceptar",
-              timer: "3000",
-            });
+            //console.log(error.response.data["Error"]);
+            if (
+              error.response.data["Error"] ==
+              "No es posible borrar usuarios administradores"
+            ) {
+              swal({
+                title: "Error " + error.response.status,
+                text: "Solo el usuario master puede eliminar cuentas de administradores, pongase en contacto con master para eliminarlo, puede bloquear el usuario cambiando su correo electronico y contraseña mientras se atiende su solicitud",
+                icon: "error",
+                button: "Aceptar",
+                timer: "5000",
+              });
+            } else {
+              swal({
+                title: "Error interno " + error.response.status,
+                text: "Error interno, vuelve a intentarlo en unos momentos.",
+                icon: "error",
+                button: "Aceptar",
+                timer: "3000",
+              });
+            }
           }
         });
     } else {
@@ -325,6 +525,41 @@ const groups = async (rol, id_grupo, grupo) => {
               } else {
                 grupos += `<option value="${response.data[i].id}">${response.data[i].nombre}</option>`;
               }
+            }
+            grupos += `</select>`;
+          }
+        })
+        .catch(function (error) {
+          if (error.status == 401) {
+            swal({
+              title: "Error acceso " + error.response.status,
+              text: "Error, no tienes acceso a esta sección.",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
+          } else {
+            swal({
+              title: "Error interno " + error.response.status,
+              text: "Error interno, vuelve a intentarlo en unos momentos.",
+              icon: "error",
+              button: "Aceptar",
+              timer: "3000",
+            });
+          }
+        });
+    } else if (rol == "Profesor") {
+      await axios
+        .get("grupos")
+        .then((response) => {
+          //console.log(response.data);
+          if (response.status >= 200 && response.status <= 205) {
+            grupos = `<label for='Egrupo'>Grupo:</label><br>
+                        <select class="swal2-input" id="Egrupo">
+                          <option value="-1" selected>Sin grupo</option>`;
+
+            for (let i = 0; i < response.data.length; i++) {
+              grupos += `<option value="${response.data[i].id}" >${response.data[i].nombre}</option>`;
             }
             grupos += `</select>`;
           }
@@ -579,7 +814,7 @@ const Users = () => {
     bordered: false,
     loading: false,
     pagination,
-    size: "default",
+    size: "Middle",
     showHeader,
     rowSelection: {},
     scroll: undefined,
@@ -614,13 +849,33 @@ const Users = () => {
 
   return (
     <>
+<<<<<<< HEAD
       <TableWrapper>
         {/* <CreateButton>+ Crear usuario</CreateButton> */}
+=======
+      {/* {onCreateBut()}
+      <div style={{ height: 100 }}>
         <Table
           {...state}
           pagination={{ position: [state.top, state.bottom] }}
           columns={tableColumns}
+          dataSource={datos1 ? datos1 : null}
+          scroll={scroll}
+        />
+      </div> */}
+      <TableWrapper>
+        {/* <CreateButton>+ Crear usuario</CreateButton>  */}
+        {onCreateBut()}
+>>>>>>> master
+        <Table
+          {...state}
+          pagination={{ position: [state.top, state.bottom] }}
+          columns={tableColumns}
+<<<<<<< HEAD
           dataSource={datos ? datos : null}
+=======
+          dataSource={datos1 ? datos1 : null}
+>>>>>>> master
           scroll={scroll}
           className="users-table"
         />
