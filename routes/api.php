@@ -46,7 +46,7 @@ Route::get('auth/perfil-usuario', [AuthController::class, 'perfilUsuario']); //O
 
 //USUARIO
 //Route::post('/register', [UsuarioController::class, 'register']);//ESTA COMENTAR, CREA USUARIOS GENERALES
-Route::get('/usuarios', [UsuarioController::class, 'getUsuarios']); //OK
+Route::get('usuarios', [UsuarioController::class, 'getUsuarios']); //OK
 Route::post('/register-alumno', [UsuarioController::class, 'registerAlumno']); //ESTA COMENTAR
 Route::post('/register-profesor', [UsuarioController::class, 'registerProfesor']); //ESTA COMENTAR
 Route::delete('/delete-usuario/{id}', [UsuarioController::class, 'deleteUsuario']); //OK
