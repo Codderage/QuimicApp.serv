@@ -78,8 +78,4 @@ export const CreateButton = styled.a`
   &:hover {
     color: white;
   }
-<<<<<<< HEAD
 `;
-=======
-`;
->>>>>>> master

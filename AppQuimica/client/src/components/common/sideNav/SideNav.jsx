@@ -7,6 +7,7 @@ import { SideNavData } from "./SideNavData";
 import { User } from "../../../App";
 import axios from "../http";
 import swal from "sweetalert";
+import "./SideNav.css";
 
 const SideNavBar = () => {
   const { user, setUser, setToken } = useContext(User);

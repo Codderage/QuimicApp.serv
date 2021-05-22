@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faEdit, faTimes, faEye } from "@fortawesome/free-solid-svg-icons";
-import { CreateButton, TableWrapper } from "./Users.styled";
 import { Table, Space } from "antd";
 import { User } from "../../App";
 
@@ -66,7 +65,7 @@ const columns = [
         </a>
 
         <a
-          href="http://localhost:3000/usuarios"
+          // href="http://localhost:3000/usuarios"
           title="Editar"
           onClick={(e) => {
             onUpdate(
@@ -86,7 +85,7 @@ const columns = [
           <FontAwesomeIcon icon={faEdit} className="edit-icon" />
         </a>
         <a
-          href="http://localhost:3000/usuarios"
+          // href="http://localhost:3000/usuarios"
           title="Eliminar"
           onClick={(e) => {
             onDelete(record.idUsuario);
@@ -98,16 +97,6 @@ const columns = [
     ),
   },
 ];
-
-// const data = [];
-// for (let i = 1; i <= 10; i++) {
-//   data.push({
-//     key: i,
-//     nombre: "profesor",
-//     apellidos: `profesor`,
-//     rol: `${i % 2 ? "Profesor" : "Alumno"}`,
-//   });
-// }
 
 const onCreateBut = () => {
   const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
@@ -849,10 +838,6 @@ const Users = () => {
 
   return (
     <>
-<<<<<<< HEAD
-      <TableWrapper>
-        {/* <CreateButton>+ Crear usuario</CreateButton> */}
-=======
       {/* {onCreateBut()}
       <div style={{ height: 100 }}>
         <Table
@@ -866,16 +851,11 @@ const Users = () => {
       <TableWrapper>
         {/* <CreateButton>+ Crear usuario</CreateButton>  */}
         {onCreateBut()}
->>>>>>> master
         <Table
           {...state}
           pagination={{ position: [state.top, state.bottom] }}
           columns={tableColumns}
-<<<<<<< HEAD
           dataSource={datos ? datos : null}
-=======
-          dataSource={datos1 ? datos1 : null}
->>>>>>> master
           scroll={scroll}
           className="users-table"
         />
