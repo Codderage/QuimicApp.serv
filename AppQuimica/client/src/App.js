@@ -1,4 +1,3 @@
-
 import React, {
   useEffect,
   useState,
@@ -7,14 +6,6 @@ import React, {
   lazy,
 } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
-const UsersLanding = lazy(() => import("./containers/users/usersLanding/UsersLanding"));
-const GroupsLanding = lazy(() => import("./containers/groups/groupsLanding/GroupsLanding"));
-const PracticesLanding = lazy(() => import("./containers/practices/practicesLanding/PracticesLanding"));
-const PracticePage = lazy(() => import("./containers/practices/view/PracticePage"));
-const CompoundsLanding = lazy(() => import("./containers/compounds/compoundsLanding/CompoundsLanding"));
-const ComponentsLanding = lazy(() => import("./containers/components/componentsLanding/ComponentsLanding"));
-
 import Login from "./containers/login/Login";
 import GlobalFonts from "./assets/fonts/fonts";
 import Home from "./containers/home/home";
@@ -25,6 +16,15 @@ import "./App.css";
 import "antd/dist/antd.css";
 import axios from "./components/common/http";
 import carga from "./assets/img/load/ajax-loader.gif";
+
+
+const UsersLanding = lazy(() => import("./containers/users/usersLanding/UsersLanding"));
+const GroupsLanding = lazy(() => import("./containers/groups/groupsLanding/GroupsLanding"));
+const PracticesLanding = lazy(() => import("./containers/practices/practicesLanding/PracticesLanding"));
+const PracticePage = lazy(() => import("./containers/practices/view/PracticePage"));
+const CompoundsLanding = lazy(() => import("./containers/compounds/compoundsLanding/CompoundsLanding"));
+const ComponentsLanding = lazy(() => import("./containers/components/componentsLanding/ComponentsLanding"));
+
 
 
 export const User = createContext();

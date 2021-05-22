@@ -809,21 +809,7 @@ const Users = () => {
 
   return (
     <>
-      {/* {peticion} */}
-
-      {onCreateBut()}
-      {/* {onCreateBut()}
-      <div style={{ height: 100 }}>
-        <Table
-          {...state}
-          pagination={{ position: [state.top, state.bottom] }}
-          columns={tableColumns}
-          dataSource={datos1 ? datos1 : null}
-          scroll={scroll}
-        />
-      </div> */}
       <TableWrapper>
-        {/* <CreateButton>+ Crear usuario</CreateButton>  */}
         {onCreateBut()}
         <Table
           {...state}

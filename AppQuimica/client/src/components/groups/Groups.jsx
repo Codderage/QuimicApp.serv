@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Table, Space } from "antd";
 import axios from "../common/http";
@@ -80,10 +79,9 @@ const Grupos = () => {
             //console.log(response.data[1].nombre);
             //console.log(response.data, response.data.length);
             for (let i = 0; i < response.data.length; i++) {
-
               //console.log(response.data[i].email);
               if (response.data[i].email) {
-                array1.push({
+                array.push({
                   key: i,
                   nombre: response.data[i].nombre,
                   apellidos: response.data[i].apellidos,
@@ -92,7 +90,7 @@ const Grupos = () => {
                   grupo: response.data[i].nombre_grupo,
                 });
               } else {
-                array1.push({
+                array.push({
                   key: i,
                   nombre: (
                     <>
@@ -122,7 +120,6 @@ const Grupos = () => {
                   grupo: response.data[i].nombre_grupo,
                 });
               }
-
             }
             //console.log(array1);
 
@@ -448,7 +445,6 @@ const Grupos = () => {
     var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
 
     if (array[0].grupo) {
-
       return (
         usuarioLogeado.username +
         " estas en el grupo " +
@@ -475,7 +471,6 @@ const Grupos = () => {
         />
       </TableWrapper>
     </>
-
   );
 };
 
