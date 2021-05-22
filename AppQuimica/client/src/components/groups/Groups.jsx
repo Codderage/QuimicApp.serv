@@ -5,6 +5,10 @@ import axios from "../common/http";
 import swal from "sweetalert";
 import carga from "../../assets/img/load/ajax-loader.gif";
 import Swal from "sweetalert2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTimes, faEye } from "@fortawesome/free-solid-svg-icons";
+
+import { CreateButton, TableWrapper } from "./Groups.styled";
 
 const columns = [
   {
@@ -17,6 +21,7 @@ const columns = [
     dataIndex: "apellidos",
     //sorter: (a, b) => a.apellidos - b.apellidos,
   },
+  
   {
     title: "Grupo",
     dataIndex: "grupo",
@@ -26,18 +31,30 @@ const columns = [
     title: "Email",
     dataIndex: "email",
     //sorter: (a, b) => a.email - b.email,
+    title: "Profesor",
+    dataIndex: "profesor",
+    sorter: (a, b) => a.profesor - b.profesor,
+  },
+  {
+    title: "",
+    key: "accion",
+    render: () => (
+      <Space size="middle">
+        <a href="http://localhost:3000/grupos" title="Ver">
+          <FontAwesomeIcon icon={faEye} className="view-icon" />
+        </a>
+        <a href="http://localhost:3000/grupos" title="Editar">
+          <FontAwesomeIcon icon={faEdit} className="view-icon" />
+        </a>
+        <a href="http://localhost:3000/grupos" title="Eliminar">
+          <FontAwesomeIcon icon={faTimes} className="delete-icon" />
+        </a>
+      </Space>
+    ),
   },
 ];
 
 const data = [];
-// for (let i = 1; i <= 10; i++) {
-//   data.push({
-//     key: i,
-//     nombre: "profesor",
-//     apellidos: `profesor`,
-//     rol: `${i % 2 ? "Profesor" : "Alumno"}`,
-//   });
-// }
 
 const showHeader = true;
 
@@ -444,18 +461,24 @@ const Grupos = () => {
   };
 
   return (
+<<<<<<< HEAD:AppQuimica/client/src/components/grupos/Grupos.jsx
     <>
       {/* {peticion} */}
       {onCreateBut()}
       <h3>{hola}</h3>
+=======
+    <TableWrapper>
+      <CreateButton>+ Crear grupo</CreateButton>
+>>>>>>> master:AppQuimica/client/src/components/groups/Groups.jsx
       <Table
         {...state}
         pagination={{ position: [state.top, state.bottom] }}
         columns={tableColumns}
-        dataSource={datos1 ? datos1 : null}
+        dataSource={state.hasData ? data : null}
         scroll={scroll}
+        className="groups-table"
       />
-    </>
+    </TableWrapper>
   );
 };
 

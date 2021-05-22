@@ -4,7 +4,11 @@ import { User } from "../../App";
 import axios from "../common/http";
 import swal from "sweetalert";
 import carga from "../../assets/img/load/ajax-loader.gif";
+import { CreateButton, TableWrapper } from "./Users.styled";
 import Swal from "sweetalert2";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTimes, faKey } from "@fortawesome/free-solid-svg-icons";
 
 // import { Link, useHistory } from "react-router-dom";
 
@@ -46,17 +50,25 @@ const columns = [
     width: 300,
     dataIndex: "accion",
     render: (text, record) => (
+<<<<<<< HEAD
       <Space>
         <button
           className="btn btn-primary"
+=======
+      <Space size="middle">
+        <a
+          title="Contraseña"
+>>>>>>> master
           onClick={(e) => {
             onUpPassUni(record.nombre, record.apellidos, record.idUsuario);
           }}
         >
-          Contraseña
-        </button>
-        <button
-          className="btn btn-primary"
+          <FontAwesomeIcon icon={faKey} className="view-icon" />
+        </a>
+
+        <a
+          href="http://localhost:3000/usuarios"
+          title="Editar"
           onClick={(e) => {
             onUpdate(
               record.id,
@@ -72,16 +84,17 @@ const columns = [
             );
           }}
         >
-          Editar
-        </button>
-        <button
-          className="btn btn-danger"
+          <FontAwesomeIcon icon={faEdit} className="edit-icon" />
+        </a>
+        <a
+          href="http://localhost:3000/usuarios"
+          title="Eliminar"
           onClick={(e) => {
             onDelete(record.idUsuario);
           }}
         >
-          Eliminar
-        </button>
+          <FontAwesomeIcon icon={faTimes} className="delete-icon" />
+        </a>
       </Space>
     ),
   },
@@ -103,6 +116,7 @@ const onCreateBut = () => {
   if (usuarioLogeado) {
     if (usuarioLogeado.id_profesor) {
       return (
+<<<<<<< HEAD
         <div className="justify-content-center row">
           <button
             className="btn btn-primary "
@@ -113,6 +127,16 @@ const onCreateBut = () => {
             Crear usuario
           </button>
         </div>
+=======
+        <CreateButton
+          className="btn "
+          onClick={(e) => {
+            onCreate();
+          }}
+        >
+          + Crear usuario
+        </CreateButton>
+>>>>>>> master
       );
     } else {
     }
@@ -811,9 +835,13 @@ const Users = () => {
 
   return (
     <>
+<<<<<<< HEAD
       {/* {peticion} */}
 
       {onCreateBut()}
+=======
+      {/* {onCreateBut()}
+>>>>>>> master
       <div style={{ height: 100 }}>
         <Table
           {...state}
@@ -822,7 +850,23 @@ const Users = () => {
           dataSource={datos1 ? datos1 : null}
           scroll={scroll}
         />
+<<<<<<< HEAD
       </div>
+=======
+      </div> */}
+      <TableWrapper>
+        {/* <CreateButton>+ Crear usuario</CreateButton>  */}
+        {onCreateBut()}
+        <Table
+          {...state}
+          pagination={{ position: [state.top, state.bottom] }}
+          columns={tableColumns}
+          dataSource={datos1 ? datos1 : null}
+          scroll={scroll}
+          className="users-table"
+        />
+      </TableWrapper>
+>>>>>>> master
     </>
   );
 };
