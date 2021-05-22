@@ -1,3 +1,4 @@
+
 import React, {
   useEffect,
   useState,
@@ -5,29 +6,29 @@ import React, {
   Suspense,
   lazy,
 } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-
-import GroupsLanding from "./containers/groups/groupsLanding/GroupsLanding";
-import PracticesLanding from "./containers/practices/practicesLanding/PracticesLanding";
-import PracticePage from "./containers/practices/view/PracticePage";
-import CompoundsLanding from "./containers/compounds/compoundsLanding/CompoundsLanding";
-import ComponentsLanding from "./containers/components/componentsLanding/ComponentsLanding";
-
-import Login from "./containers/login/Login";
-import GlobalFonts from "./assets/fonts/fonts";
+import "antd/dist/antd.css";
 import "./App.css";
 import axios from "./components/common/http";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./containers/home/home";
-//import Grupos from "./containers/grupos/grupos";
 import carga from "./assets/img/load/ajax-loader.gif";
-import { render } from "react-dom";
-//import { PageNotFound } from "./containers/error/PageNotFound";
-//import UsersLanding from "./containers/users/usersLanding/UsersLanding";
-const UsersLanding = lazy(() =>
-  import("./containers/users/usersLanding/UsersLanding")
-);
 
+import GlobalFonts from "./assets/fonts/fonts";
+import Login from "./containers/login/Login";
+import Home from "./containers/home/home";
+// import UsersLanding from "./containers/users/usersLanding/UsersLanding";
+// import GroupsLanding from "./containers/groups/groupsLanding/GroupsLanding";
+// import PracticesLanding from "./containers/practices/practicesLanding/PracticesLanding";
+// import PracticePage from "./containers/practices/view/PracticePage";
+// import CompoundsLanding from "./containers/compounds/compoundsLanding/CompoundsLanding";
+// import ComponentsLanding from "./containers/components/componentsLanding/ComponentsLanding";
+
+const UsersLanding = lazy(() => import("./containers/users/usersLanding/UsersLanding"));
+const GroupsLanding = lazy(() => import("./containers/groups/groupsLanding/GroupsLanding"));
+const PracticesLanding = lazy(() => import("./containers/practices/practicesLanding/PracticesLanding"));
+const PracticePage = lazy(() => import("./containers/practices/view/PracticePage"));
+const CompoundsLanding = lazy(() => import("./containers/compounds/compoundsLanding/CompoundsLanding"));
+const ComponentsLanding = lazy(() => import("./containers/components/componentsLanding/ComponentsLanding"));
 
 export const User = createContext();
 
@@ -36,21 +37,14 @@ const App = () => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    const loggedToken = localStorage.getItem("token");
-    // if (loggedToken) {
-    //const foundToken = loggedToken;
-    //setToken(loggedToken);
+    const loggedToken = sessionStorage.getItem("token");
+
     axios.defaults.headers.common.Authorization = `Bearer ${loggedToken}`;
-    // console.log(
-    //   loggedToken,
-    //   axios.defaults.headers.common.Authorization,
-    //   "1111111111111111111"
-    // );
-    //}
+
   }, []);
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
+    const loggedInUser = sessionStorage.getItem("user");
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
       setUser(foundUser);
@@ -71,7 +65,7 @@ const App = () => {
                 transform: "translate(-50%, -50%)",
               }}
             >
-              <img src={carga} class="centerLoadingLogo" />
+              <img src={carga} class="centerLoadingLogo" alt="loading" />
               <h1 style={{ textAlign: "center" }}>Cargando...</h1>
             </div>
           }

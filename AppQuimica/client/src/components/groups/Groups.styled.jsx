@@ -16,9 +16,6 @@ export const TableWrapper = styled.div`
       &:hover > td {
         background-color: #6bb1c5;
       }
-      & td:last-of-type {
-        text-align: center;
-      }
     }
     & thead tr th {
       background-color: #0a1128;

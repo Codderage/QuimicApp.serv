@@ -1,9 +1,9 @@
 import { Table, Space } from "antd";
-import React, { useEffect, useState, createContext, useContext } from "react";
-import { User } from "../../App";
+import React, { useEffect, useState } from "react";
+// import { User } from "../../App";
 import axios from "../common/http";
 import swal from "sweetalert";
-import carga from "../../assets/img/load/ajax-loader.gif";
+// import carga from "../../assets/img/load/ajax-loader.gif";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTimes, faEye } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,26 +12,22 @@ import { CreateButton, TableWrapper } from "./Groups.styled";
 const columns = [
   {
     title: "Grupo",
-    dataIndex: "grupo",
-    sorter: (a, b) => a.grupo - b.grupo,
+    dataIndex: "nombre",
+    // sorter: (a, b) => a.grupo - b.grupo,
   },
   {
-    title: "Profesor",
-    dataIndex: "profesor",
-    sorter: (a, b) => a.profesor - b.profesor,
-  },
-  {
-    title: "",
+    title: "Accion",
     key: "accion",
-    render: () => (
+    dataIndex: "accion",
+    render: (text, record) => (
       <Space size="middle">
-        <a href="http://localhost:3000/grupos" title="Ver">
+        <a title="Ver">
           <FontAwesomeIcon icon={faEye} className="view-icon" />
         </a>
-        <a href="http://localhost:3000/grupos" title="Editar">
+        <a title="Editar">
           <FontAwesomeIcon icon={faEdit} className="view-icon" />
         </a>
-        <a href="http://localhost:3000/grupos" title="Eliminar">
+        <a title="Eliminar">
           <FontAwesomeIcon icon={faTimes} className="delete-icon" />
         </a>
       </Space>
@@ -39,44 +35,32 @@ const columns = [
   },
 ];
 
-const data = [];
+// const data = [];
 
 const showHeader = true;
 
 const pagination = { position: "bottom" };
 
 const Grupos = () => {
-  const { token } = useContext(User);
-  const [datos1, setDatos1] = useState();
+  // const { token } = useContext(User);
+  const [datos, setDatos] = useState();
 
-  const array1 = [];
+  const array = [];
 
   useEffect(async () => {
-    if (localStorage.getItem("token") && localStorage.getItem("user")) {
+    if (sessionStorage.getItem("token") && sessionStorage.getItem("user")) {
       await axios
-        .get(
-          "group-usuario" //,
-          // {},
-          // {
-          //   headers: {
-          //     Authorization: "Bearer " + localStorage.getItem("token"),
-          //   },
-          // }
-        )
+        .get("group-usuario")
         .then((response) => {
-          //console.log(response.data);
+          console.log(response.data);
           if (response.status >= 200 && response.status <= 205) {
             //console.log(response.data[1].nombre);
             //console.log(response.data, response.data.length);
             for (let i = 0; i < response.data.length; i++) {
               //console.log(response.data[i]);
-              array1.push({
+              array.push({
                 key: i,
                 nombre: response.data[i].nombre,
-                apellidos: response.data[i].apellidos,
-                email: response.data[i].email,
-                id_grupo: response.data[i].id_grupo,
-                grupo: response.data[i].nombre_grupo,
               });
             }
             //console.log(array1);
@@ -111,7 +95,7 @@ const Grupos = () => {
     }
     //console.log(array1);
     //console.log(array1);
-    setDatos1(array1);
+    setDatos(array);
   }, []);
 
   const [state, setState] = useState({
@@ -129,7 +113,7 @@ const Grupos = () => {
     xScroll: false,
     yScroll: false,
   });
-  var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
   var hola = "Estos son los datos de tu grupo.";
   if (JSON.parse(usuarioLogeado.id_profesor)) {
     columns.splice(1);
@@ -157,15 +141,15 @@ const Grupos = () => {
     tableColumns[tableColumns.length - 1].fixed = "right";
   }
 
-  const nombreUsu = localStorage.getItem("user").username;
+  const nombreUsu = sessionStorage.getItem("user").username;
 
   const mensajeGrupo = () => {
-    var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
-    if (array1[0].grupo) {
+    var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
+    if (array[0].grupo) {
       return (
         usuarioLogeado.username +
         " estas en el grupo " +
-        array1[0].grupo +
+        array[0].grupo +
         " con estos otros usuarios."
       );
     } else {
@@ -180,7 +164,7 @@ const Grupos = () => {
         {...state}
         pagination={{ position: [state.top, state.bottom] }}
         columns={tableColumns}
-        dataSource={state.hasData ? data : null}
+        dataSource={datos ? datos : null}
         scroll={scroll}
         className="groups-table"
       />

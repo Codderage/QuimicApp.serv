@@ -1,6 +1,4 @@
 import React, { useContext } from "react";
-import Footer from "../../components/common/footer/Footer";
-import NavBar from "../../components/common/navBar/NavBar";
 import styled from "styled-components";
 import { User } from "../../App";
 import SideNavBar from "../../components/common/sideNav/SideNav";

@@ -2280,6 +2280,7 @@ button.alt:hover,
   padding: 14em 0 14em 0;
   text-align: center;
   color: #fff;
+  min-height: calc(100vh - 64px) !important;
 }
 
 #header header h1 {
