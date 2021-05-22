@@ -26,7 +26,7 @@ class UsuarioController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['register', 'verifyUsuario', 'petActContra1']]);
+        $this->middleware('auth:api', ['except' => ['register', 'verifyUsuario', 'petActContra1', 'getUsuarios']]);
     }
 
     public function getUsuarios()
