@@ -21,7 +21,7 @@ const columns = [
     dataIndex: "apellidos",
     //sorter: (a, b) => a.apellidos - b.apellidos,
   },
-  
+
   {
     title: "Grupo",
     dataIndex: "grupo",
@@ -67,14 +67,14 @@ const Grupos = () => {
   const array1 = [];
 
   useEffect(async () => {
-    if (localStorage.getItem("token") && localStorage.getItem("user")) {
+    if (sessionStorage.getItem("token") && sessionStorage.getItem("user")) {
       await axios
         .get(
           "group-usuario" //,
           // {},
           // {
           //   headers: {
-          //     Authorization: "Bearer " + localStorage.getItem("token"),
+          //     Authorization: "Bearer " + sessionStorage.getItem("token"),
           //   },
           // }
         )
@@ -249,7 +249,7 @@ const Grupos = () => {
   };
 
   const onCreateBut = () => {
-    const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+    const usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
 
     if (usuarioLogeado) {
       if (usuarioLogeado.id_profesor) {
@@ -358,11 +358,11 @@ const Grupos = () => {
           .then((response) => {
             //console.log(response.data);
             if (response.status >= 200 && response.status <= 205) {
-              var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+              var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
               if (usuarioLogeado.id_profesor) {
                 window.location.reload(true);
               } else {
-                localStorage.clear();
+                sessionStorage.clear();
                 window.location.href = "/";
               }
               swal({
@@ -416,7 +416,7 @@ const Grupos = () => {
     xScroll: false,
     yScroll: false,
   });
-  var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
   var hola = "Estos son los datos de tu grupo.";
   if (JSON.parse(usuarioLogeado.id_profesor)) {
     columns.splice(1);
@@ -444,10 +444,10 @@ const Grupos = () => {
     tableColumns[tableColumns.length - 1].fixed = "right";
   }
 
-  const nombreUsu = localStorage.getItem("user").username;
+  const nombreUsu = sessionStorage.getItem("user").username;
 
   const mensajeGrupo = () => {
-    var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+    var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
     if (array1[0].grupo) {
       return (
         usuarioLogeado.username +
@@ -461,24 +461,22 @@ const Grupos = () => {
   };
 
   return (
-<<<<<<< HEAD:AppQuimica/client/src/components/grupos/Grupos.jsx
     <>
       {/* {peticion} */}
       {onCreateBut()}
       <h3>{hola}</h3>
-=======
-    <TableWrapper>
-      <CreateButton>+ Crear grupo</CreateButton>
->>>>>>> master:AppQuimica/client/src/components/groups/Groups.jsx
-      <Table
-        {...state}
-        pagination={{ position: [state.top, state.bottom] }}
-        columns={tableColumns}
-        dataSource={state.hasData ? data : null}
-        scroll={scroll}
-        className="groups-table"
-      />
-    </TableWrapper>
+      <TableWrapper>
+        <CreateButton>+ Crear grupo</CreateButton>
+        <Table
+          {...state}
+          pagination={{ position: [state.top, state.bottom] }}
+          columns={tableColumns}
+          dataSource={state.hasData ? data : null}
+          scroll={scroll}
+          className="groups-table"
+        />
+      </TableWrapper>
+    </>
   );
 };
 

@@ -50,15 +50,9 @@ const columns = [
     width: 300,
     dataIndex: "accion",
     render: (text, record) => (
-<<<<<<< HEAD
-      <Space>
-        <button
-          className="btn btn-primary"
-=======
       <Space size="middle">
         <a
           title="Contraseña"
->>>>>>> master
           onClick={(e) => {
             onUpPassUni(record.nombre, record.apellidos, record.idUsuario);
           }}
@@ -111,23 +105,11 @@ const data = [];
 // }
 
 const onCreateBut = () => {
-  const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  const usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
 
   if (usuarioLogeado) {
     if (usuarioLogeado.id_profesor) {
       return (
-<<<<<<< HEAD
-        <div className="justify-content-center row">
-          <button
-            className="btn btn-primary "
-            onClick={(e) => {
-              onCreate();
-            }}
-          >
-            Crear usuario
-          </button>
-        </div>
-=======
         <CreateButton
           className="btn "
           onClick={(e) => {
@@ -136,7 +118,6 @@ const onCreateBut = () => {
         >
           + Crear usuario
         </CreateButton>
->>>>>>> master
       );
     } else {
     }
@@ -144,7 +125,7 @@ const onCreateBut = () => {
 };
 
 const onUpPass = async () => {
-  const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  const usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
   if (usuarioLogeado.id_profesor) {
     //seleccionar usuario, si es admin el conectado también a profesores
   } else {
@@ -212,7 +193,7 @@ const onUpPassUni = async (nombre, apellido, idUsuario) => {
 };
 
 const onCreate = async () => {
-  const usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  const usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
 
   // let adm = `<input type="hidden" class="swal2-input" id='Eadmin'>`;
   let tipo = `<option value="al" selected="">Alumno</option>`;
@@ -456,11 +437,11 @@ const onDelete = (id) => {
         .then((response) => {
           //console.log(response.data);
           if (response.status >= 200 && response.status <= 205) {
-            var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+            var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
             if (usuarioLogeado.id_profesor) {
               window.location.reload(true);
             } else {
-              localStorage.clear();
+              sessionStorage.clear();
               window.location.href = "/";
             }
             swal({
@@ -517,7 +498,7 @@ const onDelete = (id) => {
 const groups = async (rol, id_grupo, grupo) => {
   let grupos = `<input type="hidden" class="swal2-input" id='Egrupo' type='text' value="null">`;
   //console.log(rol, "AAAAAAAAAAAAAAAAAAAAAA");
-  var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+  var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
   if (usuarioLogeado.id_profesor) {
     if (rol == "Alumno") {
       //console.log(grupos, "BBBBBBBBBBB");
@@ -732,10 +713,10 @@ const Users = () => {
 
   useEffect(async () => {
     //console.log(token, axios, "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa");
-    if (localStorage.getItem("token") && localStorage.getItem("user")) {
+    if (sessionStorage.getItem("token") && sessionStorage.getItem("user")) {
       // console.log(user);
       //if (user.id_profesor) {
-      var usuarioLogeado = JSON.parse(localStorage.getItem("user"));
+      var usuarioLogeado = JSON.parse(sessionStorage.getItem("user"));
       //console.log(usuarioLogeado);
 
       //LARAVEL CONTROLA SI EL USUARIO QUE PIDE ES ADMIN O NO
@@ -835,13 +816,10 @@ const Users = () => {
 
   return (
     <>
-<<<<<<< HEAD
       {/* {peticion} */}
 
       {onCreateBut()}
-=======
       {/* {onCreateBut()}
->>>>>>> master
       <div style={{ height: 100 }}>
         <Table
           {...state}
@@ -850,9 +828,6 @@ const Users = () => {
           dataSource={datos1 ? datos1 : null}
           scroll={scroll}
         />
-<<<<<<< HEAD
-      </div>
-=======
       </div> */}
       <TableWrapper>
         {/* <CreateButton>+ Crear usuario</CreateButton>  */}
@@ -866,7 +841,6 @@ const Users = () => {
           className="users-table"
         />
       </TableWrapper>
->>>>>>> master
     </>
   );
 };

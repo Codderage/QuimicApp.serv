@@ -26,7 +26,7 @@ class CreateUsuariosTable extends Migration
                 ->references('id')->on('alumnos')
                 ->onDelete('cascade');
 
-            $table->string('username')->unique();
+            $table->string('username',100)->unique();
             $table->string('password');
             $table->string('codigo_verificacion')->nullable();
 
