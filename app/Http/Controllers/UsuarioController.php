@@ -26,7 +26,7 @@ class UsuarioController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['register', 'verifyUsuario', 'petActContra1']]);
+        $this->middleware('auth:api', ['except' => ['register', 'verifyUsuario', 'petActContra1', 'actCnt']]);
     }
 
     public function getUsuarios()
@@ -278,7 +278,7 @@ class UsuarioController extends Controller
      */
     public function actCnt(Request $request, $ref)
     {
-        return json([$usuario = Usuario::where('codigo_verificacion', $ref)->first(), $ref, $request]);
+        //return json([$usuario = Usuario::where('codigo_verificacion', $ref)->first(), $ref, $request]);
 
         if ($usuario) {
             //'password' => bcrypt($request->password),
