@@ -244,6 +244,7 @@ class PracticaController extends BaseController
      */
     public function insertPractica(Request $request)
     {
+        if (auth()->user()->id_profesor) {
         $practica = new Practica;
         $practica->id_profesor = $request->id_profesor;
         $practica->id_compuesto_en_muestra = $request->id_compuesto_en_muestra;
@@ -253,6 +254,11 @@ class PracticaController extends BaseController
 
         $practica->save();
         return $practica;
+    }else{
+        return response()->json([
+            'error' => 'No autorizado',
+        ], 401);
+    }
     }
 
     /**

@@ -91,6 +91,7 @@ class CompuestoQuimicoController extends BaseController
 
     public function insertCompuestoMuestra(Request $request)
     {
+        if (auth()->user()->id_profesor) {
         $compuestoMuestra = new CompuestoEnMuestra;
         $compuestoMuestra->nombre = $request->nombre;
         $compuestoMuestra->id_compuesto = $request->id_compuesto;
@@ -103,6 +104,12 @@ class CompuestoQuimicoController extends BaseController
         $compuestoMuestra->save();
 
         return $compuestoMuestra;
+    }else{
+
+        return response()->json([
+            'error' => 'No autorizado',
+        ], 401);
+    }
     }
 
     public function deleteCompuestoMuestra($id)

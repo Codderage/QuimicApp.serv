@@ -90,7 +90,7 @@ Route::get('/practicas1', [PracticaController::class, 'getPracticas1']);//OK
 //Route::get('/practicas', [PracticaController::class, 'getPracticas']);
 Route::get('/practica/{id}', [PracticaController::class, 'getPractica']);
 Route::put('/practica/{id}', [PracticaController::class, 'updatePractica']);//OK
-Route::post('/practica', [PracticaController::class, 'insertPractica']);
+Route::post('/practica', [PracticaController::class, 'insertPractica']);//OK
 Route::delete('/practica/{id}', [PracticaController::class, 'deletePractica']);//OK
 
 //PRACTICA REALIZADA
@@ -122,7 +122,7 @@ Route::delete('/condicion/{id}', [CondicionController::class, 'deleteCondicion']
 Route::get('/compuestos-quimicos', [CompuestoQuimicoController::class, 'getCompuestosQuimicos']);
 Route::get('/compuesto-quimico/{id}', [CompuestoQuimicoController::class, 'getCompuestoQuimico']);
 Route::put('/compuesto-quimico/{id}', [CompuestoQuimicoController::class, 'updateCompuestoQuimico']);
-Route::post('/compuesto-quimico', [CompuestoQuimicoController::class, 'insertCompuestoQuimico']);
+Route::post('/compuesto-quimico', [CompuestoQuimicoController::class, 'insertCompuestoQuimico']);//OK
 Route::delete('/compuesto-quimico/{id}', [CompuestoQuimicoController::class, 'deleteCompuestoQuimico']);//OK
 
 //COMPUESTO EN MUESTRA
