@@ -87,7 +87,7 @@ Route::delete('/grupo/{id}', [GrupoController::class, 'deleteGrupo']); //OK
 //PRACTICA
 
 Route::get('/practicas1', [PracticaController::class, 'getPracticas1']);
-Route::get('/practicas', [PracticaController::class, 'getPracticas1']);
+Route::get('/practicas', [PracticaController::class, 'getPracticas']);
 Route::get('/practica/{id}', [PracticaController::class, 'getPractica']);
 Route::put('/practica/{id}', [PracticaController::class, 'updatePractica']);
 Route::post('/practica', [PracticaController::class, 'insertPractica']);
