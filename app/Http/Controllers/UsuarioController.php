@@ -26,7 +26,7 @@ class UsuarioController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['register', 'verifyUsuario', 'petActContra1']]);
+        $this->middleware('auth:api', ['except' => ['register', 'verifyUsuario', 'petActContra1', 'actCnt']]);
     }
 
     public function getUsuarios()
@@ -297,6 +297,31 @@ class UsuarioController extends Controller
     }
 
     /**
+     * Register a User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function actCnt1(Request $request)
+    {
+        $usuario = Usuario::where('codigo_verificacion', $request->codigo_verificacion)->first();
+
+        if ($usuario) {
+            //'password' => bcrypt($request->password),
+            //'codigo_verificacion' => bin2hex(random_bytes(64))
+            $usuario->update(['password' => bcrypt($request->password)]);
+            $usuario->update(['codigo_verificacion' => null]);
+
+            return response()->json([
+                'message' => 'Password cambiada'
+            ], 201);
+        } else {
+            return response()->json([
+                'error' => 'No autorizado',
+            ], 401);
+        }
+    }
+
+    /**
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -373,14 +398,10 @@ class UsuarioController extends Controller
         $usuario = Usuario::where('codigo_verificacion', $ref)->first();
         if ($usuario) {
             $usuario->update(['codigo_verificacion' => null]);
-
-            return response()->json([
-                'message' => 'Autorizado',
-            ], 201);
+            
+            return redirect()->away('https://quimicapp.herokuapp.com/auth');
         } else {
-            return response()->json([
-                'error' => 'No autorizado',
-            ], 401);
+            return redirect()->away('https://quimicapp.herokuapp.com/noauth');
         }
     }
 

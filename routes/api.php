@@ -70,7 +70,7 @@ Route::put('/usr/co-pw/{id}', [UsuarioController::class, 'actCnt']); //OK
 
 //PROFESOR
 
-// Route::get('/profesores', [ProfesorController::class, 'getProfesores']);
+ Route::get('/profesores', [ProfesorController::class, 'getProfesores']);//OK
 // Route::get('/profesor/{id}', [ProfesorController::class, 'getProfesor']);
 // Route::put('/profesor/{id}', [ProfesorController::class, 'updateProfesor']);
 // Route::post('/profesor', [ProfesorController::class, 'insertProfesor']);
@@ -86,11 +86,12 @@ Route::delete('/grupo/{id}', [GrupoController::class, 'deleteGrupo']); //OK
 
 //PRACTICA
 
-Route::get('/practicas', [PracticaController::class, 'getPracticas']);
+Route::get('/practicas1', [PracticaController::class, 'getPracticas1']);//OK
+//Route::get('/practicas', [PracticaController::class, 'getPracticas']);
 Route::get('/practica/{id}', [PracticaController::class, 'getPractica']);
-Route::put('/practica/{id}', [PracticaController::class, 'updatePractica']);
-Route::post('/practica', [PracticaController::class, 'insertPractica']);
-Route::delete('/practica/{id}', [PracticaController::class, 'deletePractica']);
+Route::put('/practica/{id}', [PracticaController::class, 'updatePractica']);//OK
+Route::post('/practica', [PracticaController::class, 'insertPractica']);//OK
+Route::delete('/practica/{id}', [PracticaController::class, 'deletePractica']);//OK
 
 //PRACTICA REALIZADA
 
@@ -121,8 +122,8 @@ Route::delete('/condicion/{id}', [CondicionController::class, 'deleteCondicion']
 Route::get('/compuestos-quimicos', [CompuestoQuimicoController::class, 'getCompuestosQuimicos']);
 Route::get('/compuesto-quimico/{id}', [CompuestoQuimicoController::class, 'getCompuestoQuimico']);
 Route::put('/compuesto-quimico/{id}', [CompuestoQuimicoController::class, 'updateCompuestoQuimico']);
-Route::post('/compuesto-quimico', [CompuestoQuimicoController::class, 'insertCompuestoQuimico']);
-Route::delete('/compuesto-quimico/{id}', [CompuestoQuimicoController::class, 'deleteCompuestoQuimico']);
+Route::post('/compuesto-quimico', [CompuestoQuimicoController::class, 'insertCompuestoQuimico']);//OK
+Route::delete('/compuesto-quimico/{id}', [CompuestoQuimicoController::class, 'deleteCompuestoQuimico']);//OK
 
 //COMPUESTO EN MUESTRA
 
