@@ -53,6 +53,7 @@ class PracticaController extends BaseController
 
     public function getPracticas1()
     {
+        if (auth()->user()->id_profesor) {
         $respuesta = [];
         $practicas = Practica::all();
 
@@ -62,6 +63,11 @@ class PracticaController extends BaseController
         }
 
         return $respuesta;
+    }else{
+        return response()->json([
+            'error' => 'No autorizado',
+        ], 401);
+    }
     }
 
     /**
