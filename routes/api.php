@@ -70,7 +70,7 @@ Route::put('/usr/co-pw/{id}', [UsuarioController::class, 'actCnt']); //OK
 
 //PROFESOR
 
-// Route::get('/profesores', [ProfesorController::class, 'getProfesores']);
+ Route::get('/profesores', [ProfesorController::class, 'getProfesores']); //OK
 // Route::get('/profesor/{id}', [ProfesorController::class, 'getProfesor']);
 // Route::put('/profesor/{id}', [ProfesorController::class, 'updateProfesor']);
 // Route::post('/profesor', [ProfesorController::class, 'insertProfesor']);
