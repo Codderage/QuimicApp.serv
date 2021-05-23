@@ -174,7 +174,7 @@ class PracticaController extends BaseController
         $practica = Practica::find($id);
         $practica->update($request->all());
 
-        return $practica;
+        return $request;
     }else{
         return response()->json([
             'error' => 'No autorizado',
