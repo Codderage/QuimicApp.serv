@@ -278,7 +278,7 @@ class UsuarioController extends Controller
      */
     public function actCnt(Request $request, $ref)
     {
-        $usuario = Usuario::where('codigo_verificacion', $ref)->first();
+        return json([$usuario = Usuario::where('codigo_verificacion', $ref)->first(), $ref, $request]);
 
         if ($usuario) {
             //'password' => bcrypt($request->password),
