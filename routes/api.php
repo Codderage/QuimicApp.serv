@@ -58,7 +58,8 @@ Route::get('/usr/co_vf/{ref}', [UsuarioController::class, 'verifyUsuario']); //O
 Route::get('/group-usuario', [UsuarioController::class, 'getGrupoUsuario']); //OK
 Route::get('/update-pw/{id}', [UsuarioController::class, 'petActContra']); //OK
 Route::get('/mail-pw/{id}', [UsuarioController::class, 'petActContra1']); //OK
-Route::put('/usr/co-pw/{ref}', [UsuarioController::class, 'actCnt']); //OK
+//Route::put('/usr/co-pw/{id}', [UsuarioController::class, 'actCnt']); //OK
+Route::put('/co-pw/{id}', [UsuarioController::class, 'actCnt']); //OK
 
 //ALUMNO
 
