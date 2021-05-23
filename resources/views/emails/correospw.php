@@ -219,7 +219,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <div>
-                                                        <a href='http://localhost:3000/verificar-pw?verificar=<?php echo $usuario['codigo_verificacion']; ?>'
+                                                        <a href='https://quimicapp.herokuapp.com/verificar-pw?verificar=<?php echo $usuario['codigo_verificacion']; ?>'
                                                             class="button button--blue" style="color:white">Actualizar contraseña
                                                         </a>
                                                     </div>
