@@ -168,12 +168,18 @@ class PracticaController extends BaseController
      *   )
      * )
      */
-    public function updatePractica(Request $request)
+    public function updatePractica(Request $request, $id)
     {
-        $practica = Practica::find($request->id);
+        if (auth()->user()->id_profesor) {
+        $practica = Practica::find($id);
         $practica->update($request->all());
 
         return $practica;
+    }else{
+        return response()->json([
+            'error' => 'No autorizado',
+        ], 401);
+    }
     }
 
     /**
