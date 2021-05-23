@@ -70,7 +70,7 @@ Route::put('/usr/co-pw/{id}', [UsuarioController::class, 'actCnt']); //OK
 
 //PROFESOR
 
- Route::get('/profesores', [ProfesorController::class, 'getProfesores']);
+ Route::get('/profesores', [ProfesorController::class, 'getProfesores']);//OK
 // Route::get('/profesor/{id}', [ProfesorController::class, 'getProfesor']);
 // Route::put('/profesor/{id}', [ProfesorController::class, 'updateProfesor']);
 // Route::post('/profesor', [ProfesorController::class, 'insertProfesor']);
@@ -123,7 +123,7 @@ Route::get('/compuestos-quimicos', [CompuestoQuimicoController::class, 'getCompu
 Route::get('/compuesto-quimico/{id}', [CompuestoQuimicoController::class, 'getCompuestoQuimico']);
 Route::put('/compuesto-quimico/{id}', [CompuestoQuimicoController::class, 'updateCompuestoQuimico']);
 Route::post('/compuesto-quimico', [CompuestoQuimicoController::class, 'insertCompuestoQuimico']);
-Route::delete('/compuesto-quimico/{id}', [CompuestoQuimicoController::class, 'deleteCompuestoQuimico']);
+Route::delete('/compuesto-quimico/{id}', [CompuestoQuimicoController::class, 'deleteCompuestoQuimico']);//OK
 
 //COMPUESTO EN MUESTRA
 

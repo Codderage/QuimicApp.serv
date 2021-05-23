@@ -107,10 +107,17 @@ class CompuestoQuimicoController extends BaseController
 
     public function deleteCompuestoMuestra($id)
     {
+        if (auth()->user()->id_profesor) {
         $compuestoMuestra = CompuestoEnMuestra::find($id);
 
         $compuestoMuestra->delete();
 
         return $compuestoMuestra;
+    }else{
+
+        return response()->json([
+            'error' => 'No autorizado',
+        ], 401);
+    }
     }
 }
