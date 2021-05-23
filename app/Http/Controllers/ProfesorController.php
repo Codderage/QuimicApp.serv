@@ -55,7 +55,7 @@ class ProfesorController extends BaseController
 
         return $profesor;
         //return Profesor::all();
-    }
+    }else{
 
     return response()->json([
         'error' => 'No autorizado',
