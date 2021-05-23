@@ -283,10 +283,16 @@ class PracticaController extends BaseController
      */
     public function deletePractica($id)
     {
+        if (auth()->user()->id_profesor) {
         $practica = Practica::find($id);
 
         $practica->delete();
 
         return $practica;
+    }else{
+        return response()->json([
+            'error' => 'No autorizado',
+        ], 401);
+    }
     }
 }

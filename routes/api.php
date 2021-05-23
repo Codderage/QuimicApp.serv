@@ -91,7 +91,7 @@ Route::get('/practicas1', [PracticaController::class, 'getPracticas1']);//OK
 Route::get('/practica/{id}', [PracticaController::class, 'getPractica']);
 Route::put('/practica/{id}', [PracticaController::class, 'updatePractica']);//OK
 Route::post('/practica', [PracticaController::class, 'insertPractica']);
-Route::delete('/practica/{id}', [PracticaController::class, 'deletePractica']);
+Route::delete('/practica/{id}', [PracticaController::class, 'deletePractica']);//OK
 
 //PRACTICA REALIZADA
 
