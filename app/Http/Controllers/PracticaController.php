@@ -50,6 +50,19 @@ class PracticaController extends BaseController
         return Practica::all();
     }
 
+    public function getPracticas1()
+    {
+        $respuesta = [];
+        $practicas = Practica::all();
+
+        foreach ($practicas as &$valor) {
+            $valor['nombre_profesor'] = Profesor::find($valor->id_profesor)->nombre;
+            array_push($respuesta, $valor);
+        }
+
+        return $respuesta;
+    }
+
     /**
      * @OA\Get(
      *   path="/api/practica/{id}",
